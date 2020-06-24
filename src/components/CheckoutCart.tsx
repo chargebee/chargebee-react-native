@@ -16,12 +16,13 @@ export class CheckoutCart extends Component<CBCheckoutProps, CartState> {
   constructor(props: CBCheckoutProps) {
     super(props);
     this.state = {
-      planUrl: new CBCheckout().build(this.props),
+      planUrl: new CBCheckout(this.props).build(),
       isLoading: true,
     };
   }
 
   render() {
+    console.log(this.state.planUrl);
     return (
       <View style={styles.wrapper}>
         <WebView

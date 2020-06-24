@@ -9,6 +9,8 @@ export default function Checkout() {
   const couponIds = get(route, 'params.couponIds', []);
   const addons = get(route, 'params.addons', []);
   const billingAddress = get(route, 'params.billingAddress', {});
+  const customer = get(route, 'params.customer', {});
+  const subscription = get(route, 'params.subscription', {});
   const planName = get(route, 'params.planName', '');
   const site = get(route, 'params.site', '');
 
@@ -17,8 +19,8 @@ export default function Checkout() {
     navigation.navigate('Success');
   };
 
-  const handleStep = (pageToken: string) => {
-    console.log('Currently in step', pageToken);
+  const handleStep = (stepName: string) => {
+    console.log('Currently in step', stepName);
   };
 
   return (
@@ -29,7 +31,8 @@ export default function Checkout() {
       planName={planName}
       couponIds={couponIds}
       addons={addons}
-      customer={{ email: 'viveknow@chargebee.com' }}
+      customer={customer}
+      subscription={subscription}
       billingAddress={billingAddress}
     />
   );

@@ -6,6 +6,9 @@ export interface CBCheckoutProps extends CBCheckoutParams {
 export type CBCheckoutParams = {
   site: string;
   planName: string;
+} & CBCheckoutQueryParams;
+
+export type CBCheckoutQueryParams = {
   addons?: Addon[];
   couponIds?: string[];
   customer?: Customer;
@@ -23,15 +26,18 @@ export type Customer = {
   locale?: string;
   phone?: string;
   vatNumber?: string;
+  customFields?: CustomField[];
 };
 
 export type CustomField = {
-  [x: string]: string;
+  name: string;
+  value: string;
 };
 
 export type Subscription = {
   planQuantity?: number;
   startDate?: number;
+  customFields?: CustomField[];
 };
 
 export type Address = {
