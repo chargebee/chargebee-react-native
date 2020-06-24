@@ -18,13 +18,12 @@ export default function Checkout() {
   };
 
   const handleStep = (pageToken: string) => {
-    console.log('successfully got to step purchased', pageToken);
-    // navigation.navigate('Success');
+    console.log('Currently in step', pageToken);
   };
 
   return (
     <CheckoutCart
-      onSuccess={(hostedPageId: string) => successfulPurchase(hostedPageId)}
+      success={(hostedPageId: string) => successfulPurchase(hostedPageId)}
       step={(stepName: string) => handleStep(stepName)}
       site={site}
       planName={planName}

@@ -15,17 +15,10 @@ export class CBCheckout {
 }
 
 const ALLOWED_URL_OPTIONS = [
-  'billingCycles',
-  'mandatoryAddonsToRemove',
-  'termsToCharge',
-  'billingAlignmentMode',
+  'addons',
   'couponIds',
-  'passThruContent',
-  'subscription',
   'customer',
-  'card',
+  'subscription',
   'billingAddress',
   'shippingAddress',
-  'contractTerm',
-  'addons',
 ];

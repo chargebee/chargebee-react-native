@@ -45,7 +45,9 @@ export class CheckoutCart extends Component<CBCheckoutProps, CartState> {
       return;
     }
     if (url.includes('thankyou') || url.includes('thank_you')) {
-      return this.props.onSuccess(url);
+      const parts = url.split('/');
+      const hostedPageId = parts[parts.length - 2] || '';
+      return this.props.success(hostedPageId);
     }
     const recognisedStepName = StepHandler.getStepName(url);
     if (recognisedStepName) {
