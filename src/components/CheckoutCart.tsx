@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import { debounce } from 'lodash';
 import URL_LISTENER from '../utils/UrlListener';
 import WebView from 'react-native-webview';
-import { StyleProp, StyleSheet } from 'react-native';
+import { ActivityIndicator, StyleProp, StyleSheet, View } from 'react-native';
 import { CBCheckoutProps } from '../interfaces/cb-types';
 import { CBCheckout } from '../models/CBCheckout';
 import { StepHandler } from '../helpers/StepHandler';
 
 type CartState = {
   planUrl: string;
+  isLoading: boolean;
 };
 
 export class CheckoutCart extends Component<CBCheckoutProps, CartState> {
@@ -16,28 +17,50 @@ export class CheckoutCart extends Component<CBCheckoutProps, CartState> {
     super(props);
     this.state = {
       planUrl: new CBCheckout().build(this.props),
+      isLoading: true,
     };
   }
 
   render() {
     return (
-      <WebView
-        originWhitelist={['*']}
-        source={{ uri: this.state.planUrl }}
-        style={styles}
-        javaScriptEnabled={true}
-        domStorageEnabled={true}
-        onNavigationStateChange={(navState) =>
-          this.debouncedNavigationHandler(navState.url)
-        }
-        injectedJavaScript={URL_LISTENER}
-        onMessage={({ nativeEvent }) => {
-          if (nativeEvent.data === 'navigationStateChange') {
-            this.debouncedNavigationHandler(nativeEvent.url);
+      <View style={styles.wrapper}>
+        <WebView
+          scalesPageToFit={true}
+          originWhitelist={['*']}
+          source={{ uri: this.state.planUrl }}
+          style={styles}
+          javaScriptEnabled={true}
+          domStorageEnabled={true}
+          onNavigationStateChange={(navState) =>
+            this.debouncedNavigationHandler(navState.url)
           }
-        }}
+          injectedJavaScript={URL_LISTENER}
+          onMessage={({ nativeEvent }) => {
+            if (nativeEvent.data === 'navigationStateChange') {
+              this.debouncedNavigationHandler(nativeEvent.url);
+            }
+          }}
+          renderLoading={() => this.showSpinner()}
+          onLoadEnd={() => this.hideSpinner()}
+          startInLoadingState={true}
+          textZoom={100}
+        />
+      </View>
+    );
+  }
+
+  private showSpinner() {
+    return (
+      <ActivityIndicator
+        animating={this.state.isLoading}
+        size={'large'}
+        style={styles.loaderStyle}
       />
     );
+  }
+
+  hideSpinner() {
+    this.setState({ isLoading: false });
   }
 
   navigationHandler = (url: string) => {
@@ -62,5 +85,9 @@ export class CheckoutCart extends Component<CBCheckoutProps, CartState> {
 const styles: StyleProp<any> = StyleSheet.create({
   container: {
     flex: 1,
+    marginHorizontal: 3,
+    marginBottom: 5,
   },
+  loaderStyle: { position: 'absolute', left: 0, right: 0, bottom: 0, top: 0 },
+  wrapper: { flex: 1 },
 });
