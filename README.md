@@ -11,11 +11,20 @@ npm install react-native-chargebee
 ## Usage
 
 ```js
-import Chargebee from "react-native-chargebee";
+import CheckoutCart from "react-native-chargebee";
 
 // ...
 
-const result = await Chargebee.multiply(3, 7);
+<CheckoutCart
+  onSuccess={(hostedPageId: string) => handleSuccessfulPurchase(hostedPageId)}
+  step={(stepName: string) => handleStep(stepName)}
+  site='site_name'
+  planName={planName}
+  couponIds={couponIds}
+  addons={addons}
+  customer={{ email: 'viveknow@chargebee.com' }}
+  billingAddress={billingAddress}
+/>
 ```
 
 ## Contributing
