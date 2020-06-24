@@ -2128,7 +2128,7 @@
     react-is "^16.13.0"
     use-subscription "^1.4.0"
 
-"@react-navigation/native@^5.5.0":
+"@react-navigation/native@^5.5.0", "@react-navigation/native@^5.5.1":
   version "5.5.1"
   resolved "https://registry.yarnpkg.com/@react-navigation/native/-/native-5.5.1.tgz#e669d9561e54d86b1315637b8d5630dc55ee9383"
   integrity sha512-5pzsfvLdnvqfrWgTMCLDFaGK6Sj30p7tAMhUGneV2oGlx0OIbhgc6/04UUMpKEmAS2PaC/GZa1LQIsSVWDewvw==
@@ -10854,6 +10854,14 @@ react-is@^16.12.0, react-is@^16.13.0, react-is@^16.7.0, react-is@^16.8.1, react-
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
+
+react-native-chargebee@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-chargebee/-/react-native-chargebee-0.2.0.tgz#09430ebbaf4f0a6755a3c4629b3c7437d81eb495"
+  integrity sha512-nsyGrVTcDBvTPIuBFiJM5vIX/GG+8Oymx23T3lJBPF6b0KYqCjLOiMEDrAFz3zCWhSbUQQmCVkGj0mcxoU5HGg==
+  dependencies:
+    "@react-navigation/native" "^5.5.1"
+    lodash "^4.17.15"
 
 react-native-gesture-handler@^1.6.1:
   version "1.6.1"
