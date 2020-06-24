@@ -1,25 +1,19 @@
 import * as React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import Chargebee from 'react-native-chargebee';
+import AppNavigator from './navigation/AppNavigator';
+// import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+
+// const theme = {
+//   ...DefaultTheme,
+//   colors: {
+//     ...DefaultTheme.colors,
+//     primary: '#66afe9',
+//   },
+// };
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
-
-  React.useEffect(() => {
-    Chargebee.multiply(3, 7).then(setResult);
-  }, []);
-
   return (
-    <View style={styles.container}>
-      <Text>Result: {result}</Text>
-    </View>
+    // <PaperProvider theme={theme}>
+    <AppNavigator />
+    // </PaperProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

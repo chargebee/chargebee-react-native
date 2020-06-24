@@ -12,6 +12,9 @@
       "android",
       "web"
     ],
+    "android": {
+      "permissions": []
+    },
     "ios": {
       "supportsTablet": true
     },
