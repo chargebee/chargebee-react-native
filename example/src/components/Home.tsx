@@ -12,6 +12,7 @@ export default function Home() {
         <Button
           title={p.displayName}
           onPress={() => navigation.navigate('Checkout', p.option)}
+          key={p.displayName}
         />
       ))}
     </View>
