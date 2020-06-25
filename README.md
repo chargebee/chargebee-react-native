@@ -16,13 +16,14 @@ import CheckoutCart from "react-native-chargebee";
 // ...
 
 <CheckoutCart
-  onSuccess={(hostedPageId: string) => handleSuccessfulPurchase(hostedPageId)}
+  success={(hostedPageId: string) => successfulPurchase(hostedPageId)}
   step={(stepName: string) => handleStep(stepName)}
-  site='site_name'
+  site={site}
   planName={planName}
   couponIds={couponIds}
   addons={addons}
-  customer={{ email: 'viveknow@chargebee.com' }}
+  customer={customer}
+  subscription={subscription}
   billingAddress={billingAddress}
 />
 ```
