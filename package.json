@@ -1,6 +1,6 @@
 {
   "name": "react-native-chargebee",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Package for chargebee checkout",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
