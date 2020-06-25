@@ -144,7 +144,6 @@
     ]
   },
   "dependencies": {
-    "@react-navigation/native": "^5.5.1",
     "lodash": "^4.17.15"
   }
 }
