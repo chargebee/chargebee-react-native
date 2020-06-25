@@ -64,12 +64,12 @@ The properties that can be passed to the `CheckoutCart` component are:
 | :------------ |:---------------:| :---------------:| :-----|
 | site | Yes | String | Name of the chargebee hosted site |
 |planName | Yes | String | Name of the plan user is purchasing |
-| addons | No | [Addon[]](#Addon) | Parameters for addons. Multiple addons can be passed. Fields are listed below|
+| addons | No | [Addon[]](#addon) | Parameters for addons. Multiple addons can be passed. Fields are listed below|
 | couponIds | No | String[] | Identifier of the coupon as a List. Coupon Codes can also be passed|
 | customer | No | [Customer](#customer) | Details about the customer that needs to be prefilled in checkout. Fields are listed below |
-| subscription | No | [Subscription](#Subscription) | Details about the subscription. Fields listed below |
-| billingAddress | No | [Address](#Address) | Billing address of the customer. Fields listed below |
-| shippingAddress | No | [Address](#Address) | Shipping address of the customer. Fields listed below |
+| subscription | No | [Subscription](#subscription) | Details about the subscription. Fields listed below |
+| billingAddress | No | [Address](#address) | Billing address of the customer. Fields listed below |
+| shippingAddress | No | [Address](#address) | Shipping address of the customer. Fields listed below |
 
 ### Addon
 | Prop  | Required  | Type | Description |
