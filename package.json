@@ -1,5 +1,5 @@
 {
-  "name": "react-native-chargebee",
+  "name": "@chargebee/react-native-chargebee",
   "version": "0.3.3",
   "description": "Package for chargebee checkout",
   "main": "lib/commonjs/index",
@@ -13,7 +13,7 @@
     "android",
     "ios",
     "cpp",
-    "react-native-chargebee.podspec",
+    "chargebee-react-native-chargebee.podspec",
     "!lib/typescript/example",
     "!**/__tests__",
     "!**/__fixtures__",
@@ -34,13 +34,13 @@
     "ios",
     "android"
   ],
-  "repository": "https://github.com/cb-prabu/react-native-chargebee",
-  "author": "&#34;&#34; <prabu@chargebeeinc.com> (https://github.com/cb-prabu)",
+  "repository": "https://github.com/chargebee/react-native-chargebee",
+  "author": "Prabu <prabu@chargebeeinc.com> (https://github.com/cb-prabu)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cb-prabu/react-native-chargebee/issues"
+    "url": "https://github.com/chargebee/react-native-chargebee/issues"
   },
-  "homepage": "https://github.com/cb-prabu/react-native-chargebee#readme",
+  "homepage": "https://github.com/chargebee/react-native-chargebee#readme",
   "devDependencies": {
     "@commitlint/config-conventional": "^8.3.4",
     "@react-native-community/bob": "^0.15.1",

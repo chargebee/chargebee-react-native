@@ -22,7 +22,6 @@ export class CheckoutCart extends Component<CBCheckoutProps, CartState> {
   }
 
   render() {
-    console.log(this.state.planUrl);
     return (
       <View style={styles.wrapper}>
         <WebView

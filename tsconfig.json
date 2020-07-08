@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "react-native-chargebee": ["./src/index"]
+      "@chargebee/react-native-chargebee": ["./src/index"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,

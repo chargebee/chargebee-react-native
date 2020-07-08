@@ -1,4 +1,4 @@
-import { CheckoutCart } from 'react-native-chargebee';
+import { CheckoutCart } from '@chargebee/react-native-chargebee';
 import * as React from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { get } from 'lodash';

@@ -1,7 +1,7 @@
 import { Button, View } from 'react-native';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { CBCheckoutParams } from 'react-native-chargebee';
+import { CBCheckoutParams } from '@chargebee/react-native-chargebee';
 
 export default function Home() {
   const navigation = useNavigation();

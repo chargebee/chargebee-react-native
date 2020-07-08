@@ -8,7 +8,7 @@ Package for chargebee checkout
 ## Installation
 
 ```sh
-yarn add react-native-chargebee
+yarn add @chargebee/react-native-chargebee
 ```
 
 ## Dependencies
@@ -19,7 +19,7 @@ To successfully use this package, you need react native webview with version >= 
 ## Usage
 The package comes with type definition whic you can use to see the list of allowed props.
 ```js
-import CheckoutCart from "react-native-chargebee";
+import CheckoutCart from "@chargebee/react-native-chargebee";
 
 // ...
 
