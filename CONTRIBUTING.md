@@ -65,6 +65,15 @@ We follow the [conventional commits specification](https://www.conventionalcommi
 - `chore`: tooling changes, e.g. change CI config.
 
 Our pre-commit hooks verify that your commit message matches this format when committing.
+Other available commit types are build, ci, perf, revert, style.
+To change/add commit types check https://github.com/conventional-changelog/commitlint
+
+#### Note
+When there are any backward incompatible changes please add a footer line to the commit message as below:
+
+`BREAKING CHANGE: <Message>`
+
+This will tag the release automatically as next major version
 
 ### Linting and tests
 
@@ -87,11 +96,48 @@ The `package.json` file contains various scripts for common tasks:
 - `yarn example ios`: run the example app on iOS.
 
 ### Release
-To release from a local machine
+Github token is needed to push a release tag to the repo with `repo` access (`admin` is not needed).
+
+`export GITHUB_TOKEN=<Github Token>`
+
+NPM Token is needed to publish to npm
+
+`export NPM_TOKEN=<Npm token here>`
+
+To release from a local machine in interactive mode
 `yarn release`
+
+To do a dry run of the release process
+`yarn release --dry-run`
 
 To trigger the release process from CI
 `yarn release --ci`
 The release process:
  1. Creates a release version in Github
- 2. Publishes to npm
+ 2. Publishes to npm [More info](https://github.com/release-it/release-it/blob/master/docs/npm.md)
+
+#### Skip publish
+
+To bump the version in `package.json` with the release, but not publish to the registry:
+
+```json
+{
+  "npm": {
+    "publish": false
+  }
+}
+```
+
+#### Ignore version
+
+To ignore the `version` from `package.json`, (and use the latest Git tag instead):
+
+```json
+{
+  "npm": {
+    "ignoreVersion": true
+  }
+}
+```
+
+Or `--npm.ignoreVersion` from the command line.
