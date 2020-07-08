@@ -73,7 +73,8 @@ When there are any backward incompatible changes please add a footer line to the
 
 `BREAKING CHANGE: <Message>`
 
-This will tag the release automatically as next major version
+This will tag the release automatically as next major version.
+For an example, you can take a look at the commit message of commit id `d48c299` in this repo
 
 ### Linting and tests
 
