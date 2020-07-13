@@ -44,6 +44,6 @@ export abstract class BaseBuilder {
   }
 
   protected abstract getAttributeMap(): { [k: string]: string };
-  // public abstract build(): {[k: string]: any};
+
   public abstract toUrl(): string;
 }
