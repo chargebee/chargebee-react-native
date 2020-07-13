@@ -7,7 +7,7 @@ export abstract class BaseBuilder {
     }
     return customFields.reduce(
       (acc: { [key: string]: string }, cf: CustomField) => {
-        acc[`cf_${cf.name}`] = encodeURI(cf.value);
+        acc[`${cf.name}`] = encodeURI(cf.value);
         return acc;
       },
       {}

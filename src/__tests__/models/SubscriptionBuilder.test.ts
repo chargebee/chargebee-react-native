@@ -21,9 +21,9 @@ describe('Subscription Builder', () => {
     );
   });
 
-  test('should prefix custom fields in subscription', () => {
+  test('should include custom fields in subscription url', () => {
     const customField: CustomField = {
-      name: 'sub_test',
+      name: 'cf_sub_test',
       value: 'professional',
     };
     subscription = { customFields: [customField] };
@@ -33,7 +33,7 @@ describe('Subscription Builder', () => {
       'subscription'
     ).toUrl();
     expect(urlParams).toBe(
-      `subscription[cf_${customField.name}]=${customField.value}`
+      `subscription[${customField.name}]=${customField.value}`
     );
   });
 });
