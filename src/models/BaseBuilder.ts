@@ -7,7 +7,7 @@ export abstract class BaseBuilder {
     }
     return customFields.reduce(
       (acc: { [key: string]: string }, cf: CustomField) => {
-        acc[`cf_${cf.name}`] = encodeURI(cf.value);
+        acc[`${cf.name}`] = encodeURI(cf.value);
         return acc;
       },
       {}
@@ -44,6 +44,6 @@ export abstract class BaseBuilder {
   }
 
   protected abstract getAttributeMap(): { [k: string]: string };
-  // public abstract build(): {[k: string]: any};
+
   public abstract toUrl(): string;
 }
