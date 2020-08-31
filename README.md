@@ -1,9 +1,6 @@
 # react-native-chargebee
 
-
-
-
-Package for chargebee checkout
+React Native wrapper for rendering a Chargebee hosted checkout page within a WebView component.
 
 ## Installation
 
@@ -14,10 +11,11 @@ yarn add @chargebee/react-native-chargebee
 ## Dependencies
 
 To successfully use this package, you need react native webview with version >= 8.1.1
+
 `yarn add "react-native-webview"`
 
 ## Usage
-The package comes with type definition whic you can use to see the list of allowed props.
+The package comes with type definition which you can use to see the list of allowed props.
 ```js
 import CheckoutCart from "@chargebee/react-native-chargebee";
 
@@ -83,7 +81,7 @@ The properties that can be passed to the `CheckoutCart` component are:
 | Prop  | Required  | Type | Description |
 | :------------ |:---------------:| :---------------:| :-----|
 | id | Yes | string | Identifier of the addon |
-| quantity | No |  integer,<br><br> default=1, min=1 | Addon quantity. Applicable only for the quantity based addons |
+| quantity | No |  integer <br> default=1, min=1 | Addon quantity. Applicable only for the quantity based addons |
 
 
 ### Customer
@@ -126,4 +124,4 @@ See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the 
 
 ## License
 
-MIT
+Chargebee is available under the MIT license. See the LICENSE file for more info.
