@@ -3,17 +3,15 @@ phases:
   install:
     runtime-versions:
       nodejs: 12
-  pre_build:
+  build:
     commands:
       - cd $CODEBUILD_SRC_DIR
       - VERSION=$(echo $CODEBUILD_WEBHOOK_TRIGGER | sed 's/branch\///g')
       - sh $CODEBUILD_SRC_DIR/build-config/sns_util.sh "START" "$VERSION"
       - echo "Installing yarn Packages..."
       - yarn install
-  build:
-    commands:
       - echo "Yarn build and publishing to NPM"
-      - yarn release --no-git --ci --dry-run | tee /tmp/build.log
+      - yarn release --no-git --ci | tee /tmp/build.log
       - VERSION=$(grep '! npm version' /tmp/build.log | awk '{ print $4 }')
     finally:
       - |
