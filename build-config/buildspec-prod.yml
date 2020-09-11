@@ -14,8 +14,8 @@ phases:
     commands:
       - echo "Yarn build and publishing to NPM"
       - yarn release --no-git --ci --dry-run | tee /tmp/build.log
-      - VERSION=$(grep <> /tmp/build.log)
-  finally:
+      - VERSION=$(grep '! npm version' /tmp/build.log | awk '{ print $4 }')
+    finally:
       - |
         if [ "$CODEBUILD_BUILD_SUCCEEDING" = "0" ]; then
             sh $CODEBUILD_SRC_DIR/build-config/sns_util.sh "FAILED" "$VERSION"
