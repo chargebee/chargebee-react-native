@@ -9,7 +9,7 @@ phases:
       - VERSION=$(echo $CODEBUILD_WEBHOOK_TRIGGER | sed 's/branch\///g')
       - sh $CODEBUILD_SRC_DIR/build-config/sns_util.sh "START" "$VERSION"
       - echo "Installing yarn Packages..."
-      - yarn install
+      - yarn bootstrap
       - echo "Yarn build and publishing to NPM"
       - yarn release --no-git --ci | tee /tmp/build.log
       - VERSION=$(grep '! npm version' /tmp/build.log | awk '{ print $4 }')
