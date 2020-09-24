@@ -16,8 +16,12 @@ To successfully use this package, you need react native webview with version >= 
 
 ## Usage
 The package comes with type definition which you can use to see the list of allowed props.
+
+For `site`, use the Chargebee site code. Ex. if the Chargebee domain is 'honey-comics.chargebee.com', then the site code is `honey-comics`.
+For `planName`, use the Chargebee plan code. Ex. if the plan name is 'Annual Comic Subscription', the plan code would be `annual-comic-subs`.  
+
 ```js
-import CheckoutCart from "@chargebee/react-native-chargebee";
+import { CheckoutCart } from "@chargebee/react-native-chargebee";
 
 // ...
 
