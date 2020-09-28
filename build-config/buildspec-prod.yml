@@ -11,7 +11,10 @@ phases:
       - echo "Installing yarn Packages..."
       - yarn bootstrap
       - echo "Yarn build and publishing to NPM"
+      - yarn config list
       - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
+      - yarn config list
+      - npm whoami
       - yarn release --no-git --no-git-release --ci 2>&1 | tee /tmp/build.log
       - grep -q 'Command failed with exit code' /tmp/build.log && exit 1
       - VERSION=$(grep '! npm version' /tmp/build.log | awk '{ print $4 }')
