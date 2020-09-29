@@ -8,13 +8,17 @@ phases:
       - cd $CODEBUILD_SRC_DIR
       - VERSION=$(echo $CODEBUILD_WEBHOOK_TRIGGER | sed 's/branch\///g')
       - sh $CODEBUILD_SRC_DIR/build-config/sns_util.sh "START" "$VERSION"
-      - echo "Creating npmrc files..."
-      - echo "_auth="$NPM_TOKEN"\nalways-auth=true\nregistry=https://registry.npmjs.org/\n//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
-      - echo "@chargebee:registry=https://registry.npmjs.org" > .npmrc
+      - npm config set unsafe-perm true
+      - npm config set always-auth true
+      - npm config set scripts-prepend-node-path true
+      - npm config set registry=https://registry.npmjs.com/
+      - npm config set //registry.npmjs.com/:_authToken=$NPM_TOKEN
+      - npm whoami
+      - npm config list
       - echo "Installing yarn Packages..."
       - yarn bootstrap
       - echo "Yarn build and publishing to NPM"
-      - yarn release --no-git --no-github.release --ci 2>&1 | tee /tmp/build.log
+      - npm run release -- --no-git --no-github.release --ci 2>&1 | tee /tmp/build.log
       - grep -q 'Command failed with exit code' /tmp/build.log && exit 1
       - VERSION=$(grep '! npm version' /tmp/build.log | awk '{ print $4 }')
       - NPM_VERSION=$(npm show @chargebee/react-native-chargebee version)
