@@ -18,7 +18,7 @@ To successfully use this package, you need react native webview with version >= 
 The package comes with type definition which you can use to see the list of allowed props.
 
 For `site`, use the Chargebee site name. For example, if the Chargebee domain is 'honey-comics.chargebee.com', then the site name is `honey-comics`.
-For `planName`, use the Chargebee plan ID. For example, if the plan name is 'Annual Comic Subscription', the plan ID might be something like `annual-comic-subs`.  
+For `planId`, use the Chargebee plan ID. For example, if the plan name is 'Annual Comic Subscription', the plan ID might be something like `annual-comic-subs`.  
 
 ```js
 import { CheckoutCart } from "@chargebee/react-native-chargebee";
@@ -29,7 +29,7 @@ import { CheckoutCart } from "@chargebee/react-native-chargebee";
   success={(hostedPageId: string) => successfulPurchase(hostedPageId)}
   step={(stepName: string) => handleStep(stepName)}
   site={site}
-  planName={planName}
+  planId={planId}
   couponIds={couponIds}
   addons={addons}
   customer={customer}
@@ -73,7 +73,8 @@ The properties that can be passed to the `CheckoutCart` component are:
 | Prop  | Required  | Type | Description |
 | :------------ |:---------------:| :---------------:| :-----|
 | site | Yes | String | Name of the chargebee hosted site |
-|planName | Yes | String | Name of the plan user is purchasing |
+|planName | Yes | String | Deprecated since 1.0.7. Use planId instead ID of the plan user is purchasing |
+|planId | Yes | String | ID of the plan user is purchasing |
 | addons | No | [Addon[]](#addon) | Parameters for addons. Multiple addons can be passed. Fields are listed below|
 | couponIds | No | String[] | Identifier of the coupon as a List. Coupon Codes can also be passed|
 | customer | No | [Customer](#customer) | Details about the customer that needs to be prefilled in checkout. Fields are listed below |
