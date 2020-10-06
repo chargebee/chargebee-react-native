@@ -5,7 +5,9 @@ export interface CBCheckoutProps extends CBCheckoutParams {
 
 export type CBCheckoutParams = {
   site: string;
-  planName: string;
+  /** @deprecated since 1.0.7. Use `planId` instead. **/
+  planName?: string;
+  planId?: string;
 } & CBCheckoutQueryParams;
 
 export type CBCheckoutQueryParams = {
