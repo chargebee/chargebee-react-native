@@ -11,7 +11,7 @@ export default function Checkout() {
   const billingAddress = get(route, 'params.billingAddress', {});
   const customer = get(route, 'params.customer', {});
   const subscription = get(route, 'params.subscription', {});
-  const planName = get(route, 'params.planName', '');
+  const planId = get(route, 'params.planId', '');
   const site = get(route, 'params.site', '');
 
   const successfulPurchase = (hostedPageId: string) => {
@@ -28,7 +28,7 @@ export default function Checkout() {
       success={(hostedPageId: string) => successfulPurchase(hostedPageId)}
       step={(stepName: string) => handleStep(stepName)}
       site={site}
-      planName={planName}
+      planId={planId}
       couponIds={couponIds}
       addons={addons}
       customer={customer}

@@ -34,7 +34,7 @@ describe('Customer Builder', () => {
 
     const urlParams = new CustomerBuilder(customer, 'customer').toUrl();
     expect(urlParams).toBe(
-      `customer[cf_${customField.name}]=${customField.value}`
+      `customer[${customField.name}]=${customField.value}`
     );
   });
 });

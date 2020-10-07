@@ -23,7 +23,16 @@ export class CBCheckout {
   }
 
   private baseUrl() {
-    return `https://${this.props.site}.chargebee.com/hosted_pages/plans/${this.props.planName}`;
+    return `https://${
+      this.props.site
+    }.chargebee.com/hosted_pages/plans/${this.planResource()}`;
+  }
+
+  private planResource() {
+    if (this.props.planId) {
+      return this.props.planId;
+    }
+    return this.props.planName;
   }
 
   private buildQueryParams() {

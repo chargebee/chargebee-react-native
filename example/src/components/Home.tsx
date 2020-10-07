@@ -22,18 +22,18 @@ export default function Home() {
 function buildPlans() {
   const planWithCoupons: CBCheckoutParams = {
     couponIds: ['cbdemo_earlybird'],
-    planName: 'comics-box',
+    planId: 'comics-box',
     site: 'honeycomics-v3-test',
   };
 
   const basePlan = {
-    planName: 'comics-box',
+    planId: 'comics-box',
     site: 'honeycomics-v3-test',
   };
 
   const planWithAddons = {
     addons: [{ id: 'extra-comic-book', quantity: 2 }],
-    planName: 'comics-box',
+    planId: 'comics-box',
     site: 'honeycomics-v3-test',
   };
   const prefilledOptions = {
@@ -53,7 +53,7 @@ function buildPlans() {
       firstName: 'Prabu',
       lastName: 'K',
     },
-    planName: 'comics-box',
+    planId: 'comics-box',
     site: 'honeycomics-v3-test',
   };
   const customFieldOptions = {
@@ -66,17 +66,17 @@ function buildPlans() {
     subscription: {
       customFields: [{ name: 'sub_test', value: 'subscription value' }],
     },
-    planName: 'comics-box',
+    planId: 'comics-box',
     site: 'honeycomics-v3-test',
   };
   const planWith3DS = {
-    planName: 'cbdemo_scale',
+    planId: 'cbdemo_scale',
     addons: [{ id: 'cbdemo_conciergesupport', quantity: 1 }],
     couponIds: ['cbdemo_holidays'],
     site: 'test-ashwin1-test',
   };
   const singlePageCheckout = {
-    planName: 'cbdemo_scale',
+    planId: 'cbdemo_scale',
     addons: [{ id: 'cbdemo_conciergesupport' }],
     couponIds: ['cbdemo_holidays'],
     site: 'test-ashwin4-test',
