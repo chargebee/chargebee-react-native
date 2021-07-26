@@ -75,12 +75,14 @@ The properties that can be passed to the `CheckoutCart` component are:
 | site | Yes | String | Name of the chargebee hosted site |
 |planName | Yes | String | Deprecated since 1.0.7. Use planId instead ID of the plan user is purchasing |
 |planId | Yes | String | ID of the plan user is purchasing |
-| addons | No | [Addon[]](#addon) | Parameters for addons. Multiple addons can be passed. Fields are listed below|
+| addons | No | [Addon[]](#addon) | Parameters for addons. Multiple addons can be passed. Fields are listed below. You can use the Chargebee List Addons API to retrieve all the addons for the site. Refer to [Addons](https://apidocs.chargebee.com/docs/api/addons?prod_cat_ver=1#list_addons) for sites on Product Catalog 1.0.|
 | couponIds | No | String[] | Identifier of the coupon as a List. Coupon Codes can also be passed|
 | customer | No | [Customer](#customer) | Details about the customer that needs to be prefilled in checkout. Fields are listed below |
 | subscription | No | [Subscription](#subscription) | Details about the subscription. Fields listed below |
 | billingAddress | No | [Address](#address) | Billing address of the customer. Fields listed below |
 | shippingAddress | No | [Address](#address) | Shipping address of the customer. Fields listed below |
+| success | Yes | [Success Call Back](#successcallback) | Accepts a call back function which will be called upon successful completion of a purchase. You can use this to redirect the user out of the Chargebee Hosted webview and into a success screen controlled by the app.|
+| step | Yes | [Step Call Back](#stepcallback) | Accepts a call back function which will be called upon successful completion of each step of the purchase. For example, the callback is called when a user moves from Cart page to Account Info page, from Account Info page to Billing address page, and so on. You can use this to log or track the current progress of the user within the Chargebee Hosted webview, upto a successful purchase action.|
 
 ### Addon
 | Prop  | Required  | Type | Description |
@@ -121,7 +123,29 @@ The properties that can be passed to the `CheckoutCart` component are:
 | stateCode | No | String  <br> max chars=50 | The ISO 3166-2 state/province code without the country prefix. Currently supported for USA, Canada and India. <br> For instance, for Arizona ( USA), set the stateCode as AZ (not US-AZ). or, for Tamil Nadu (India), set the stateCode as TN (not IN-TN). or, for British Columbia (Canada), set the stateCode as BC (not CA-BC). <br> Note: If the 'stateCode' is specified, the 'state' attribute should not be provided as Chargebee will set the value automatically (for US, Canada, India). |
 | state | No | String <br> max chars=50 | The state/province name. Use this to pass the state/province information for cases where 'stateCode' is not supported or cannot be passed. |
 | zip | No | String  <br> max chars=20| Zip or Postal code. |
-| country | No | String  <br> max chars=50| 2-letter ISO 3166 alpha-2 country code. |
+| country | No | Strinntg  <br> max chars=50| 2-letter ISO 3166 alpha-2 country code. |
+
+### SuccessCallBack
+The success call back is a function of type:  ```(string) => void```. It takes in the `hostedPageId` from the Chargebee Hostedpage success screen.
+Example:
+```javascript
+    success = {(hostedPageId: String) => onSuccessNavigateToHomePage(hostedPageId)}
+    onSuccessNavigateToHomePage = (hostedPageId: string) => {
+        console.log('Successfully purchased', hostedPageId);
+        navigation.navigate('Home'); // Application's logic for handling redirection
+    }; 
+```
+
+### StepCallBack
+The step call back is a function of type:  ```(string) => void```. It takes in the `stepName` for each of the Chargebee Hostedpage screens.
+Example:
+```javascript
+    step = {(stepName: String) => onEachStepTrackUser(stepName)}
+    onEachStepTrackUser = (stepName: string) => {
+        console.log('User is currently in the step ', stepName);
+        // Application's logic for logging/tracking user action
+    }; 
+ ```
 
 ## Contributing
 
