@@ -81,8 +81,8 @@ The properties that can be passed to the `CheckoutCart` component are:
 | subscription | No | [Subscription](#subscription) | Details about the subscription. Fields listed below |
 | billingAddress | No | [Address](#address) | Billing address of the customer. Fields listed below |
 | shippingAddress | No | [Address](#address) | Shipping address of the customer. Fields listed below |
-| success | Yes | [Success Call Back](#successcallback) | Accepts a call back function which will be called upon successful completion of a purchase. You can use this to redirect the user out of the Chargebee Hosted webview and into a success screen controlled by the app.|
-| step | Yes | [Step Call Back](#stepcallback) | Accepts a call back function which will be called upon successful completion of each step of the purchase. For example, the callback is called when a user moves from Cart page to Account Info page, from Account Info page to Billing address page, and so on. You can use this to log or track the current progress of the user within the Chargebee Hosted webview, upto a successful purchase action.|
+| success | Yes | [Success Callback](#successcallback) | Accepts a callback function which will be called upon successful completion of a purchase. You can use this to redirect the user out of the Chargebee Hosted webview and into a success screen controlled by the app.|
+| step | Yes | [Step Callback](#stepcallback) | Accepts a callback function which will be called upon successful completion of each step of the purchase. For example, the callback is called when a user moves from Cart page to Account Info page, from Account Info page to Billing address page, and so on. You can use this to log or track the current progress of the user within the Chargebee Hosted webview, upto a successful purchase action.|
 
 ### Addon
 | Prop  | Required  | Type | Description |
@@ -123,10 +123,10 @@ The properties that can be passed to the `CheckoutCart` component are:
 | stateCode | No | String  <br> max chars=50 | The ISO 3166-2 state/province code without the country prefix. Currently supported for USA, Canada and India. <br> For instance, for Arizona ( USA), set the stateCode as AZ (not US-AZ). or, for Tamil Nadu (India), set the stateCode as TN (not IN-TN). or, for British Columbia (Canada), set the stateCode as BC (not CA-BC). <br> Note: If the 'stateCode' is specified, the 'state' attribute should not be provided as Chargebee will set the value automatically (for US, Canada, India). |
 | state | No | String <br> max chars=50 | The state/province name. Use this to pass the state/province information for cases where 'stateCode' is not supported or cannot be passed. |
 | zip | No | String  <br> max chars=20| Zip or Postal code. |
-| country | No | Strinntg  <br> max chars=50| 2-letter ISO 3166 alpha-2 country code. |
+| country | No | String  <br> max chars=50| 2-letter ISO 3166 alpha-2 country code. |
 
-### SuccessCallBack
-The success call back is a function of type:  ```(string) => void```. It takes in the `hostedPageId` from the Chargebee Hostedpage success screen.
+### SuccessCallback
+The success callback is a function of type:  ```(string) => void```. It takes in the `hostedPageId` from the Chargebee Hostedpage success screen.
 Example:
 ```javascript
     success = {(hostedPageId: String) => onSuccessNavigateToHomePage(hostedPageId)}
@@ -136,8 +136,8 @@ Example:
     }; 
 ```
 
-### StepCallBack
-The step call back is a function of type:  ```(string) => void```. It takes in the `stepName` for each of the Chargebee Hostedpage screens.
+### StepCallback
+The step callback is a function of type:  ```(string) => void```. It takes in the `stepName` for each of the Chargebee Hostedpage screens.
 Example:
 ```javascript
     step = {(stepName: String) => onEachStepTrackUser(stepName)}
