@@ -21,23 +21,22 @@ export default function Home() {
 
 function buildPlans() {
   const planWithCoupons: CBCheckoutParams = {
-    couponIds: ['cbdemo_earlybird'],
-    planId: 'comics-box',
-    site: 'honeycomics-v3-test',
+    couponIds: ['cbdemo_earlybird','cbdemo_launchoffer'],
+    items: [{planPricePointId: 'HBProduct-USD-Monthly'},{ planPricePointId: 'cbdemo_additional-analytics-USD-monthly'}],
+    site: 'hbcompany-test',
   };
 
   const basePlan = {
-    planId: 'comics-box',
-    site: 'honeycomics-v3-test',
+    items:[{ planPricePointId: 'HBProduct-USD-Monthly'}],
+    site: 'hbcompany-test',
   };
 
   const planWithAddons = {
-    addons: [{ id: 'extra-comic-book', quantity: 2 }],
-    planId: 'comics-box',
-    site: 'honeycomics-v3-test',
+    items: [{ planPricePointId: 'HBProduct-USD-Monthly'},{ planPricePointId: 'cbdemo_additional-analytics-USD-monthly'},{ planPricePointId : 'cbdemo_additional-users-USD-monthly' , quantity : 2}],
+    site: 'hbcompany-test',
   };
   const prefilledOptions = {
-    addons: [{ id: 'extra-comic-book', quantity: 3 }],
+    items:[{ planPricePointId: 'HBProduct-USD-Monthly'},{ planPricePointId: 'cbdemo_additional-analytics-USD-monthly'},{ planPricePointId : 'cbdemo_additional-users-USD-monthly' , quantity : 2}],
     billingAddress: {
       firstName: 'Ellie',
       lastName: 'Joel',
@@ -49,15 +48,14 @@ function buildPlans() {
       country: 'US',
     },
     customer: {
-      email: 'prabuk@chargebee.com',
+      email: 'HB@chargebee.com',
       firstName: 'Prabu',
       lastName: 'K',
     },
-    planId: 'comics-box',
-    site: 'honeycomics-v3-test',
+    site: 'hbcompany-test',
   };
   const customFieldOptions = {
-    addons: [{ id: 'extra-comic-book', quantity: 3 }],
+    items:[{ planPricePointId: 'HBProduct-USD-Monthly'}],
     customer: {
       customFields: [{ name: 'test', value: 'testing' }],
       firstName: 'Prabu',
@@ -66,20 +64,17 @@ function buildPlans() {
     subscription: {
       customFields: [{ name: 'sub_test', value: 'subscription value' }],
     },
-    planId: 'comics-box',
-    site: 'honeycomics-v3-test',
+    site: 'hbcompany-test',
   };
   const planWith3DS = {
-    planId: 'cbdemo_scale',
-    addons: [{ id: 'cbdemo_conciergesupport', quantity: 1 }],
-    couponIds: ['cbdemo_holidays'],
-    site: 'test-ashwin1-test',
+    couponIds: ['cbdemo_earlybird','cbdemo_launchoffer'],
+    site: 'hbcompany-test',
+    items: [{ planPricePointId: 'HBProduct-USD-Monthly'},{ planPricePointId: 'cbdemo_additional-analytics-USD-monthly'},{ planPricePointId : 'cbdemo_additional-users-USD-monthly' , quantity : 2}],
   };
   const singlePageCheckout = {
-    planId: 'cbdemo_scale',
-    addons: [{ id: 'cbdemo_conciergesupport' }],
-    couponIds: ['cbdemo_holidays'],
-    site: 'test-ashwin4-test',
+    couponIds: ['cbdemo_earlybird','cbdemo_launchoffer'],
+    site: 'hbcompany-test',
+    items: [{ planPricePointId: 'HBProduct-USD-Monthly'},{ planPricePointId: 'cbdemo_additional-analytics-USD-monthly'},{ planPricePointId : 'cbdemo_additional-users-USD-monthly' , quantity : 2}],
   };
   return [
     { option: planWithCoupons, displayName: 'Coupon Code Plan' },

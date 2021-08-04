@@ -39,7 +39,7 @@ describe('Checkout Url Builder', () => {
     const url = new CBCheckout(simplePlan).build();
 
     expect(url).toBe(
-      'https://honeycomics-v3-test.chargebee.com/hosted_pages/plans/comics-box'
+      'https://honeycomics-v3-test.chargebee.com/hosted_pages/checkout'
     );
   });
 
@@ -51,7 +51,7 @@ describe('Checkout Url Builder', () => {
     const url = new CBCheckout(simplePlan).build();
 
     expect(url).toBe(
-      'https://honeycomics-v3-test.chargebee.com/hosted_pages/plans/comics-box'
+      'https://honeycomics-v3-test.chargebee.com/hosted_pages/checkout'
     );
   });
 
@@ -59,8 +59,7 @@ describe('Checkout Url Builder', () => {
     const url = new CBCheckout(planWithOptions).build();
 
     expect(url).toBe(
-      'https://honeycomics-v3-test.chargebee.com/hosted_pages/plans/comics-box?addons[id][0]=extra-comic-book&' +
-        'addons[quantity][0]=3&billing_address[first_name]=Ellie&billing_address[last_name]=Joel&' +
+      'https://honeycomics-v3-test.chargebee.com/hosted_pages/checkout?billing_address[first_name]=Ellie&billing_address[last_name]=Joel&' +
         'billing_address[company]=Naughty%20Dog&billing_address[line1]=12340%20Boggy%20Creek%20Road&' +
         'billing_address[city]=Orlando&billing_address[zip]=32824&billing_address[state_code]=FL&' +
         'billing_address[country]=US&customer[test]=testing&customer[email]=prabu@chargebeeinc.com&' +
