@@ -25,11 +25,20 @@ export class UrlTransformer {
       .join('&');
   }
 
-  public static encodeArrayOfObjectsfromIndex(startIndex :number,key: string, value: any) {
+  public static encodeArrayOfObjectsfromIndex(
+    startIndex: number,
+    key: string,
+    value: any
+  ) {
     return value
       .map((object: any, index: number) => {
         return Object.keys(object)
-          .map((prop) => `${key}[${prop}][${index+startIndex}]=${encodeURI(object[prop])}`)
+          .map(
+            (prop) =>
+              `${key}[${prop}][${index + startIndex}]=${encodeURI(
+                object[prop]
+              )}`
+          )
           .join('&');
       })
       .join('&');

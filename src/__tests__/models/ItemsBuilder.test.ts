@@ -5,7 +5,10 @@ describe('Items Builder', () => {
   test('should convert Item details to url format', () => {
     const items: Item[] = [
       { planPricePointId: 'HBProduct-USD-Monthly' },
-      { planPricePointId: 'cbdemo_additional-analytics-USD-monthly', quantity: 1 },
+      {
+        planPricePointId: 'cbdemo_additional-analytics-USD-monthly',
+        quantity: 1,
+      },
     ];
     const urlParams = new ItemsBuilder(items, 'subscription_items').toUrl();
 

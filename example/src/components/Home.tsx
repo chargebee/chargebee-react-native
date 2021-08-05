@@ -21,22 +21,33 @@ export default function Home() {
 
 function buildPlans() {
   const planWithCoupons: CBCheckoutParams = {
-    couponIds: ['cbdemo_earlybird','cbdemo_launchoffer'],
-    items: [{planPricePointId: 'HBProduct-USD-Monthly'},{ planPricePointId: 'cbdemo_additional-analytics-USD-monthly'}],
+    couponIds: ['cbdemo_earlybird', 'cbdemo_launchoffer'],
+    items: [
+      { planPricePointId: 'HBProduct-USD-Monthly' },
+      { planPricePointId: 'cbdemo_additional-analytics-USD-monthly' },
+    ],
     site: 'hbcompany-test',
   };
 
   const basePlan = {
-    items:[{ planPricePointId: 'HBProduct-USD-Monthly'}],
+    items: [{ planPricePointId: 'HBProduct-USD-Monthly' }],
     site: 'hbcompany-test',
   };
 
   const planWithAddons = {
-    items: [{ planPricePointId: 'HBProduct-USD-Monthly'},{ planPricePointId: 'cbdemo_additional-analytics-USD-monthly'},{ planPricePointId : 'cbdemo_additional-users-USD-monthly' , quantity : 2}],
+    items: [
+      { planPricePointId: 'HBProduct-USD-Monthly' },
+      { planPricePointId: 'cbdemo_additional-analytics-USD-monthly' },
+      { planPricePointId: 'cbdemo_additional-users-USD-monthly', quantity: 2 },
+    ],
     site: 'hbcompany-test',
   };
   const prefilledOptions = {
-    items:[{ planPricePointId: 'HBProduct-USD-Monthly'},{ planPricePointId: 'cbdemo_additional-analytics-USD-monthly'},{ planPricePointId : 'cbdemo_additional-users-USD-monthly' , quantity : 2}],
+    items: [
+      { planPricePointId: 'HBProduct-USD-Monthly' },
+      { planPricePointId: 'cbdemo_additional-analytics-USD-monthly' },
+      { planPricePointId: 'cbdemo_additional-users-USD-monthly', quantity: 2 },
+    ],
     billingAddress: {
       firstName: 'Ellie',
       lastName: 'Joel',
@@ -55,7 +66,7 @@ function buildPlans() {
     site: 'hbcompany-test',
   };
   const customFieldOptions = {
-    items:[{ planPricePointId: 'HBProduct-USD-Monthly'}],
+    items: [{ planPricePointId: 'HBProduct-USD-Monthly' }],
     customer: {
       customFields: [{ name: 'test', value: 'testing' }],
       firstName: 'Prabu',
@@ -67,14 +78,22 @@ function buildPlans() {
     site: 'hbcompany-test',
   };
   const planWith3DS = {
-    couponIds: ['cbdemo_earlybird','cbdemo_launchoffer'],
+    couponIds: ['cbdemo_earlybird', 'cbdemo_launchoffer'],
     site: 'hbcompany-test',
-    items: [{ planPricePointId: 'HBProduct-USD-Monthly'},{ planPricePointId: 'cbdemo_additional-analytics-USD-monthly'},{ planPricePointId : 'cbdemo_additional-users-USD-monthly' , quantity : 2}],
+    items: [
+      { planPricePointId: 'HBProduct-USD-Monthly' },
+      { planPricePointId: 'cbdemo_additional-analytics-USD-monthly' },
+      { planPricePointId: 'cbdemo_additional-users-USD-monthly', quantity: 2 },
+    ],
   };
   const singlePageCheckout = {
-    couponIds: ['cbdemo_earlybird','cbdemo_launchoffer'],
+    couponIds: ['cbdemo_earlybird', 'cbdemo_launchoffer'],
     site: 'hbcompany-test',
-    items: [{ planPricePointId: 'HBProduct-USD-Monthly'},{ planPricePointId: 'cbdemo_additional-analytics-USD-monthly'},{ planPricePointId : 'cbdemo_additional-users-USD-monthly' , quantity : 2}],
+    items: [
+      { planPricePointId: 'HBProduct-USD-Monthly' },
+      { planPricePointId: 'cbdemo_additional-analytics-USD-monthly' },
+      { planPricePointId: 'cbdemo_additional-users-USD-monthly', quantity: 2 },
+    ],
   };
   return [
     { option: planWithCoupons, displayName: 'Coupon Code Plan' },

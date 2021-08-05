@@ -31,7 +31,7 @@ export default function Checkout() {
       customer={customer}
       subscription={subscription}
       billingAddress={billingAddress}
-      items = {items}
+      items={items}
     />
   );
 }
