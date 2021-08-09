@@ -5,12 +5,6 @@ export class UrlTransformer {
       .join('&');
   }
 
-  public static encodePlainObjectwithoutKey(key: string, value: any) {
-    return Object.keys(value)
-      .map((v) => `${key}=${encodeURI(value[v])}`)
-      .join('&');
-  }
-
   public static encodePlainArray(key: string, value: any[]) {
     return value.map((v, i) => `${key}[${i}]=${encodeURI(v)}`).join('&');
   }
