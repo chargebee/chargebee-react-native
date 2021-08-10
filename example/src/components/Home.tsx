@@ -67,13 +67,15 @@ function buildPlans() {
   };
   const customFieldOptions = {
     items: [{ planPricePointId: 'HBProduct-USD-Monthly' }],
+    // Prefix Custom Field with cf_  for Customer
     customer: {
-      customFields: [{ name: 'test', value: 'testing' }],
+      customFields: [{ name: 'cf_test', value: 'testing' }],
       firstName: 'Prabu',
       lastName: 'K',
     },
+    // Prefix Custom Field with cf_ for Subscription
     subscription: {
-      customFields: [{ name: 'sub_test', value: 'subscription value' }],
+      customFields: [{ name: 'cf_sub_test', value: 'subscriptionvalue' }],
     },
     site: 'hbcompany-test',
   };
