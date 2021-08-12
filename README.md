@@ -73,9 +73,9 @@ The properties that can be passed to the `CheckoutCart` component are:
 | Prop  | Required  | Type | Description |
 | :------------ |:---------------:| :---------------:| :-----|
 | site | Yes | String | Name of the chargebee hosted site |
-|planName | Yes | String | Deprecated since 1.0.7. Use planId instead ID of the plan user is purchasing | Deprecated
-|planId | Yes | String | Deprecated : ID of the plan user is purchasing | Deprecated
-| addons | No | [Addon[]] |  Deprecated : Parameters for addons. Multiple addons can be passed. Fields are listed below. You can use the Chargebee List Addons API to retrieve all the addons for the site. Refer to [Addons](https://apidocs.chargebee.com/docs/api/addons?prod_cat_ver=1#list_addons) for sites on Product Catalog 1.0.
+|planName | Yes | String | Deprecated since 1.0.7. Use planId instead ID of the plan user is purchasing |
+|planId | Yes | String | ID of the plan user is purchasing |
+| addons | No | [Addon[]](#addon) | Parameters for addons. Multiple addons can be passed. Fields are listed below. You can use the Chargebee List Addons API to retrieve all the addons for the site. Refer to [Addons](https://apidocs.chargebee.com/docs/api/addons?prod_cat_ver=1#list_addons) for sites on Product Catalog 1.0.|
 | items | Yes | [Item[]](#item) | Parameters of items , Pland and Addons are renamed as Items in V2. Array of Items can be passed and in such cases first item would be base and others addon items. Pass in the planPricePointId
 | couponIds | No | String[] | Identifier of the coupon as a List. Coupon Codes can also be passed|
 | customer | No | [Customer](#customer) | Details about the customer that needs to be prefilled in checkout. Fields are listed below |
@@ -84,6 +84,12 @@ The properties that can be passed to the `CheckoutCart` component are:
 | shippingAddress | No | [Address](#address) | Shipping address of the customer. Fields listed below |
 | success | Yes | [Success Callback](#successcallback) | Accepts a callback function which will be called upon successful completion of a purchase. You can use this to redirect the user out of the Chargebee Hosted webview and into a success screen controlled by the app.|
 | step | Yes | [Step Callback](#stepcallback) | Accepts a callback function which will be called upon successful completion of each step of the purchase. For example, the callback is called when a user moves from Cart page to Account Info page, from Account Info page to Billing address page, and so on. You can use this to log or track the current progress of the user within the Chargebee Hosted webview, upto a successful purchase action.|
+
+### Addon
+| Prop  | Required  | Type | Description |
+| :------------ |:---------------:| :---------------:| :-----|
+| id | Yes | string | Identifier of the addon |
+| quantity | No |  integer <br> default=1, min=1 | Addon quantity. Applicable only for the quantity based addons |
 
 ### Item
 | Prop  | Required  | Type | Description |

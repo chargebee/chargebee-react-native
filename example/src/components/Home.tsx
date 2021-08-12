@@ -175,6 +175,6 @@ function buildPlans() {
     { option: v2prefilledOptions, displayName: 'v2 Billing Address Pre-filled' },
     { option: v2customFieldOptions, displayName: 'v2 Custom Fields Pre-filled' },
     { option: v2planWith3DS, displayName: 'v2 With 3DS' },
-    { option: v2singlePageCheckout, displayName: 'v2 V2 Single Page Checkout' },
+    // { option: v2singlePageCheckout, displayName: 'v2 V2 Single Page Checkout' },
   ];
 }
