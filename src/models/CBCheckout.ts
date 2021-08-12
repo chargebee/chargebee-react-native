@@ -69,11 +69,13 @@ export class CBCheckout {
             'Content-Type': 'application/json',
             'Authorization':
               'Basic ' +
-              base64.encode('test_rODRSf0YSfJJJzyy6bjUp16dZ9Kl0i1B:'),
+              // base64.encode('test_rODRSf0YSfJJJzyy6bjUp16dZ9Kl0i1B:'),
+              base64.encode(`${this.props.apikey}`),
           },
         }
       );
       const json = await response.json();
+      console.log(json);
       if (json.configurations[0].product_catalog_version === 'v2') return true;
       else return false;
     } catch (error) {

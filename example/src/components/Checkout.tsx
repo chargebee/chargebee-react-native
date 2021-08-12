@@ -14,6 +14,7 @@ export default function Checkout() {
   const planId = get(route, 'params.planId', '');
   const site = get(route, 'params.site', '');
   const items = get(route, 'params.items', '');
+  const apikey = get(route, 'params.apikey', '');
 
   const successfulPurchase = (hostedPageId: string) => {
     console.log('successfully purchased', hostedPageId);
@@ -36,6 +37,7 @@ export default function Checkout() {
       subscription={subscription}
       billingAddress={billingAddress}
       items={items}
+      apikey={apikey}
     />
   );
 }

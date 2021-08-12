@@ -94,6 +94,7 @@ function buildPlans() {
   const v2basePlan = {
     items: [{ planPricePointId: 'HBProduct-USD-Monthly' }],
     site: 'hbcompany-test',
+    apikey: 'test_rODRSf0YSfJJJzyy6bjUp16dZ9Kl0i1B:',
   };
 
   const v2planWithAddons = {
