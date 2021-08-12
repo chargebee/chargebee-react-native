@@ -1,5 +1,6 @@
 import { chain } from 'lodash';
 import {
+  Addon,
   Item,
   Address,
   CBCheckoutParams,
@@ -7,6 +8,7 @@ import {
   Customer,
   Subscription,
 } from '../interfaces/cb-types';
+import { AddonsBuilder } from './AddonsBuilder';
 import { CouponsBuilder } from './CouponsBuilder';
 import { CustomerBuilder } from './CustomerBuilder';
 import { SubscriptionBuilder } from './SubscriptionBuilder';
@@ -23,12 +25,15 @@ export class CBCheckout {
   }
 
   private baseUrl() {
+    return `https://${
+      this.props.site
+    }.chargebee.com/hosted_pages/plans/${this.planResource()}`;
     return `https://${this.props.site}.chargebee.com/hosted_pages/checkout`;
   }
 
   private planResource() {
-    if (this.props.planPricePointId) {
-      return this.props.planPricePointId;
+    if (this.props.planId) {
+      return this.props.planId;
     }
     return this.props.planName;
   }
@@ -49,6 +54,7 @@ export class CBCheckout {
 const matcher: {
   [k in keyof CBCheckoutQueryParams]: (value: any) => BaseBuilder;
 } = {
+  addons: (value: Addon[]) => new AddonsBuilder(value, 'addons'),
   items: (value: Item[]) => new ItemsBuilder(value, 'subscription_items'),
   couponIds: (value: string[]) => new CouponsBuilder(value, 'coupon_ids'),
   customer: (value: Customer) => new CustomerBuilder(value, 'customer'),

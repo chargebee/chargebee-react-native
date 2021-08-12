@@ -59,6 +59,11 @@ export type Address = {
   country?: string;
 };
 
+export type Addon = {
+  id?: string;
+  quantity?: number;
+};
+
 export type Item = {
   planPricePointId?: string;
   quantity?: number;
