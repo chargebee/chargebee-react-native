@@ -15,9 +15,8 @@ type CartState = {
 export class CheckoutCart extends Component<CBCheckoutProps, CartState> {
   constructor(props: CBCheckoutProps) {
     super(props);
-    const hasProperty = Object.keys(props).includes('items');
     this.state = {
-      planUrl: new CBCheckout(this.props).build(hasProperty),
+      planUrl: new CBCheckout(this.props).build(),
       isLoading: true,
     };
   }
