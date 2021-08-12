@@ -21,14 +21,12 @@ export class CBCheckout {
 
   build(isV2) {
     const queryParams = this.buildQueryParams();
-    return queryParams ? `${this.baseUrl(${isV2})}?${queryParams}` : this.baseUrl();
+    return queryParams ? `${this.baseUrl(isV2)}?${queryParams}` : this.baseUrl();
   }
 
   private baseUrl(isV2) {
     if (!isV2){
-      return `https://${
-        this.props.site
-      }.chargebee.com/hosted_pages/plans/${this.planResource()}`;
+      return `https://${this.props.site}.chargebee.com/hosted_pages/plans/${this.planResource()}`;
     }
     else {
       console.log("This is v2 plan")
