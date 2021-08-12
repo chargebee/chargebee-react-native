@@ -3,6 +3,7 @@ import { CBCheckoutParams } from '../../interfaces/cb-types';
 
 describe('Checkout Url Builder', () => {
   let planWithOptions: CBCheckoutParams;
+  let itemWithOptions: CBCheckoutParams;
 
   beforeEach(() => {
     planWithOptions = {
@@ -52,7 +53,7 @@ describe('Checkout Url Builder', () => {
       },
       planName: 'comics-box',
       site: 'honeycomics-v3-test',
-      items: [{ planPricePointId: 'HBProduct-USD-Monthly' }]
+      items: [{ planPricePointId: 'HBProduct-USD-Monthly' }],
     };
   });
 
@@ -72,7 +73,6 @@ describe('Checkout Url Builder', () => {
     const simplePlan = {
       items: [{ planPricePointId: 'HBProduct-USD-Monthly' }],
       site: 'honeycomics-v3-test',
-
     };
     const url = new CBCheckout(simplePlan).build(true);
 
@@ -93,21 +93,7 @@ describe('Checkout Url Builder', () => {
     );
   });
 
-  test('should generate a proper url for a simple plan with V2, using items', () => {
-    const simplePlan = {
-      items: [{ planPricePointId: 'HBProduct-USD-Monthly' }],
-      site: 'honeycomics-v3-test',
-    };
-    const url = new CBCheckout(simplePlan).build(true);
-
-    expect(url).toBe(
-      'https://honeycomics-v3-test.chargebee.com/hosted_pages/checkout?subscription_items[item_price_id][0]=HBProduct-USD-Monthly'
-    );
-  });
-
-  
-
-    test('should generate a proper url for a plan with options', () => {
+  test('should generate a proper url for a plan with options', () => {
     const url = new CBCheckout(planWithOptions).build();
 
     expect(url).toBe(
@@ -120,7 +106,6 @@ describe('Checkout Url Builder', () => {
     );
   });
 
-
   test('should generate a proper url for a item with options', () => {
     const url = new CBCheckout(itemWithOptions).build(true);
 
@@ -132,5 +117,5 @@ describe('Checkout Url Builder', () => {
         'customer[first_name]=Prabu&customer[last_name]=K&subscription[sub_test]=subscription%2520value&' +
         'subscription_items[item_price_id][0]=HBProduct-USD-Monthly'
     );
-  });  
+  });
 });

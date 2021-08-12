@@ -20,7 +20,6 @@ export default function Home() {
 }
 
 function buildPlans() {
-
   const planWithCoupons: CBCheckoutParams = {
     couponIds: ['cbdemo_earlybird'],
     planId: 'comics-box',
@@ -82,7 +81,6 @@ function buildPlans() {
     couponIds: ['cbdemo_holidays'],
     site: 'test-ashwin4-test',
   };
-
 
   const v2planWithCoupons: CBCheckoutParams = {
     couponIds: ['cbdemo_earlybird', 'cbdemo_launchoffer'],
@@ -152,15 +150,15 @@ function buildPlans() {
       { planPricePointId: 'cbdemo_additional-users-USD-monthly', quantity: 2 },
     ],
   };
-  const v2singlePageCheckout = {
-    couponIds: ['cbdemo_earlybird', 'cbdemo_launchoffer'],
-    site: 'hbcompany-test',
-    items: [
-      { planPricePointId: 'HBProduct-USD-Monthly' },
-      { planPricePointId: 'cbdemo_additional-analytics-USD-monthly' },
-      { planPricePointId: 'cbdemo_additional-users-USD-monthly', quantity: 2 },
-    ],
-  };
+  // const v2singlePageCheckout = {
+  //   couponIds: ['cbdemo_earlybird', 'cbdemo_launchoffer'],
+  //   site: 'hbcompany-test',
+  //   items: [
+  //     { planPricePointId: 'HBProduct-USD-Monthly' },
+  //     { planPricePointId: 'cbdemo_additional-analytics-USD-monthly' },
+  //     { planPricePointId: 'cbdemo_additional-users-USD-monthly', quantity: 2 },
+  //   ],
+  // };
   return [
     { option: planWithCoupons, displayName: 'Coupon Code Plan' },
     { option: basePlan, displayName: 'Paid Plan' },
@@ -172,8 +170,14 @@ function buildPlans() {
     { option: v2planWithCoupons, displayName: 'v2 Coupon Code Plan' },
     { option: v2basePlan, displayName: 'v2 Paid Plan' },
     { option: v2planWithAddons, displayName: 'v2 Paid Plan - With Addons' },
-    { option: v2prefilledOptions, displayName: 'v2 Billing Address Pre-filled' },
-    { option: v2customFieldOptions, displayName: 'v2 Custom Fields Pre-filled' },
+    {
+      option: v2prefilledOptions,
+      displayName: 'v2 Billing Address Pre-filled',
+    },
+    {
+      option: v2customFieldOptions,
+      displayName: 'v2 Custom Fields Pre-filled',
+    },
     { option: v2planWith3DS, displayName: 'v2 With 3DS' },
     // { option: v2singlePageCheckout, displayName: 'v2 V2 Single Page Checkout' },
   ];
