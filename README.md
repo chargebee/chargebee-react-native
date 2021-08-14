@@ -76,7 +76,7 @@ The properties that can be passed to the `CheckoutCart` component are:
 |planName | Yes | String | Deprecated since 1.0.7. Use planId instead ID of the plan user is purchasing |
 |planId | Yes | String | ID of the plan user is purchasing |
 | addons | No | [Addon[]](#addon) | Parameters for addons. Multiple addons can be passed. Fields are listed below. You can use the Chargebee List Addons API to retrieve all the addons for the site. Refer to [Addons](https://apidocs.chargebee.com/docs/api/addons?prod_cat_ver=1#list_addons) for sites on Product Catalog 1.0.|
-| items | Yes | [Item[]](#item) | Parameters of items , Pland and Addons are renamed as Items in V2. Array of Items can be passed and in such cases first item would be base and others addon items. Pass in the planPricePointId
+| items | Yes | [Item[]](#item) | Parameters of items , Plans and Addons are renamed as Items in V2. Array of Items can be passed and in such cases first item would be base and others addon items. Pass in the planPricePointId
 | couponIds | No | String[] | Identifier of the coupon as a List. Coupon Codes can also be passed|
 | customer | No | [Customer](#customer) | Details about the customer that needs to be prefilled in checkout. Fields are listed below |
 | subscription | No | [Subscription](#subscription) | Details about the subscription. Fields listed below |
