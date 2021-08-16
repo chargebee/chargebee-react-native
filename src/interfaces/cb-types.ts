@@ -65,6 +65,6 @@ export type Addon = {
 };
 
 export type Item = {
-  planPricePointId?: string;
+  planPricePointId: string;
   quantity?: number;
 };
