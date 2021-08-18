@@ -1,5 +1,4 @@
 import { chain } from 'lodash';
-import base64 from 'react-native-base64';
 import {
   Addon,
   Item,
@@ -20,16 +19,15 @@ import { BaseBuilder } from './BaseBuilder';
 export class CBCheckout {
   constructor(private props: CBCheckoutParams) {}
 
-  build(checkforV1V2) {
-    let isV2 = Object.keys(this.props).includes('items');
-    if (checkforV1V2) isV2 = this.checkforV1orV2(this.props);
+  build() {
+    let isV2: boolean = Object.keys(this.props).includes('items');
     const queryParams = this.buildQueryParams();
     return queryParams
       ? `${this.baseUrl(isV2)}?${queryParams}`
-      : this.baseUrl();
+      : this.baseUrl(isV2);
   }
 
-  private baseUrl(isV2) {
+  private baseUrl(isV2: boolean) {
     if (!isV2) {
       return `https://${
         this.props.site
@@ -56,31 +54,6 @@ export class CBCheckout {
       .compact()
       .join('&')
       .value();
-  }
-
-  async checkforV1orV2() {
-    try {
-      const response = await fetch(
-        `https://${this.props.site}.chargebee.com/api/v2/configurations`,
-        {
-          method: 'GET',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Authorization':
-              'Basic ' +
-              // base64.encode('test_rODRSf0YSfJJJzyy6bjUp16dZ9Kl0i1B:'),
-              base64.encode(`${this.props.apikey}`),
-          },
-        }
-      );
-      const json = await response.json();
-      if (json.configurations[0].product_catalog_version === 'v2') return true;
-      else return false;
-    } catch (error) {
-      console.log(error);
-      return false;
-    }
   }
 }
 

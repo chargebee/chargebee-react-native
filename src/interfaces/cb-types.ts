@@ -11,7 +11,7 @@ export type CBCheckoutParams = {
 } & CBCheckoutQueryParams;
 
 export type CBCheckoutQueryParams = {
-  item?: Item;
+  items?: Item[];
   addons?: Addon[];
   couponIds?: string[];
   customer?: Customer;
@@ -65,6 +65,6 @@ export type Addon = {
 };
 
 export type Item = {
-  planPricePointId: string;
+  planPricePointId?: string;
   quantity?: number;
 };
