@@ -151,15 +151,6 @@ function buildPlans() {
       { planPricePointId: 'cbdemo_additional-users-USD-monthly', quantity: 2 },
     ],
   };
-  // const v2singlePageCheckout = {
-  //   couponIds: ['cbdemo_earlybird', 'cbdemo_launchoffer'],
-  //   site: 'hbcompany-test',
-  //   items: [
-  //     { planPricePointId: 'HBProduct-USD-Monthly' },
-  //     { planPricePointId: 'cbdemo_additional-analytics-USD-monthly' },
-  //     { planPricePointId: 'cbdemo_additional-users-USD-monthly', quantity: 2 },
-  //   ],
-  // };
   return [
     { option: planWithCoupons, displayName: 'Coupon Code Plan' },
     { option: basePlan, displayName: 'Paid Plan' },

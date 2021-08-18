@@ -75,7 +75,6 @@ export class CBCheckout {
         }
       );
       const json = await response.json();
-      console.log(json);
       if (json.configurations[0].product_catalog_version === 'v2') return true;
       else return false;
     } catch (error) {
