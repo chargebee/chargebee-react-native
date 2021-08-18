@@ -13,6 +13,7 @@ export default function Checkout() {
   const subscription = get(route, 'params.subscription', {});
   const planId = get(route, 'params.planId', '');
   const site = get(route, 'params.site', '');
+  const items = get(route, 'params.items', '');
 
   const successfulPurchase = (hostedPageId: string) => {
     console.log('successfully purchased', hostedPageId);
@@ -34,6 +35,7 @@ export default function Checkout() {
       customer={customer}
       subscription={subscription}
       billingAddress={billingAddress}
+      items={items}
     />
   );
 }
