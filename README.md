@@ -35,6 +35,7 @@ import { CheckoutCart } from "@chargebee/react-native-chargebee";
   customer={customer}
   subscription={subscription}
   billingAddress={billingAddress}
+  items={items} // Only for V2
 />
 ```
 
@@ -94,7 +95,7 @@ The properties that can be passed to the `CheckoutCart` component are:
 ### Item
 | Prop  | Required  | Type | Description |
 | :------------ |:---------------:| :---------------:| :-----|
-| id | Yes | string | Identifier of the Item which is planPricePointId |
+| planPricePointId | Yes | string | Identifier of the Item which is planPricePointId |
 | quantity | No |  integer <br> default=1, min=1 | Addon quantity. Applicable only for the quantity based addons |
 
 

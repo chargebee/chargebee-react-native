@@ -70,11 +70,11 @@ export class CheckoutCart extends Component<CBCheckoutProps, CartState> {
     if (url.includes('thankyou') || url.includes('thank_you')) {
       const parts = url.split('/');
       const hostedPageId = parts[parts.length - 2] || '';
-      return this.props.success(hostedPageId);
+      return this.props.onSuccess(hostedPageId);
     }
     const recognisedStepName = StepHandler.getStepName(url);
-    if (recognisedStepName) {
-      return this.props.step(recognisedStepName);
+    if (recognisedStepName && this.props.onEachStep) {
+      return this.props.onEachStep(recognisedStepName);
     }
   };
 
