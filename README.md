@@ -26,8 +26,8 @@ import { CheckoutCart } from "@chargebee/react-native-chargebee";
 // ...
 
 <CheckoutCart
-  success={(hostedPageId: string) => successfulPurchase(hostedPageId)}
-  step={(stepName: string) => handleStep(stepName)}
+  onSuccess={(hostedPageId: string) => successfulPurchase(hostedPageId)}
+  onEachStep={(stepName: string) => handleStep(stepName)}
   site={site}
   planId={planId}
   couponIds={couponIds}
@@ -83,8 +83,8 @@ The properties that can be passed to the `CheckoutCart` component are:
 | subscription | No | [Subscription](#subscription) | Details about the subscription. Fields listed below |
 | billingAddress | No | [Address](#address) | Billing address of the customer. Fields listed below |
 | shippingAddress | No | [Address](#address) | Shipping address of the customer. Fields listed below |
-| success | Yes | [Success Callback](#successcallback) | Accepts a callback function which will be called upon successful completion of a purchase. You can use this to redirect the user out of the Chargebee Hosted webview and into a success screen controlled by the app.|
-| step | Yes | [Step Callback](#stepcallback) | Accepts a callback function which will be called upon successful completion of each step of the purchase. For example, the callback is called when a user moves from Cart page to Account Info page, from Account Info page to Billing address page, and so on. You can use this to log or track the current progress of the user within the Chargebee Hosted webview, upto a successful purchase action.|
+| onSuccess | Yes | [Success Callback](#successcallback) | Accepts a callback function which will be called upon successful completion of a purchase. You can use this to redirect the user out of the Chargebee Hosted webview and into a success screen controlled by the app.|
+| onEachStep | Yes | [Step Callback](#stepcallback) | Accepts a callback function which will be called upon successful completion of each step of the purchase. For example, the callback is called when a user moves from Cart page to Account Info page, from Account Info page to Billing address page, and so on. You can use this to log or track the current progress of the user within the Chargebee Hosted webview, upto a successful purchase action.|
 
 ### Addon
 | Prop  | Required  | Type | Description |
