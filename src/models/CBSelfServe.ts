@@ -1,7 +1,4 @@
-
-import {
-  CBSelfServeParams,
-} from '../interfaces/cb-types';
+import { CBSelfServeParams } from '../interfaces/cb-types';
 
 export class CBSelfServe {
   constructor(private props: CBSelfServeParams) {}

@@ -1,14 +1,20 @@
 import { Button, View } from 'react-native';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { CBCheckoutParams, CBSelfServeParams } from '../../../src/interfaces/cb-types';
+import {
+  CBCheckoutParams,
+  CBSelfServeParams,
+} from '../../../src/interfaces/cb-types';
 
 export default function Home() {
   const navigation = useNavigation();
 
   return (
     <View>
-      <Button title={'Self Serve'} onPress={() => navigation.navigate('SelfServe', selfServeParams)}/>
+      <Button
+        title={'Self Serve'}
+        onPress={() => navigation.navigate('SelfServe', selfServeParams)}
+      />
       {buildPlans().map((p) => (
         <Button
           title={p.displayName}
@@ -22,7 +28,7 @@ export default function Home() {
 
 const selfServeParams: CBSelfServeParams = {
   site: 'deepsentinel-test',
-  customer: {email: 'travis@deepsentinel.com'}
+  customer: { email: 'travis@deepsentinel.com' },
 };
 
 function buildPlans() {

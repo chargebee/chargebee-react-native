@@ -9,9 +9,10 @@ export default function SelfServePortal() {
   const customer = get(route, 'params.customer', {});
   const site = get(route, 'params.site', '');
 
-  console.log("Customer: " + customer);
+  console.log('Customer: ' + customer);
 
   const successfulPurchase = (hostedPageId: string) => {
+    console.log(hostedPageId);
     navigation.navigate('Success');
   };
 
