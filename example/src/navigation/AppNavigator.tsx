@@ -8,6 +8,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Success from '../components/Success';
 import Home from '../components/Home';
 import Checkout from '../components/Checkout';
+import SelfServePortal from '../components/SelfServePortal';
 
 const Stack = createStackNavigator();
 
@@ -20,6 +21,11 @@ const AppNavigator = () => {
           name="Checkout"
           component={Checkout}
           options={{ title: 'Checkout' }}
+        />
+        <Stack.Screen
+          name="SelfServe"
+          component={SelfServePortal}
+          options={{ title: 'Self Serve' }}
         />
         <Stack.Screen
           name="Success"

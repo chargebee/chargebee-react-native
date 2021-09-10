@@ -20,6 +20,19 @@ export type CBCheckoutQueryParams = {
   shippingAddress?: Address;
 };
 
+export interface CBSelfServeProps extends CBSelfServeParams {
+  success: (hostedPageId: string) => void;
+  step: (stepName: string) => void;
+}
+
+export type CBSelfServeParams = {
+  site: string;
+} & CBSelfServeQueryParams;
+
+export type CBSelfServeQueryParams = {
+  customer?: Customer;
+};
+
 export type Customer = {
   id?: string;
   email?: string;
