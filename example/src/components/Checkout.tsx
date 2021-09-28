@@ -26,8 +26,8 @@ export default function Checkout() {
 
   return (
     <CheckoutCart
-      success={(hostedPageId: string) => successfulPurchase(hostedPageId)}
-      step={(stepName: string) => handleStep(stepName)}
+      onSuccess={(hostedPageId: string) => successfulPurchase(hostedPageId)}
+      onEachStep={(stepName: string) => handleStep(stepName)}
       site={site}
       planId={planId}
       couponIds={couponIds}

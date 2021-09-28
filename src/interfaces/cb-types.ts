@@ -1,6 +1,6 @@
 export interface CBCheckoutProps extends CBCheckoutParams {
-  success: (hostedPageId: string) => void;
-  step: (stepName: string) => void;
+  onSuccess: (hostedPageId: string) => void;
+  onEachStep?: (stepName: string) => void;
 }
 
 export type CBCheckoutParams = {
