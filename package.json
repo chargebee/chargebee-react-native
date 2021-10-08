@@ -63,7 +63,8 @@
     "react-native": "0.62.0",
     "react-native-webview": "11.6.2",
     "release-it": "^13.5.8",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "axios":"^0.22.0"
   },
   "peerDependencies": {
     "react": "*",
@@ -146,7 +147,8 @@
       "typescript"
     ]
   },
-  "dependencies": {
+  "dependencies": {   
+     "axios": "^0.22.0",
     "lodash": "^4.17.15"
   }
 }

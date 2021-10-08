@@ -6,6 +6,7 @@ import { ActivityIndicator, StyleProp, StyleSheet, View } from 'react-native';
 import { CBCheckoutProps } from '../interfaces/cb-types';
 import { CBCheckout } from '../models/CBCheckout';
 import { StepHandler } from '../helpers/StepHandler';
+import axios from 'axios';
 
 type CartState = {
   planUrl: string;
@@ -19,6 +20,23 @@ export class CheckoutCart extends Component<CBCheckoutProps, CartState> {
       planUrl: new CBCheckout(this.props).build(),
       isLoading: true,
     };
+  }
+
+  componentDidMount() {
+    this.logData();
+  }
+
+  logData() {
+    axios({
+      method: 'post',
+      url: `https://${this.props.site}.chargebee.com/api/internal/track_info_error`,
+      data: {
+        ref_module: 'cb_rn_sdk',
+        site: this.props.site,
+        action: 'Hosted Page',
+        key: 'cb.logging',
+      },
+    });
   }
 
   render() {
