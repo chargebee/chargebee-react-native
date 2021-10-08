@@ -30,8 +30,11 @@ export class CheckoutCart extends Component<CBCheckoutProps, CartState> {
     axios({
       method: 'post',
       url: `https://${this.props.site}.chargebee.com/api/internal/track_info_error`,
-      data: {
-        ref_module: 'cb_rn_sdk',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      params: {
+        ref_module: 'cb_reactNative_sdk',
         site: this.props.site,
         action: 'Hosted Page',
         key: 'cb.logging',
