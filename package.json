@@ -60,7 +60,7 @@
     "pod-install": "^0.1.0",
     "prettier": "^2.0.5",
     "react": "16.11.0",
-    "react-native": "0.62.0",
+    "react-native": "0.62.3",
     "react-native-webview": "11.6.2",
     "release-it": "^13.5.8",
     "typescript": "^3.8.3",
