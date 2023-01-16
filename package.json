@@ -162,6 +162,10 @@
   "codegenConfig": {
     "name": "RNChargebeeReactNativeSpec",
     "type": "modules",
-    "jsSrcsDir": "src"
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.chargebee.android"
+    }
   }
+
 }

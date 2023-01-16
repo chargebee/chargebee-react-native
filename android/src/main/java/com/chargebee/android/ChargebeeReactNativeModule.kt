@@ -1,4 +1,4 @@
-package com.chargebeereactnative
+package com.chargebee.android
 
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactMethod

@@ -1,4 +1,4 @@
-package com.chargebeereactnative
+package com.chargebee.android
 
 import com.facebook.react.TurboReactPackage
 import com.facebook.react.bridge.ReactApplicationContext

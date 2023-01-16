@@ -90,6 +90,6 @@ if (isNewArchitectureEnabled()) {
   react {
     jsRootDir = file("../src/")
     libraryName = "ChargebeeReactNative"
-    codegenJavaPackageName = "com.chargebeereactnative"
+    codegenJavaPackageName = "com.chargebee.android"
   }
 }
