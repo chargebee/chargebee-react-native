@@ -1,6 +1,8 @@
 PODS:
   - boost (1.76.0)
+  - Chargebee (1.0.16)
   - chargebee-react-native (2.0.0):
+    - Chargebee (= 1.0.16)
     - React-Core
   - CocoaAsyncSocket (7.6.5)
   - DoubleConversion (1.1.6)
@@ -449,6 +451,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - Chargebee
     - CocoaAsyncSocket
     - Flipper
     - Flipper-Boost-iOSX
@@ -539,7 +542,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   boost: 57d2868c099736d80fcd648bf211b4431e51a558
-  chargebee-react-native: 4f1075570f139b478f8f8e2d326d233a01e98419
+  Chargebee: a75add2a7817f517e2a7ce4e08374ddb0036bca1
+  chargebee-react-native: 8909608675931320bf7884a847ebf3cb6d9f67be
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   FBLazyVector: 61839cba7a48c570b7ac3e1cd8a4d0948382202f
