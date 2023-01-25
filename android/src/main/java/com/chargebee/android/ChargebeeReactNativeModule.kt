@@ -11,11 +11,9 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
     return NAME
   }
 
-  // Example method
-  // See https://reactnative.dev/docs/native-modules-android
   @ReactMethod
-  override fun multiply(a: Double, b: Double, promise: Promise) {
-    promise.resolve(a * b)
+  override fun configure(site: String, publishableApiKey: String, sdkKey: String) {
+    Chargebee.configure(site, publishableApiKey, true, sdkKey)
   }
 
   companion object {
