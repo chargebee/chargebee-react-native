@@ -1,13 +1,14 @@
 import * as React from 'react';
 
 import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from '@chargebee/react-native-chargebee';
+import { configure } from '@chargebee/react-native-chargebee';
 
 export default function App() {
   const [result, setResult] = React.useState<number | undefined>();
 
   React.useEffect(() => {
-    multiply(3, 30).then(setResult);
+    console.log("Configuring Site with: Site, apiKey, sdkKey")
+    configure("Site", "apiKey", "sdkKey")
   }, []);
 
   return (

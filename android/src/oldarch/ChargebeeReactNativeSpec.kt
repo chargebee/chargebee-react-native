@@ -6,6 +6,6 @@ import com.facebook.react.bridge.Promise
 
 abstract class ChargebeeReactNativeSpec internal constructor(context: ReactApplicationContext) :
   ReactContextBaseJavaModule(context) {
+  abstract fun configure(site: String, publishableApiKey: String, sdkKey: String = "")
 
-  abstract fun multiply(a: Double, b: Double, promise: Promise)
 }

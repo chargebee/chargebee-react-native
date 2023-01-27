@@ -24,6 +24,7 @@ const ChargebeeReactNative = ChargebeeReactNativeModule
       }
     );
 
-export function multiply(a: number, b: number): Promise<number> {
-  return ChargebeeReactNative.multiply(a, b);
+
+export function configure(site: string, publishableApiKey: string, sdkKey?: string) {
+  return ChargebeeReactNative.configure(site, publishableApiKey, sdkKey);
 }

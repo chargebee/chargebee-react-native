@@ -1,18 +1,15 @@
 #import "ChargebeeReactNative.h"
+#import <ChargebeeReactNative-Swift.h>
 
 @implementation ChargebeeReactNative
 RCT_EXPORT_MODULE()
 
-// Example method
-// See // https://reactnative.dev/docs/native-modules-ios
-RCT_REMAP_METHOD(multiply,
-                 multiplyWithA:(double)a withB:(double)b
-                 withResolver:(RCTPromiseResolveBlock)resolve
-                 withRejecter:(RCTPromiseRejectBlock)reject)
+RCT_REMAP_METHOD(configure,
+                configureWithSite:(NSString *)site
+                withPublishableApiKey:(NSString *)publishableApiKey
+                withSdkKey:(NSString *)sdkKey)
 {
-    NSNumber *result = @(a * b);
-
-    resolve(result);
+    [[[ChargebeeHelper alloc] init] configureWithSite:site apiKey:publishableApiKey];
 }
 
 // Don't compile this code when we build for the old architecture.
