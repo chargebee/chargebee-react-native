@@ -9,7 +9,8 @@ RCT_REMAP_METHOD(configure,
                 withPublishableApiKey:(NSString *)publishableApiKey
                 withSdkKey:(NSString *)sdkKey)
 {
-    [[[ChargebeeHelper alloc] init] configureWithSite:site apiKey:publishableApiKey];
+    ChargebeeHelper* helper = [[ChargebeeHelper alloc] init];
+    [helper configureWithSite:site apiKey:publishableApiKey sdkKey:sdkKey];
 }
 
 // Don't compile this code when we build for the old architecture.
