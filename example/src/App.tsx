@@ -1,19 +1,30 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 
 import { StyleSheet, View, Text } from 'react-native';
-import { configure } from '@chargebee/react-native-chargebee';
+import Chargebee from '@chargebee/react-native-chargebee';
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
+  const [configComplete, isConfigComplete] = useState(false);
+  const site = 'site';
+  const apiKey = 'test_key';
+  const sdkKey = 'sdk-key';
 
   React.useEffect(() => {
-    console.log("Configuring Site with: Site, apiKey, sdkKey")
-    configure("Site", "apiKey", "sdkKey")
+    Chargebee.configure({
+      site: site,
+      publishableApiKey: apiKey,
+      sdkKey: sdkKey,
+    });
+    isConfigComplete(true);
   }, []);
 
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
+      {!configComplete ? (
+        <Text>Pending config</Text>
+      ) : (
+        <Text>Config complete</Text>
+      )}
     </View>
   );
 }
