@@ -91,6 +91,9 @@
     "modulePathIgnorePatterns": [
       "<rootDir>/example/node_modules",
       "<rootDir>/lib/"
+    ],
+    "setupFiles": [
+      "./src/__mocks__/setupJest.js"
     ]
   },
   "commitlint": {
