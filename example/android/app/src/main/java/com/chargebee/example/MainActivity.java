@@ -1,4 +1,4 @@
-package com.chargebeereactnativeexample;
+package com.chargebee.example;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
