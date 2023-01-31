@@ -6,7 +6,7 @@ pre-commit:
       glob: "*.{js,ts,jsx,tsx}"
       run: npx eslint {files}
     types:
-      files: git diff --name-only @{push}
+      files: git diff --name-only --staged @{push}
       glob: "*.{js,ts, jsx, tsx}"
       run: npx tsc --noEmit
 commit-msg:
