@@ -38,4 +38,10 @@ export default class Chargebee {
   }: ChargebeeConfig): void {
     ChargebeeReactNative.configure(site, publishableApiKey, sdkKey);
   }
+
+  public static async retrieveProductIdentifiers(
+    queryParams: Map<string, string>
+  ): Promise<Array<string>> {
+    return ChargebeeReactNative.retrieveProductIdentifiers(queryParams);
+  }
 }

@@ -1,7 +1,5 @@
-package com.chargebee.example
+package com.chargebee.android
 
-import com.chargebee.android.Chargebee
-import com.chargebee.android.ChargebeeReactNativeSpec
 import com.chargebee.android.billingservice.CBPurchase
 import com.chargebee.android.exceptions.CBProductIDResult
 import com.facebook.react.bridge.ReactApplicationContext
