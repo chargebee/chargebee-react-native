@@ -96,7 +96,7 @@
       "<rootDir>/lib/"
     ],
     "setupFiles": [
-      "./src/__mocks__/setupJest.js"
+      "./src/__mocks__/setupJest.ts"
     ]
   },
   "commitlint": {
