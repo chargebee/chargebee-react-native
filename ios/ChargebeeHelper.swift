@@ -17,12 +17,11 @@ public class ChargebeeHelper: NSObject {
         CBPurchase.shared.retrieveProductIdentifers(queryParams: queryParams) { result in
             switch result {
                 case let .success(products):
-                    resolver(products)
+                    resolver(products.ids)
                 case let .failure(error as NSError):
                     rejecter("\(error.code)", error.localizedDescription, error)
             }
         }
-        
     }
     
 }
