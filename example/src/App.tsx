@@ -26,16 +26,15 @@ export default function App() {
   );
 }
 
-const retrieveProductIdentifiers = () => {
+const retrieveProductIdentifiers = async () => {
   const queryParams = new Map<string, string>();
   queryParams.set('limit', '100');
-  Chargebee.retrieveProductIdentifiers(queryParams)
-    .then((result) => {
-      console.log(result);
-    })
-    .catch((e) => {
-      console.error(e);
-    });
+  try {
+    const result = await Chargebee.retrieveProductIdentifiers(queryParams)
+    console.log(result)
+  } catch(error) {
+    console.error(error)
+  }
 };
 
 const configure = (site: string, apiKey: string, sdkKey: string) => {
