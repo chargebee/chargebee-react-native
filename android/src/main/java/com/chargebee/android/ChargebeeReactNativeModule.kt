@@ -3,10 +3,7 @@ package com.chargebee.android
 import com.chargebee.android.billingservice.CBPurchase
 import com.chargebee.android.exceptions.CBProductIDResult
 import com.chargebee.android.utils.convertArrayToWritableArray
-import com.facebook.react.bridge.Promise
-import com.facebook.react.bridge.ReactApplicationContext
-import com.facebook.react.bridge.ReactMethod
-import com.facebook.react.bridge.ReadableMap
+import com.facebook.react.bridge.*
 
 class ChargebeeReactNativeModule internal constructor(context: ReactApplicationContext) :
   ChargebeeReactNativeSpec(context) {
@@ -34,6 +31,10 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
         }
       }
     }
+  }
+
+  override fun retrieveProducts(productIds: ReadableArray, promise: Promise) {
+    TODO("Not yet implemented")
   }
 
   private fun getFormattedQueryParams(queryParams: ReadableMap): Array<String> {

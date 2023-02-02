@@ -30,6 +30,14 @@ export interface ChargebeeConfig {
   sdkKey?: string | null;
 }
 
+export interface Product {
+  readonly id: string;
+  readonly title: string;
+  readonly price: string;
+  readonly currencyCode: string;
+}
+
+
 export default class Chargebee {
   public static configure({
     site,
@@ -43,5 +51,11 @@ export default class Chargebee {
     queryParams: Map<string, string>
   ): Promise<Array<string>> {
     return ChargebeeReactNative.retrieveProductIdentifiers(queryParams);
+  }
+
+  public static async retrieveProducts(
+    productIds: Array<string>
+  ): Promise<Array<Product>> {
+    return ChargebeeReactNative.retrieveProducts(productIds);
   }
 }

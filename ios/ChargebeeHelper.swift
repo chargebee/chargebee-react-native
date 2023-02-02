@@ -24,4 +24,8 @@ public class ChargebeeHelper: NSObject {
         }
     }
     
+    @objc public func retrieveProducts(productIds: Array<String>, resolver: @escaping RCTPromiseResolveBlock, rejecter: @escaping RCTPromiseRejectBlock) {
+        resolver("")
+    }
+    
 }
