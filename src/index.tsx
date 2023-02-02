@@ -24,7 +24,18 @@ const ChargebeeReactNative = ChargebeeReactNativeModule
       }
     );
 
+export interface ChargebeeConfig {
+  site: string;
+  publishableApiKey: string;
+  sdkKey?: string | null;
+}
 
-export function configure(site: string, publishableApiKey: string, sdkKey?: string) {
-  return ChargebeeReactNative.configure(site, publishableApiKey, sdkKey);
+export default class Chargebee {
+  public static configure({
+    site,
+    publishableApiKey,
+    sdkKey,
+  }: ChargebeeConfig): void {
+    ChargebeeReactNative.configure(site, publishableApiKey, sdkKey);
+  }
 }
