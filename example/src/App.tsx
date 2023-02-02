@@ -30,10 +30,10 @@ const retrieveProductIdentifiers = async () => {
   const queryParams = new Map<string, string>();
   queryParams.set('limit', '100');
   try {
-    const result = await Chargebee.retrieveProductIdentifiers(queryParams)
-    console.log(result)
-  } catch(error) {
-    console.error(error)
+    const result = await Chargebee.retrieveProductIdentifiers(queryParams);
+    console.log(result);
+  } catch (error) {
+    console.error(error);
   }
 };
 
