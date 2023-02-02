@@ -2,9 +2,10 @@ package com.chargebee.android
 
 import com.chargebee.android.billingservice.CBPurchase
 import com.chargebee.android.exceptions.CBProductIDResult
+import com.chargebee.android.utils.convertArrayToWritableArray
+import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactMethod
-import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReadableMap
 
 class ChargebeeReactNativeModule internal constructor(context: ReactApplicationContext) :
@@ -16,7 +17,8 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
 
   @ReactMethod
   override fun configure(site: String, publishableApiKey: String, sdkKey: String) {
-    Chargebee.configure(site, publishableApiKey, true, sdkKey)
+    val packageName = currentActivity?.packageName ?: ""
+    Chargebee.configure(site, publishableApiKey, true, sdkKey, packageName)
   }
 
   @ReactMethod
@@ -25,7 +27,7 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
     CBPurchase.retrieveProductIdentifers(formattedQueryParams) {
       when (it) {
         is CBProductIDResult.ProductIds -> {
-            promise.resolve(it.IDs)
+          promise.resolve(convertArrayToWritableArray(it.IDs.toArray()))
         }
         is CBProductIDResult.Error -> {
           promise.reject(it.exp.message, it.exp)
