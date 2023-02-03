@@ -25,7 +25,14 @@ public class ChargebeeHelper: NSObject {
     }
     
     @objc public func retrieveProducts(productIds: Array<String>, resolver: @escaping RCTPromiseResolveBlock, rejecter: @escaping RCTPromiseRejectBlock) {
-        resolver("")
+        CBPurchase.shared.retrieveProducts(withProductID: productIds) { result in
+            switch result {
+                case let .success(products):
+                    let formattedProducts = products.map { $0.asDictionary }
+                    resolver(formattedProducts)
+                case let .failure(error as NSError):
+                    rejecter("\(error.code)", error.localizedDescription, error)
+            }
+        }
     }
-    
 }
