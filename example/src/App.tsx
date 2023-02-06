@@ -1,33 +1,49 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Button } from 'react-native';
 import Chargebee from '@chargebee/react-native-chargebee';
 
 export default function App() {
-  const [configComplete, isConfigComplete] = useState(false);
   const site = 'site';
-  const apiKey = 'test_key';
-  const sdkKey = 'sdk-key';
+  const apiKey = 'apiKey';
+  const sdkKey = 'sdkKey';
 
   React.useEffect(() => {
-    Chargebee.configure({
-      site: site,
-      publishableApiKey: apiKey,
-      sdkKey: sdkKey,
-    });
-    isConfigComplete(true);
+    configure(site, apiKey, sdkKey);
   }, []);
 
   return (
     <View style={styles.container}>
-      {!configComplete ? (
-        <Text>Pending config</Text>
-      ) : (
-        <Text>Config complete</Text>
-      )}
+      <Button
+        title="Configure"
+        onPress={() => configure(site, apiKey, sdkKey)}
+      />
+      <Button
+        title="Retrieve Product Identifers"
+        onPress={retrieveProductIdentifiers}
+      />
     </View>
   );
 }
+
+const retrieveProductIdentifiers = async () => {
+  const queryParams = new Map<string, string>();
+  queryParams.set('limit', '100');
+  try {
+    const result = await Chargebee.retrieveProductIdentifiers(queryParams);
+    console.log(result);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const configure = (site: string, apiKey: string, sdkKey: string) => {
+  Chargebee.configure({
+    site: site,
+    publishableApiKey: apiKey,
+    sdkKey: sdkKey,
+  });
+};
 
 const styles = StyleSheet.create({
   container: {

@@ -19,4 +19,17 @@ describe('Chargebee React Native', () => {
       sdkKey
     );
   });
+
+  it('retrieve Product Identifiers for the configured SDK', async () => {
+    const queryParams = new Map<string, string>();
+    queryParams.set('limit', '100');
+    await Chargebee.retrieveProductIdentifiers(queryParams);
+
+    expect(
+      NativeModules.ChargebeeReactNative.retrieveProductIdentifiers
+    ).toBeCalledTimes(1);
+    expect(
+      NativeModules.ChargebeeReactNative.retrieveProductIdentifiers
+    ).toHaveBeenCalledWith(queryParams);
+  });
 });
