@@ -1,12 +1,14 @@
 package com.chargebee.android
 
+import com.chargebee.android.billingservice.CBCallback
 import com.chargebee.android.billingservice.CBPurchase
+import com.chargebee.android.exceptions.CBException
 import com.chargebee.android.exceptions.CBProductIDResult
+import com.chargebee.android.models.CBProduct
 import com.chargebee.android.utils.convertArrayToWritableArray
-import com.facebook.react.bridge.Promise
-import com.facebook.react.bridge.ReactApplicationContext
-import com.facebook.react.bridge.ReactMethod
-import com.facebook.react.bridge.ReadableMap
+import com.chargebee.android.utils.convertListToWritableArray
+import com.chargebee.android.utils.convertReadableArray
+import com.facebook.react.bridge.*
 
 class ChargebeeReactNativeModule internal constructor(context: ReactApplicationContext) :
   ChargebeeReactNativeSpec(context) {
@@ -36,6 +38,23 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
     }
   }
 
+  @ReactMethod
+  override fun retrieveProducts(productIds: ReadableArray, promise: Promise) {
+    val activity = currentActivity
+    activity?.let {
+      CBPurchase.retrieveProducts(it, convertReadableArray(productIds),
+          object : CBCallback.ListProductsCallback<ArrayList<CBProduct>> {
+            override fun onSuccess(productDetails: ArrayList<CBProduct>) {
+              promise.resolve(convertListToWritableArray(productDetails))
+            }
+
+            override fun onError(error: CBException) {
+              promise.reject(error.message, error)
+            }
+          })
+    }
+  }
+
   private fun getFormattedQueryParams(queryParams: ReadableMap): Array<String> {
     if (queryParams != null)
       return arrayOf(queryParams.getString("limit") ?: "")
@@ -46,3 +65,5 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
     const val NAME = "ChargebeeReactNative"
   }
 }
+
+
