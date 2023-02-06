@@ -39,19 +39,24 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
   }
 
   @ReactMethod
+  override fun purchaseProduct(productId: String, customerId: String, promise: Promise) {
+    promise.resolve("TO BE IMPLEMENTED")
+  }
+
+  @ReactMethod
   override fun retrieveProducts(productIds: ReadableArray, promise: Promise) {
     val activity = currentActivity
     activity?.let {
       CBPurchase.retrieveProducts(it, convertReadableArray(productIds),
-          object : CBCallback.ListProductsCallback<ArrayList<CBProduct>> {
-            override fun onSuccess(productDetails: ArrayList<CBProduct>) {
-              promise.resolve(convertListToWritableArray(productDetails))
-            }
+        object : CBCallback.ListProductsCallback<ArrayList<CBProduct>> {
+          override fun onSuccess(productDetails: ArrayList<CBProduct>) {
+            promise.resolve(convertListToWritableArray(productDetails))
+          }
 
-            override fun onError(error: CBException) {
-              promise.reject(error.message, error)
-            }
-          })
+          override fun onError(error: CBException) {
+            promise.reject(error.message, error)
+          }
+        })
     }
   }
 

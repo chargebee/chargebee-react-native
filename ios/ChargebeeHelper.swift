@@ -35,4 +35,8 @@ public class ChargebeeHelper: NSObject {
             }
         }
     }
+    
+    @objc public func purchaseProduct(productId: String, customerId: String, resolver: @escaping RCTPromiseResolveBlock, rejecter: @escaping RCTPromiseRejectBlock) {
+        resolver("TO BE IMPLEMENTED")
+    }
 }

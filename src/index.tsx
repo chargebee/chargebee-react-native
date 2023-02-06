@@ -58,4 +58,9 @@ export default class Chargebee {
   ): Promise<Array<Product>> {
     return ChargebeeReactNative.retrieveProducts(productIds);
   }
+
+  // TODO: Refactor to pass Product object
+  public static async purchaseProduct(productId: string, customerId: string | null): Promise<string> {
+    return ChargebeeReactNative.purchaseProduct(productId, customerId);
+  }
 }
