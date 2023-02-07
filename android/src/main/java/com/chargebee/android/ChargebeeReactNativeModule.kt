@@ -5,6 +5,7 @@ import com.chargebee.android.billingservice.CBPurchase
 import com.chargebee.android.exceptions.CBException
 import com.chargebee.android.exceptions.CBProductIDResult
 import com.chargebee.android.models.CBProduct
+import com.chargebee.android.network.ReceiptDetail
 import com.chargebee.android.utils.convertArrayToWritableArray
 import com.chargebee.android.utils.convertListToWritableArray
 import com.chargebee.android.utils.convertReadableArray
@@ -39,11 +40,6 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
   }
 
   @ReactMethod
-  override fun purchaseProduct(productId: String, customerId: String, promise: Promise) {
-    promise.resolve("TO BE IMPLEMENTED")
-  }
-
-  @ReactMethod
   override fun retrieveProducts(productIds: ReadableArray, promise: Promise) {
     val activity = currentActivity
     activity?.let {
@@ -53,6 +49,35 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
             promise.resolve(convertListToWritableArray(productDetails))
           }
 
+          override fun onError(error: CBException) {
+            promise.reject(error.message, error)
+          }
+        })
+    }
+  }
+
+  @ReactMethod
+  override fun purchaseProduct(productId: String, customerId: String, promise: Promise) {
+    val activity = currentActivity
+    activity?.let {
+      val productIds = arrayListOf(productId)
+      CBPurchase.retrieveProducts(it, productIds,
+        object : CBCallback.ListProductsCallback<ArrayList<CBProduct>> {
+          override fun onSuccess(productDetails: ArrayList<CBProduct>) {
+            CBPurchase.purchaseProduct(
+              productDetails.first(),
+              customerId,
+              object : CBCallback.PurchaseCallback<String> {
+
+                override fun onSuccess(receiptDetail: ReceiptDetail, status: Boolean) {
+                  promise.resolve(receiptDetail.toString())
+                }
+
+                override fun onError(error: CBException) {
+                  promise.reject(error.message, error)
+                }
+              })
+          }
           override fun onError(error: CBException) {
             promise.reject(error.message, error)
           }
