@@ -32,4 +32,29 @@ describe('Chargebee React Native', () => {
       NativeModules.ChargebeeReactNative.retrieveProductIdentifiers
     ).toHaveBeenCalledWith(queryParams);
   });
+
+  it('retrieve Products by Product IDs for the configured SDK', async () => {
+    const productIds = ['product-id-1'];
+    await Chargebee.retrieveProducts(productIds);
+
+    expect(NativeModules.ChargebeeReactNative.retrieveProducts).toBeCalledTimes(
+      1
+    );
+    expect(
+      NativeModules.ChargebeeReactNative.retrieveProducts
+    ).toHaveBeenCalledWith(productIds);
+  });
+
+  it('purchase Product by Product ID and Customer ID for the configured SDK', async () => {
+    const productId = 'product-id-1';
+    const customerId = 'customer-id-1';
+    await Chargebee.purchaseProduct(productId, customerId);
+
+    expect(NativeModules.ChargebeeReactNative.purchaseProduct).toBeCalledTimes(
+      1
+    );
+    expect(
+      NativeModules.ChargebeeReactNative.purchaseProduct
+    ).toHaveBeenCalledWith(productId, customerId);
+  });
 });
