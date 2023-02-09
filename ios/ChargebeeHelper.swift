@@ -35,4 +35,25 @@ public class ChargebeeHelper: NSObject {
             }
         }
     }
+    
+    @objc public func purchaseProduct(productId: String, customerId: String, resolver: @escaping RCTPromiseResolveBlock, rejecter: @escaping RCTPromiseRejectBlock) {
+        CBPurchase.shared.retrieveProducts(withProductID: [productId]) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case let .success(products):
+                    let  product: CBProduct = products.self.first!;
+                    CBPurchase.shared.purchaseProduct(product: product, customerId: customerId) { result in
+                        switch result {
+                        case .success(let result):
+                            resolver(result)
+                        case .failure(let error as NSError):
+                            rejecter("\(error.code)", error.localizedDescription, error)
+                        }
+                    }
+                case let .failure(error as NSError):
+                    rejecter("\(error.code)", error.localizedDescription, error)
+                }
+            }
+        }
+    }
 }

@@ -37,7 +37,6 @@ export interface Product {
   readonly currencyCode: string;
 }
 
-
 export default class Chargebee {
   public static configure({
     site,
@@ -47,6 +46,7 @@ export default class Chargebee {
     ChargebeeReactNative.configure(site, publishableApiKey, sdkKey);
   }
 
+  // TODO: Refactor to use types for query
   public static async retrieveProductIdentifiers(
     queryParams: Map<string, string>
   ): Promise<Array<string>> {
@@ -57,5 +57,13 @@ export default class Chargebee {
     productIds: Array<string>
   ): Promise<Array<Product>> {
     return ChargebeeReactNative.retrieveProducts(productIds);
+  }
+
+  // TODO: Refactor to pass Product object
+  public static async purchaseProduct(
+    productId: string,
+    customerId: string | null
+  ): Promise<string> {
+    return ChargebeeReactNative.purchaseProduct(productId, customerId);
   }
 }
