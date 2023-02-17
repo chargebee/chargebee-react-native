@@ -1,6 +1,7 @@
 package com.chargebee.android.utils
 
 import com.chargebee.android.models.CBProduct
+import com.chargebee.android.models.PurchaseResult
 import com.facebook.react.bridge.*
 
 
@@ -37,5 +38,13 @@ internal fun convertProductToDictionary(product: CBProduct): WritableMap {
   writableMap.putString("title", product.productTitle)
   writableMap.putString("price", product.productPrice)
   writableMap.putString("currencyCode", product.skuDetails.priceCurrencyCode)
+  return writableMap
+}
+
+internal fun convertPurchaseResultToDictionary(product: PurchaseResult, status: Boolean): WritableMap {
+  val writableMap: WritableMap = WritableNativeMap()
+  writableMap.putString("subscription_id", product.subscriptionId)
+  writableMap.putString("plan_id", product.planId)
+  writableMap.putBoolean("status", status)
   return writableMap
 }

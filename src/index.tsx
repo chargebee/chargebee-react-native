@@ -37,6 +37,12 @@ export interface Product {
   readonly currencyCode: string;
 }
 
+export interface Purchase {
+  readonly subscriptionId: string;
+  readonly planId: string;
+  readonly status: string;
+}
+
 export default class Chargebee {
   public static configure({
     site,
@@ -63,7 +69,7 @@ export default class Chargebee {
   public static async purchaseProduct(
     productId: string,
     customerId: string | null
-  ): Promise<string> {
+  ): Promise<Purchase> {
     return ChargebeeReactNative.purchaseProduct(productId, customerId);
   }
 }

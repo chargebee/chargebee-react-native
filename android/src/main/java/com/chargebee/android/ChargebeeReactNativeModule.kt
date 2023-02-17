@@ -5,9 +5,11 @@ import com.chargebee.android.billingservice.CBPurchase
 import com.chargebee.android.exceptions.CBException
 import com.chargebee.android.exceptions.CBProductIDResult
 import com.chargebee.android.models.CBProduct
+import com.chargebee.android.models.PurchaseResult
 import com.chargebee.android.network.ReceiptDetail
 import com.chargebee.android.utils.convertArrayToWritableArray
 import com.chargebee.android.utils.convertListToWritableArray
+import com.chargebee.android.utils.convertPurchaseResultToDictionary
 import com.chargebee.android.utils.convertReadableArray
 import com.facebook.react.bridge.*
 
@@ -64,19 +66,22 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
       CBPurchase.retrieveProducts(it, productIds,
         object : CBCallback.ListProductsCallback<ArrayList<CBProduct>> {
           override fun onSuccess(productDetails: ArrayList<CBProduct>) {
-            CBPurchase.purchaseProduct(
-              productDetails.first(),
-              customerId,
-              object : CBCallback.PurchaseCallback<String> {
+            if(productDetails.size > 0) {
+              CBPurchase.purchaseProduct(
+                productDetails.first(),
+                customerId,
+                object : CBCallback.PurchaseCallback<String> {
 
-                override fun onSuccess(receiptDetail: ReceiptDetail, status: Boolean) {
-                  promise.resolve(receiptDetail.toString())
-                }
+                  override fun onSuccess(receiptDetail: ReceiptDetail, status: Boolean) {
+                    val purchaseResult = PurchaseResult(receiptDetail, status)
+                    promise.resolve(convertPurchaseResultToDictionary(purchaseResult, status))
+                  }
 
-                override fun onError(error: CBException) {
-                  promise.reject(error.message, error)
-                }
-              })
+                  override fun onError(error: CBException) {
+                    promise.reject(error.message, error)
+                  }
+                })
+            }
           }
           override fun onError(error: CBException) {
             promise.reject(error.message, error)
