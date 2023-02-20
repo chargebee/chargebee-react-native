@@ -2,6 +2,7 @@ package com.chargebee.android
 
 import com.chargebee.android.billingservice.CBCallback
 import com.chargebee.android.billingservice.CBPurchase
+import com.chargebee.android.billingservice.GPErrorCode
 import com.chargebee.android.exceptions.CBException
 import com.chargebee.android.exceptions.CBProductIDResult
 import com.chargebee.android.models.CBProduct
@@ -81,7 +82,11 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
                     promise.reject(error.message, error)
                   }
                 })
+            } else {
+              val productNotAvailable = CBException(ErrorDetail(GPErrorCode.ProductUnavailable.errorMsg))
+              promise.reject(productNotAvailable.message, productNotAvailable)
             }
+
           }
           override fun onError(error: CBException) {
             promise.reject(error.message, error)
