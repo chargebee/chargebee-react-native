@@ -7,10 +7,11 @@
 
 import Foundation
 
+
 struct CBPurchaseResult: Codable {
 
-    let subscriptionId: String?
-    let planId: String?
+    let subscriptionId: String
+    let planId: String
     let status: Bool
 
     enum CodingKeys: String, CodingKey {
@@ -21,10 +22,13 @@ struct CBPurchaseResult: Codable {
 }
 
 extension CBPurchaseResult {
-    init(fromTuple: (status:Bool, subscriptionId:String?, planId:String?)) {
-        self.subscriptionId = fromTuple.subscriptionId
+    init(fromTuple: (status: Bool, subscriptionId: String?, planId: String?)) throws {
+        guard let subscriptionId = fromTuple.subscriptionId, let planId = fromTuple.planId else {
+            throw CBReactNativeError.systemError
+        }
+        self.subscriptionId = subscriptionId
         self.status = fromTuple.status
-        self.planId = fromTuple.planId
+        self.planId = planId
     }
 }
 
