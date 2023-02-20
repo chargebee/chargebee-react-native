@@ -9,6 +9,7 @@ import Foundation
 import Chargebee
 
 public class ChargebeeHelper: NSObject {
+    
     @objc public func configure(site: String, apiKey: String, sdkKey: String?) {
         Chargebee.configure(site: site, apiKey: apiKey, sdkKey: sdkKey)
     }
@@ -32,6 +33,32 @@ public class ChargebeeHelper: NSObject {
                     resolver(formattedProducts)
                 case let .failure(error as NSError):
                     rejecter("\(error.code)", error.localizedDescription, error)
+            }
+        }
+    }
+    
+    @objc public func purchaseProduct(productId: String, customerId: String, resolver: @escaping RCTPromiseResolveBlock, rejecter: @escaping RCTPromiseRejectBlock) {
+        CBPurchase.shared.retrieveProducts(withProductID: [productId]) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case let .success(products):
+                    let  product: CBProduct = products.self.first!;
+                    CBPurchase.shared.purchaseProduct(product: product, customerId: customerId) { result in
+                        switch result {
+                        case .success(let result):
+                            do {
+                                let purchasedProduct = try CBPurchaseResult(fromTuple: result)
+                                resolver(purchasedProduct.asDictionary)
+                            } catch (let error as NSError) {
+                                rejecter("\(error.code)", error.localizedDescription, error)
+                            }
+                        case .failure(let error as NSError):
+                            rejecter("\(error.code)", error.localizedDescription, error)
+                        }
+                    }
+                case let .failure(error as NSError):
+                    rejecter("\(error.code)", error.localizedDescription, error)
+                }
             }
         }
     }

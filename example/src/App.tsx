@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
-import { StyleSheet, View, Button } from 'react-native';
-import Chargebee from '@chargebee/react-native-chargebee';
+import { StyleSheet, View, Button, Alert } from 'react-native';
+import Chargebee, { Product } from '@chargebee/react-native-chargebee';
 
 export default function App() {
   const site = 'site';
@@ -9,10 +9,11 @@ export default function App() {
   const sdkKey = 'sdkKey';
 
   let productIdentifiers: string[] = [];
+  let products: Product[] = [];
 
   useEffect(() => {
     configure(site, apiKey, sdkKey);
-  }, []);
+  });
 
   const retrieveProductIdentifiers = async () => {
     const queryParams = new Map<string, string>();
@@ -20,6 +21,7 @@ export default function App() {
     try {
       const result = await Chargebee.retrieveProductIdentifiers(queryParams);
       console.log(result);
+      openAlert(result);
       productIdentifiers = result;
     } catch (error) {
       console.error(error);
@@ -30,7 +32,22 @@ export default function App() {
   const retrieveProducts = async () => {
     try {
       const result = await Chargebee.retrieveProducts(productIdentifiers);
+      products = result;
+      openAlert(result);
       console.log(result);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const purchaseProduct = async () => {
+    try {
+      const result = await Chargebee.purchaseProduct(
+        products[0]?.id!,
+        'graceperiodtest3'
+      );
+      console.log(result);
+      openAlert(result);
     } catch (error) {
       console.error(error);
     }
@@ -42,6 +59,12 @@ export default function App() {
       publishableApiKey: apiKey,
       sdkKey: sdkKey,
     });
+    console.log('Configured ', site);
+    openAlert('Configured: ' + site);
+  };
+
+  const openAlert = (response: any) => {
+    Alert.alert(JSON.stringify(response));
   };
 
   return (
@@ -55,6 +78,7 @@ export default function App() {
         onPress={retrieveProductIdentifiers}
       />
       <Button title="Retrieve Products" onPress={retrieveProducts} />
+      <Button title="Purchase Product" onPress={purchaseProduct} />
     </View>
   );
 }
