@@ -6,14 +6,15 @@ import Chargebee, { Product } from '@chargebee/react-native-chargebee';
 export default function App() {
   const site = 'site';
   const apiKey = 'apiKey';
-  const sdkKey = 'sdkKey';
+  const androidSdkKey = 'androidSdkKey';
+  const iOsSdkKey = 'iOsSdkKey';
 
   let productIdentifiers: string[] = [];
   let products: Product[] = [];
 
   useEffect(() => {
-    configure(site, apiKey, sdkKey);
-  }, []);
+    configure(site, apiKey, androidSdkKey, iOsSdkKey);
+  });
 
   const retrieveProductIdentifiers = async () => {
     const queryParams = new Map<string, string>();
@@ -40,21 +41,28 @@ export default function App() {
 
   const purchaseProduct = async () => {
     try {
-      const result = await Chargebee.purchaseProduct(
-        products[0]?.id!,
-        'graceperiodtest3'
-      );
+      const productId = products[0]?.id!;
+      const customerId = 'customer-id';
+      console.log('Purchssing ', productId, customerId);
+      const result = await Chargebee.purchaseProduct(productId, customerId);
+      openAlert(result);
       console.log(result);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const configure = (site: string, apiKey: string, sdkKey: string) => {
+  const configure = (
+    site: string,
+    apiKey: string,
+    androidSdkKey: string,
+    iOsSdkKey: string
+  ) => {
     Chargebee.configure({
       site: site,
       publishableApiKey: apiKey,
-      sdkKey: sdkKey,
+      androidSdkKey: androidSdkKey,
+      iOsSdkKey: iOsSdkKey,
     });
   };
 
@@ -62,7 +70,7 @@ export default function App() {
     <View style={styles.container}>
       <Button
         title="Configure"
-        onPress={() => configure(site, apiKey, androidSdkKey)}
+        onPress={() => configure(site, apiKey, androidSdkKey, iOsSdkKey)}
       />
       <Button
         title="Retrieve Product Identifers"

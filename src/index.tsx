@@ -27,7 +27,8 @@ const ChargebeeReactNative = ChargebeeReactNativeModule
 export interface ChargebeeConfig {
   site: string;
   publishableApiKey: string;
-  sdkKey?: string | null;
+  androidSdkKey: string;
+  iOsSdkKey: string;
 }
 
 export interface Product {
@@ -41,8 +42,10 @@ export default class Chargebee {
   public static configure({
     site,
     publishableApiKey,
-    sdkKey,
+    androidSdkKey,
+    iOsSdkKey,
   }: ChargebeeConfig): void {
+    const sdkKey: string = sdkKeyForPlatform(androidSdkKey, iOsSdkKey);
     ChargebeeReactNative.configure(site, publishableApiKey, sdkKey);
   }
 
@@ -66,4 +69,12 @@ export default class Chargebee {
   ): Promise<string> {
     return ChargebeeReactNative.purchaseProduct(productId, customerId);
   }
+}
+function sdkKeyForPlatform(androidSdkKey: string, iOsSdkKey: string): string {
+  if (Platform.OS === 'ios') {
+    return iOsSdkKey;
+  } else if (Platform.OS === 'android') {
+    return androidSdkKey;
+  }
+  throw new Error('Platform not supported.');
 }
