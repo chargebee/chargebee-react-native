@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { StyleSheet, View, Button } from 'react-native';
+import { StyleSheet, View, Button, Alert } from 'react-native';
 import Chargebee, { Product } from '@chargebee/react-native-chargebee';
 
 export default function App() {
@@ -13,7 +13,7 @@ export default function App() {
 
   useEffect(() => {
     configure(site, apiKey, sdkKey);
-  }, []);
+  });
 
   const retrieveProductIdentifiers = async () => {
     const queryParams = new Map<string, string>();
@@ -21,6 +21,7 @@ export default function App() {
     try {
       const result = await Chargebee.retrieveProductIdentifiers(queryParams);
       console.log(result);
+      openAlert(result);
       productIdentifiers = result;
     } catch (error) {
       console.error(error);
@@ -32,6 +33,7 @@ export default function App() {
     try {
       const result = await Chargebee.retrieveProducts(productIdentifiers);
       products = result;
+      openAlert(result);
       console.log(result);
     } catch (error) {
       console.error(error);
@@ -45,6 +47,7 @@ export default function App() {
         'graceperiodtest3'
       );
       console.log(result);
+      openAlert(result);
     } catch (error) {
       console.error(error);
     }
@@ -56,13 +59,19 @@ export default function App() {
       publishableApiKey: apiKey,
       sdkKey: sdkKey,
     });
+    console.log('Configured ', site);
+    openAlert('Configured: ' + site);
+  };
+
+  const openAlert = (response: any) => {
+    Alert.alert(JSON.stringify(response));
   };
 
   return (
     <View style={styles.container}>
       <Button
         title="Configure"
-        onPress={() => configure(site, apiKey, androidSdkKey)}
+        onPress={() => configure(site, apiKey, sdkKey)}
       />
       <Button
         title="Retrieve Product Identifers"
