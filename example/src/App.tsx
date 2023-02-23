@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { StyleSheet, View, Button } from 'react-native';
+import { StyleSheet, View, Button, Alert } from 'react-native';
 import Chargebee, { Product } from '@chargebee/react-native-chargebee';
 
 export default function App() {
@@ -22,6 +22,7 @@ export default function App() {
     try {
       const result = await Chargebee.retrieveProductIdentifiers(queryParams);
       console.log(result);
+      openAlert(result);
       productIdentifiers = result;
     } catch (error) {
       console.error(error);
@@ -33,6 +34,7 @@ export default function App() {
     try {
       const result = await Chargebee.retrieveProducts(productIdentifiers);
       products = result;
+      openAlert(result);
       console.log(result);
     } catch (error) {
       console.error(error);
@@ -47,6 +49,7 @@ export default function App() {
       const result = await Chargebee.purchaseProduct(productId, customerId);
       openAlert(result);
       console.log(result);
+      openAlert(result);
     } catch (error) {
       console.error(error);
     }
@@ -64,6 +67,12 @@ export default function App() {
       androidSdkKey: androidSdkKey,
       iOsSdkKey: iOsSdkKey,
     });
+    console.log('Configured ', site);
+    openAlert('Configured: ' + site);
+  };
+
+  const openAlert = (response: any) => {
+    Alert.alert(JSON.stringify(response));
   };
 
   return (

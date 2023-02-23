@@ -9,6 +9,7 @@ import Foundation
 import Chargebee
 
 public class ChargebeeHelper: NSObject {
+    
     @objc public func configure(site: String, apiKey: String, sdkKey: String?) {
         Chargebee.configure(site: site, apiKey: apiKey, sdkKey: sdkKey)
     }
@@ -45,7 +46,12 @@ public class ChargebeeHelper: NSObject {
                     CBPurchase.shared.purchaseProduct(product: product, customerId: customerId) { result in
                         switch result {
                         case .success(let result):
-                            resolver(result)
+                            do {
+                                let purchasedProduct = try CBPurchaseResult(fromTuple: result)
+                                resolver(purchasedProduct.asDictionary)
+                            } catch (let error as NSError) {
+                                rejecter("\(error.code)", error.localizedDescription, error)
+                            }
                         case .failure(let error as NSError):
                             rejecter("\(error.code)", error.localizedDescription, error)
                         }
