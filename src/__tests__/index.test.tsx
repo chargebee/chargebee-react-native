@@ -1,23 +1,61 @@
-import { NativeModules } from 'react-native';
+import { NativeModules, Platform } from 'react-native';
 import Chargebee from '../index';
 
 describe('Chargebee React Native', () => {
-  it('configures the CB RN SDK with Site, Publishable API key and SDK Key', () => {
+  describe('Configuring Chargebee React Native SDK with Site, Publishable API key and SDK Key', () => {
     const testSite = 'testsite';
     const testPublishableApiKey = 'test-PublishableApiKey';
-    const sdkKey = 'sdkKey';
+    const androidSdkKey = 'androidSdkKey';
+    const iOsSdkKey = 'iOsSdkKey';
 
-    Chargebee.configure({
-      site: testSite,
-      publishableApiKey: testPublishableApiKey,
-      sdkKey: sdkKey,
+    it('for Android', () => {
+      Platform.OS = 'android';
+
+      Chargebee.configure({
+        site: testSite,
+        publishableApiKey: testPublishableApiKey,
+        androidSdkKey: androidSdkKey,
+        iOsSdkKey: iOsSdkKey,
+      });
+
+      expect(NativeModules.ChargebeeReactNative.configure).toHaveBeenCalledWith(
+        testSite,
+        testPublishableApiKey,
+        androidSdkKey
+      );
     });
 
-    expect(NativeModules.ChargebeeReactNative.configure).toHaveBeenCalledWith(
-      testSite,
-      testPublishableApiKey,
-      sdkKey
-    );
+    it('for iOS', () => {
+      Platform.OS = 'ios';
+
+      Chargebee.configure({
+        site: testSite,
+        publishableApiKey: testPublishableApiKey,
+        androidSdkKey: androidSdkKey,
+        iOsSdkKey: iOsSdkKey,
+      });
+
+      expect(NativeModules.ChargebeeReactNative.configure).toHaveBeenCalledWith(
+        testSite,
+        testPublishableApiKey,
+        iOsSdkKey
+      );
+    });
+
+    it('for Unsupported Platform', () => {
+      Platform.OS = 'web';
+
+      let configure = () => {
+        Chargebee.configure({
+          site: testSite,
+          publishableApiKey: testPublishableApiKey,
+          androidSdkKey: androidSdkKey,
+          iOsSdkKey: iOsSdkKey,
+        });
+      };
+
+      expect(configure).toThrowError('Platform not supported.');
+    });
   });
 
   it('retrieve Product Identifiers for the configured SDK', async () => {
