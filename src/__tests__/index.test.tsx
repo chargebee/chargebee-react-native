@@ -1,5 +1,5 @@
 import { NativeModules, Platform } from 'react-native';
-import Chargebee from '../index';
+import Chargebee, { SubscriptionsRequest } from '../index';
 
 describe('Chargebee React Native', () => {
   describe('Configuring Chargebee React Native SDK with Site, Publishable API key and SDK Key', () => {
@@ -94,5 +94,18 @@ describe('Chargebee React Native', () => {
     expect(
       NativeModules.ChargebeeReactNative.purchaseProduct
     ).toHaveBeenCalledWith(productId, customerId);
+  });
+
+  it('retrieve subscriptions by Subscription ID, Subscription status or Customer ID', async () => {
+    const customerId = 'customer-id-1';
+    const queryParams: SubscriptionsRequest = {customer_id: customerId}
+    await Chargebee.retrieveSubscriptions(queryParams);
+
+    expect(NativeModules.ChargebeeReactNative.retrieveSubscriptions).toBeCalledTimes(
+      1
+    );
+    expect(
+      NativeModules.ChargebeeReactNative.retrieveSubscriptions
+    ).toHaveBeenCalledWith(queryParams);
   });
 });
