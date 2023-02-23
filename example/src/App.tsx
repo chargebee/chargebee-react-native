@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { StyleSheet, View, Button, Alert } from 'react-native';
-import Chargebee, { Product } from '@chargebee/react-native-chargebee';
+import Chargebee, { Product, Subscription, SubscriptionsRequest } from '@chargebee/react-native-chargebee';
 
 export default function App() {
   const site = 'site';
@@ -71,6 +71,15 @@ export default function App() {
     openAlert('Configured: ' + site);
   };
 
+  const retrieveSubscriptions = async () => {
+    const queryParams: SubscriptionsRequest = {customer_id : 'cb-test'}
+    const subscriptions: Subscription[] = await Chargebee.retrieveSubscriptions(queryParams);
+    console.log('retrieveSubscriptions ', subscriptions);
+    console.log('retrieveSubscriptions ', subscriptions[0]?.activatedAt);
+    console.log('retrieveSubscriptions ', subscriptions[1]?.activatedAt);
+    openAlert(subscriptions);
+  };
+
   const openAlert = (response: any) => {
     Alert.alert(JSON.stringify(response));
   };
@@ -87,6 +96,7 @@ export default function App() {
       />
       <Button title="Retrieve Products" onPress={retrieveProducts} />
       <Button title="Purchase Product" onPress={purchaseProduct} />
+      <Button title="Retrieve Subscriptions" onPress={retrieveSubscriptions} />
     </View>
   );
 }

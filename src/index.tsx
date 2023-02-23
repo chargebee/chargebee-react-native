@@ -1,4 +1,5 @@
 import { NativeModules, Platform } from 'react-native';
+import type { Double } from 'react-native/Libraries/Types/CodegenTypes';
 
 const LINKING_ERROR =
   `The package '@chargebee/react-native-chargebee' doesn't seem to be linked. Make sure: \n\n` +
@@ -44,7 +45,25 @@ export interface Purchase {
   readonly status: string;
 }
 
+export interface Subscription {
+  readonly activatedAt: Double | null;
+  readonly status: string | null;
+  readonly planAmount: Double | null;
+  readonly id: string | null;
+  readonly customerId: string | null;
+  readonly currentTermEnd: Double | null;
+  readonly currentTermStart: Double | null;
+  readonly planId: string | null;
+}
+
+export interface SubscriptionsRequest {
+  customer_id?: string;
+  subscription_id?: string;
+  status?: string | null;
+}
+
 export default class Chargebee {
+
   public static configure({
     site,
     publishableApiKey,
@@ -75,7 +94,12 @@ export default class Chargebee {
   ): Promise<Purchase> {
     return ChargebeeReactNative.purchaseProduct(productId, customerId);
   }
+
+  public static retrieveSubscriptions(queryParams: SubscriptionsRequest): Promise<Array<Subscription>> {
+    return ChargebeeReactNative.retrieveSubscriptions(queryParams)
+  }
 }
+
 function sdkKeyForPlatform(androidSdkKey: string, iOsSdkKey: string): string {
   if (Platform.OS === 'ios') {
     return iOsSdkKey;
