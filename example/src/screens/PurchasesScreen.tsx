@@ -3,15 +3,18 @@ import { Text } from '@ui-kitten/components';
 import React, { useEffect, useState } from 'react';
 import { Products } from '../components/Product';
 
-const PurchasesScreen = () => {
+const PurchasesScreen = ({navigation}) => {
   const [products, setProducts] = useState<Array<string>>();
+
+  const selectProduct = (productId) => {
+    navigation.navigate('ProductDetail', { productId: productId }, productId);
+  }
 
   useEffect(() => {
     const queryParams = new Map<string, string>();
     queryParams.set('limit', '1');
     Chargebee.retrieveProductIdentifiers(queryParams)
       .then((products) => {
-        console.log('+++1', products);
         setProducts(products);
       })
       .catch((error) => {
@@ -22,7 +25,7 @@ const PurchasesScreen = () => {
   return (
     <>
       <Text category="h4">Showing available products</Text>
-      <Products products={products} />
+      <Products products={products} selectProduct={selectProduct} />
     </>
   );
 };

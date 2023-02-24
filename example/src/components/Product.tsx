@@ -2,10 +2,10 @@ import { Card, List, Text } from '@ui-kitten/components';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-export const Products = ({ products }) => {
+export const Products = ({ products, selectProduct }) => {
   const renderItem = (product) => {
     return (
-      <Card style={styles.item} status="primary">
+      <Card style={styles.item} status="primary" onPressOut={() => selectProduct(product.item)}>
         <Text> Product: {product.item} </Text>
       </Card>
     );

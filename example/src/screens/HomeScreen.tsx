@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import CoursesScreen from './CoursesScreen';
 import PurchasesScreen from './PurchasesScreen';
 
-const HomeScreen = ({ route }) => {
+const HomeScreen = ({ route, navigation }) => {
   const [subscriptions, setSubscriptions] = useState<Array<Subscription>>([]);
   const [isSubscribed, setIsSubscribed] = useState(false);
 
@@ -15,7 +15,7 @@ const HomeScreen = ({ route }) => {
     setIsSubscribed(subscriptions.length > 0);
   }, [subscriptions]);
 
-  return <>{isSubscribed ? <CoursesScreen /> : <PurchasesScreen />}</>;
+  return <>{isSubscribed ? <CoursesScreen /> : <PurchasesScreen navigation={navigation} />}</>;
 };
 
 export default HomeScreen;
