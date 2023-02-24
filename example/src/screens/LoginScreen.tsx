@@ -12,7 +12,7 @@ const LoginScreen = ({ navigation }) => {
   const [subscriptions, setSubscriptions] = useState<Array<Subscription>>([]);
 
   useEffect(() => {
-    navigation.navigate('Home', subscriptions);
+    navigation.navigate('Home', { subscriptions: subscriptions });
   }, [subscriptions, navigation]);
 
   const login: LoginFunction = async (userId, password) => {

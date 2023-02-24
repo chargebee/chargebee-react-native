@@ -1,13 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text } from '@ui-kitten/components';
 import { StyleSheet } from 'react-native';
+import type { Subscription } from '@chargebee/react-native-chargebee';
+import CoursesScreen from './CoursesScreen';
 
-const HomeScreen = () => {
+const HomeScreen = ({ route }) => {
+  const [subscriptions, setSubscriptions] = useState<Array<Subscription>>([]);
+  const [isSubscribed, setIsSubscribed] = useState(false);
+
+  useEffect(() => {
+    setSubscriptions(route.params.subscriptions);
+  }, [route.params.subscriptions]);
+
+  useEffect(() => {
+    setIsSubscribed(subscriptions.length > 0);
+  }, [subscriptions]);
+
   return (
     <>
-      <Text style={styles.text} category="h1">
-        You are logged in as Bruce!
-      </Text>
+      {isSubscribed ? (
+        <CoursesScreen />
+      ) : (
+        <Text style={styles.text} category="h1">
+          You are logged in as Wayne!
+        </Text>
+      )}
     </>
   );
 };
@@ -15,11 +32,6 @@ const HomeScreen = () => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   text: {
     textAlign: 'center',
   },
