@@ -5,9 +5,13 @@ import com.chargebee.android.billingservice.CBPurchase
 import com.chargebee.android.billingservice.GPErrorCode
 import com.chargebee.android.exceptions.CBException
 import com.chargebee.android.exceptions.CBProductIDResult
+import com.chargebee.android.exceptions.ChargebeeResult
 import com.chargebee.android.models.CBProduct
+import com.chargebee.android.models.CBSubscription
 import com.chargebee.android.models.PurchaseResult
+import com.chargebee.android.models.toMap
 import com.chargebee.android.network.ReceiptDetail
+import com.chargebee.android.utils.*
 import com.chargebee.android.utils.convertArrayToWritableArray
 import com.chargebee.android.utils.convertListToWritableArray
 import com.chargebee.android.utils.convertPurchaseResultToDictionary
@@ -29,7 +33,7 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
 
   @ReactMethod
   override fun retrieveProductIdentifiers(queryParams: ReadableMap, promise: Promise) {
-    val formattedQueryParams = getFormattedQueryParams(queryParams)
+    val formattedQueryParams = convertQueryParamsToArray(queryParams)
     CBPurchase.retrieveProductIdentifers(formattedQueryParams) {
       when (it) {
         is CBProductIDResult.ProductIds -> {
@@ -67,7 +71,7 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
       CBPurchase.retrieveProducts(it, productIds,
         object : CBCallback.ListProductsCallback<ArrayList<CBProduct>> {
           override fun onSuccess(productDetails: ArrayList<CBProduct>) {
-            if(productDetails.size > 0) {
+            if (productDetails.size > 0) {
               CBPurchase.purchaseProduct(
                 productDetails.first(),
                 customerId,
@@ -95,15 +99,22 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
     }
   }
 
-  private fun getFormattedQueryParams(queryParams: ReadableMap): Array<String> {
-    if (queryParams != null)
-      return arrayOf(queryParams.getString("limit") ?: "")
-    return arrayOf("")
+  @ReactMethod
+  override fun retrieveSubscriptions(queryParams: ReadableMap, promise: Promise) {
+    Chargebee.retrieveSubscriptions(queryParams.toMap()) {
+      when(it){
+        is ChargebeeResult.Success -> {
+          val subscriptions = (it.data as CBSubscription).list
+          promise.resolve(convertSubscriptionsToDictionary(subscriptions))
+        }
+        is ChargebeeResult.Error ->{
+          promise.reject(it.exp.message, it.exp)
+        }
+      }
+    }
   }
 
   companion object {
     const val NAME = "ChargebeeReactNative"
   }
 }
-
-

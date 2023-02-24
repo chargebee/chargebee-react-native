@@ -62,4 +62,16 @@ public class ChargebeeHelper: NSObject {
             }
         }
     }
+    
+    @objc public func retrieveSubscriptions(queryParams: Dictionary<String, String>, resolver: @escaping RCTPromiseResolveBlock, rejecter: @escaping RCTPromiseRejectBlock) {
+        Chargebee.shared.retrieveSubscriptions(queryParams: queryParams) { result in
+            switch result {
+            case let .success(list):
+                let data = list.map { $0.subscription.asDictionary }
+                resolver(data)
+            case let .error(error as NSError):
+                rejecter("\(error.code)", error.localizedDescription, error)
+            }
+        }
+    }
 }

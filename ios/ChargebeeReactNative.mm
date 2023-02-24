@@ -41,6 +41,15 @@ RCT_REMAP_METHOD(purchaseProduct,
     [helper purchaseProductWithProductId:productId customerId:customerId resolver:resolve rejecter:reject];
 }
 
+RCT_REMAP_METHOD(retrieveSubscriptions,
+                 retrieveSubscriptionsWithQueryParams:(NSDictionary *)queryParams
+                 withResolver:(RCTPromiseResolveBlock)resolve
+                 withRejecter:(RCTPromiseRejectBlock)reject)
+{
+    ChargebeeHelper* helper = [[ChargebeeHelper alloc] init];
+    [helper retrieveSubscriptionsWithQueryParams:queryParams resolver:resolve rejecter:reject];
+}
+
 // Don't compile this code when we build for the old architecture.
 #ifdef RCT_NEW_ARCH_ENABLED
 - (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:
