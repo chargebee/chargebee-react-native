@@ -98,12 +98,12 @@ describe('Chargebee React Native', () => {
 
   it('retrieve subscriptions by Subscription ID, Subscription status or Customer ID', async () => {
     const customerId = 'customer-id-1';
-    const queryParams: SubscriptionsRequest = {customer_id: customerId}
+    const queryParams: SubscriptionsRequest = { customer_id: customerId };
     await Chargebee.retrieveSubscriptions(queryParams);
 
-    expect(NativeModules.ChargebeeReactNative.retrieveSubscriptions).toBeCalledTimes(
-      1
-    );
+    expect(
+      NativeModules.ChargebeeReactNative.retrieveSubscriptions
+    ).toBeCalledTimes(1);
     expect(
       NativeModules.ChargebeeReactNative.retrieveSubscriptions
     ).toHaveBeenCalledWith(queryParams);
