@@ -3,12 +3,15 @@ import { Text } from '@ui-kitten/components';
 import React, { useEffect, useState } from 'react';
 import { Products } from '../components/Product';
 
-const PurchasesScreen = ({navigation}) => {
+const PurchasesScreen = ({ navigation, customerId }) => {
   const [products, setProducts] = useState<Array<string>>();
 
   const selectProduct = (productId) => {
-    navigation.navigate('ProductDetail', { productId: productId }, productId);
-  }
+    navigation.navigate('ProductDetail', {
+      productId: productId,
+      customerId: customerId,
+    });
+  };
 
   useEffect(() => {
     const queryParams = new Map<string, string>();

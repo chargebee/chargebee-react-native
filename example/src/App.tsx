@@ -9,7 +9,8 @@ import Chargebee from '@chargebee/react-native-chargebee';
 
 import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen';
-import ProductDetail from './screens/ProductDetail';
+import ProductDetail from './screens/ProductDetailScreen';
+import CoursesScreen from './screens/CoursesScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -47,6 +48,11 @@ export default function App() {
             name="ProductDetail"
             component={ProductDetail}
             options={{ title: 'Product Detail' }}
+          />
+          <Stack.Screen
+            name="Courses"
+            component={CoursesScreen}
+            options={{ title: 'Courses' }}
           />
         </Stack.Navigator>
       </NavigationContainer>

@@ -5,6 +5,7 @@ import PurchasesScreen from './PurchasesScreen';
 
 const HomeScreen = ({ route, navigation }) => {
   const [subscriptions, setSubscriptions] = useState<Array<Subscription>>([]);
+  const [customerId, setCustomerId] = useState<string>('');
   const [isSubscribed, setIsSubscribed] = useState(false);
 
   useEffect(() => {
@@ -12,10 +13,22 @@ const HomeScreen = ({ route, navigation }) => {
   }, [route.params.subscriptions]);
 
   useEffect(() => {
+    setCustomerId(route.params.customerId);
+  }, [route.params.customerId]);
+
+  useEffect(() => {
     setIsSubscribed(subscriptions.length > 0);
   }, [subscriptions]);
 
-  return <>{isSubscribed ? <CoursesScreen /> : <PurchasesScreen navigation={navigation} />}</>;
+  return (
+    <>
+      {isSubscribed ? (
+        <CoursesScreen />
+      ) : (
+        <PurchasesScreen navigation={navigation} customerId={customerId} />
+      )}
+    </>
+  );
 };
 
 export default HomeScreen;

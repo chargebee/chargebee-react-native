@@ -1,24 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import { Text } from '@ui-kitten/components';
-import LoginForm from '../components/LoginForm.';
-import { StyleSheet } from 'react-native';
-import type { LoginFunction } from '../types/CBee';
 import Chargebee, {
   Subscription,
   SubscriptionsRequest,
 } from '@chargebee/react-native-chargebee';
+import { Text } from '@ui-kitten/components';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet } from 'react-native';
+import LoginForm from '../components/LoginForm';
+import type { LoginFunction } from '../types/CBee';
 
 const LoginScreen = ({ navigation }) => {
   const [subscriptions, setSubscriptions] = useState<Array<Subscription>>([]);
+  const [loggedInUserId, setLoggedInUserId] = useState<string>();
 
   useEffect(() => {
-    navigation.navigate('Home', { subscriptions: subscriptions });
-  }, [subscriptions, navigation]);
+    navigation.navigate('Home', {
+      subscriptions: subscriptions,
+      customerId: loggedInUserId,
+    });
+  }, [subscriptions, navigation, loggedInUserId]);
 
   const login: LoginFunction = async (userId, password) => {
     console.log('Try Login');
-    const loggedInUserId = await loginUser(userId, password);
-    fetchSubscriptionsForUser(loggedInUserId);
+    const successfulLogingUserId = await loginUser(userId, password);
+    setLoggedInUserId(successfulLogingUserId);
+    if (loggedInUserId) {
+      fetchSubscriptionsForUser(loggedInUserId);
+    }
   };
 
   const loginUser = (userId: string, _: string) => {
