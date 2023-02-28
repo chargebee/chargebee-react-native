@@ -37,7 +37,8 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
     CBPurchase.retrieveProductIdentifers(formattedQueryParams) {
       when (it) {
         is CBProductIDResult.ProductIds -> {
-          promise.resolve(convertArrayToWritableArray(it.IDs.toArray()))
+          val identifiers = it.IDs.toArray(arrayOf<String>())
+          promise.resolve(convertArrayToWritableArray(identifiers))
         }
         is CBProductIDResult.Error -> {
           promise.reject(it.exp.message, it.exp)
