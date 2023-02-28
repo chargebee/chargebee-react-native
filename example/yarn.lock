@@ -1539,6 +1539,11 @@
     hoist-non-react-statics "^3.2.1"
     lodash.merge "^4.6.1"
 
+"@ui-kitten/metro-config@^5.1.2":
+  version "5.1.2"
+  resolved "https://registry.yarnpkg.com/@ui-kitten/metro-config/-/metro-config-5.1.2.tgz#c678d11230ec93756859a7359a00086fd50ab43d"
+  integrity sha512-PV+S23ocybRqDrD7kjEqBfvnfE5h+53zFivoI7m/Zln+cTZPqxDaWZZvadW1IlyHEQe5oPA/QdWyuP8ccH1kaA==
+
 abort-controller@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/abort-controller/-/abort-controller-3.0.0.tgz#eaf54d53b62bae4138e809ca225c8439a6efb392"

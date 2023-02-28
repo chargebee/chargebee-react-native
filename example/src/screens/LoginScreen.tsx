@@ -13,10 +13,12 @@ const LoginScreen = ({ navigation }) => {
   const [loggedInUserId, setLoggedInUserId] = useState<string>();
 
   useEffect(() => {
-    navigation.navigate('Home', {
-      subscriptions: subscriptions,
-      customerId: loggedInUserId,
-    });
+    if (loggedInUserId) {
+      navigation.navigate('Home', {
+        subscriptions: subscriptions,
+        customerId: loggedInUserId,
+      });
+    }
   }, [subscriptions, navigation, loggedInUserId]);
 
   const login: LoginFunction = async (userId, password) => {
