@@ -1,6 +1,6 @@
 import type { TurboModule } from 'react-native';
 import { TurboModuleRegistry } from 'react-native';
-import type { Product, Purchase, Subscription } from '.';
+import type { Product, Purchase, Subscription } from './Purchases';
 
 export interface Spec extends TurboModule {
   configure(site: string, publishableApiKey: string, sdkKey: string): void;
