@@ -22,7 +22,7 @@ const LoginScreen = ({ navigation }) => {
   }, [subscriptions, navigation, loggedInUserId]);
 
   const login: LoginFunction = async (userId, password) => {
-    console.log('Try Login');
+    console.log('Try Login for user:', userId);
     const successfulLogingUserId = await loginUser(userId, password);
     setLoggedInUserId(successfulLogingUserId);
     if (loggedInUserId) {
@@ -37,6 +37,7 @@ const LoginScreen = ({ navigation }) => {
 
   const fetchSubscriptionsForUser = (userId: string) => {
     const subscriptionRequests: SubscriptionsRequest = { customer_id: userId };
+    console.log('Fetching Subscriptions for :', subscriptionRequests);
     Chargebee.retrieveSubscriptions(subscriptionRequests)
       .then((subscriptions: Array<Subscription>) => {
         setSubscriptions(subscriptions);

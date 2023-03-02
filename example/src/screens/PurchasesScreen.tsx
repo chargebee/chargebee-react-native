@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Products } from '../components/Product';
 
 const PurchasesScreen = ({ navigation, customerId }) => {
-  const [products, setProducts] = useState<Array<string>>();
+  const [products, setProducts] = useState<Array<string>>([]);
 
   const selectProduct = (productId) => {
     navigation.navigate('ProductDetail', {

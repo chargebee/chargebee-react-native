@@ -6,7 +6,6 @@ import PurchasesScreen from './PurchasesScreen';
 const HomeScreen = ({ route, navigation }) => {
   const [subscriptions, setSubscriptions] = useState<Array<Subscription>>([]);
   const [customerId, setCustomerId] = useState<string>('');
-  const [isSubscribed, setIsSubscribed] = useState(false);
 
   useEffect(() => {
     setSubscriptions(route.params.subscriptions);
@@ -16,13 +15,9 @@ const HomeScreen = ({ route, navigation }) => {
     setCustomerId(route.params.customerId);
   }, [route.params.customerId]);
 
-  useEffect(() => {
-    setIsSubscribed(subscriptions.length > 0);
-  }, [subscriptions]);
-
   return (
     <>
-      {isSubscribed ? (
+      {subscriptions.length > 0 ? (
         <CoursesScreen />
       ) : (
         <PurchasesScreen navigation={navigation} customerId={customerId} />
