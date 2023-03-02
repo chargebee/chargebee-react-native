@@ -63,7 +63,6 @@ export interface SubscriptionsRequest {
 }
 
 export default class Chargebee {
-
   public static configure({
     site,
     publishableApiKey,
@@ -95,8 +94,10 @@ export default class Chargebee {
     return ChargebeeReactNative.purchaseProduct(productId, customerId);
   }
 
-  public static retrieveSubscriptions(queryParams: SubscriptionsRequest): Promise<Array<Subscription>> {
-    return ChargebeeReactNative.retrieveSubscriptions(queryParams)
+  public static async retrieveSubscriptions(
+    queryParams: SubscriptionsRequest
+  ): Promise<Array<Subscription>> {
+    return ChargebeeReactNative.retrieveSubscriptions(queryParams);
   }
 }
 
