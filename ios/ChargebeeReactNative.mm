@@ -9,7 +9,7 @@ RCT_REMAP_METHOD(configure,
                 withPublishableApiKey:(NSString *)publishableApiKey
                 withSdkKey:(NSString *)sdkKey)
 {
-    ChargebeeHelper* helper = [[ChargebeeHelper alloc] init];
+    ChargebeeHelper* helper = [ChargebeeHelper shared];
     [helper configureWithSite:site apiKey:publishableApiKey sdkKey:sdkKey];
 }
 
@@ -18,7 +18,7 @@ RCT_REMAP_METHOD(retrieveProductIdentifiers,
                  withResolver:(RCTPromiseResolveBlock)resolve
                  withRejecter:(RCTPromiseRejectBlock)reject)
 {
-    ChargebeeHelper* helper = [[ChargebeeHelper alloc] init];
+    ChargebeeHelper* helper = [ChargebeeHelper shared];
     [helper retrieveProductIdentifiersWithQueryParams:queryParams resolver:resolve rejecter:reject];
 }
 
@@ -27,7 +27,7 @@ RCT_REMAP_METHOD(retrieveProducts,
                  withResolver:(RCTPromiseResolveBlock)resolve
                  withRejecter:(RCTPromiseRejectBlock)reject)
 {
-    ChargebeeHelper* helper = [[ChargebeeHelper alloc] init];
+    ChargebeeHelper* helper = [ChargebeeHelper shared];
     [helper retrieveProductsWithProductIds:productIds resolver:resolve rejecter:reject];
 }
 
@@ -37,7 +37,7 @@ RCT_REMAP_METHOD(purchaseProduct,
                  withResolver:(RCTPromiseResolveBlock)resolve
                  withRejecter:(RCTPromiseRejectBlock)reject)
 {
-    ChargebeeHelper* helper = [[ChargebeeHelper alloc] init];
+    ChargebeeHelper* helper = [ChargebeeHelper shared];
     [helper purchaseProductWithProductId:productId customerId:customerId resolver:resolve rejecter:reject];
 }
 
@@ -46,7 +46,7 @@ RCT_REMAP_METHOD(retrieveSubscriptions,
                  withResolver:(RCTPromiseResolveBlock)resolve
                  withRejecter:(RCTPromiseRejectBlock)reject)
 {
-    ChargebeeHelper* helper = [[ChargebeeHelper alloc] init];
+    ChargebeeHelper* helper = [ChargebeeHelper shared];
     [helper retrieveSubscriptionsWithQueryParams:queryParams resolver:resolve rejecter:reject];
 }
 
