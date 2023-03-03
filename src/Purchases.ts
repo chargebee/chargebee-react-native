@@ -22,14 +22,14 @@ export interface Purchase {
 }
 
 export interface Subscription {
-  readonly activatedAt: Double | null;
-  readonly status: string | null;
-  readonly planAmount: Double | null;
-  readonly id: string | null;
-  readonly customerId: string | null;
-  readonly currentTermEnd: Double | null;
-  readonly currentTermStart: Double | null;
+  readonly id: string;
+  readonly customerId: string;
+  readonly status: string;
   readonly planId: string | null;
+  readonly planAmount: Double | null;
+  readonly activatedAt: Double | null;
+  readonly currentTermStart: Double | null;
+  readonly currentTermEnd: Double | null;
 }
 
 export interface SubscriptionsRequest {
