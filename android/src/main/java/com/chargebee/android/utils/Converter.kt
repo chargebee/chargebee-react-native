@@ -6,11 +6,10 @@ import com.chargebee.android.models.SubscriptionDetailsWrapper
 import com.facebook.react.bridge.*
 
 
-internal fun convertArrayToWritableArray(array: Array<Any?>): WritableArray {
+internal fun convertArrayToWritableArray(array: Array<String>): WritableArray {
   val writableArray: WritableArray = WritableNativeArray()
   for (item in array) {
     when (item) {
-      null -> writableArray.pushNull()
       is String -> writableArray.pushString(item)
     }
   }
