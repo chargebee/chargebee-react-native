@@ -10,8 +10,15 @@ import Chargebee
 
 public class ChargebeeHelper: NSObject {
     
-    @objc public func configure(site: String, apiKey: String, sdkKey: String?) {
-        Chargebee.configure(site: site, apiKey: apiKey, sdkKey: sdkKey)
+    @objc public func configure(site: String, apiKey: String, sdkKey: String?, resolver: @escaping RCTPromiseResolveBlock, rejecter: @escaping RCTPromiseRejectBlock) {
+        Chargebee.configure(site: site, apiKey: apiKey, sdkKey:sdkKey) { result in
+            switch result {
+            case .success(let status):
+                resolver(status.asDictionary)
+            case .error(let error):
+                rejecter("\(error.httpStatusCode)", error.errorDescription, error)
+            }
+        }
     }
     
     @objc public func retrieveProductIdentifiers(queryParams: Dictionary<String, String>, resolver: @escaping RCTPromiseResolveBlock, rejecter: @escaping RCTPromiseRejectBlock) {

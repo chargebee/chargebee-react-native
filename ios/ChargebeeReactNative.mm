@@ -7,10 +7,12 @@ RCT_EXPORT_MODULE()
 RCT_REMAP_METHOD(configure,
                 configureWithSite:(NSString *)site
                 withPublishableApiKey:(NSString *)publishableApiKey
-                withSdkKey:(NSString *)sdkKey)
+                withSdkKey:(NSString *)sdkKey
+                withResolver:(RCTPromiseResolveBlock)resolve
+                withRejecter:(RCTPromiseRejectBlock)reject)
 {
     ChargebeeHelper* helper = [[ChargebeeHelper alloc] init];
-    [helper configureWithSite:site apiKey:publishableApiKey sdkKey:sdkKey];
+    [helper configureWithSite:site apiKey:publishableApiKey sdkKey:sdkKey resolver: resolve rejecter: reject];
 }
 
 RCT_REMAP_METHOD(retrieveProductIdentifiers,

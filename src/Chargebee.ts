@@ -1,11 +1,12 @@
 import { NativeModules, Platform } from 'react-native';
 import {
-  type ChargebeeConfig,
   sdkKeyForPlatform,
+  type ChargebeeConfig,
   type Product,
   type Purchase,
   type SubscriptionsRequest,
   type Subscription,
+  type AuthenticationDetail,
 } from './Purchases';
 
 const LINKING_ERROR =
@@ -38,9 +39,9 @@ export default class Chargebee {
     publishableApiKey,
     androidSdkKey,
     iOsSdkKey,
-  }: ChargebeeConfig): void {
+  }: ChargebeeConfig): Promise<AuthenticationDetail> {
     const sdkKey: string = sdkKeyForPlatform(androidSdkKey, iOsSdkKey);
-    ChargebeeReactNative.configure(site, publishableApiKey, sdkKey);
+    return ChargebeeReactNative.configure(site, publishableApiKey, sdkKey);
   }
 
   // TODO: Refactor to use types for query
