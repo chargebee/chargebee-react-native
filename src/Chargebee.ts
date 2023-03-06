@@ -36,8 +36,9 @@ export default class Chargebee {
   /**
    * Sets up Chargebee SDK with site, API key and SDK IDs for Android and iOS.
    * 
-   * @param {String} site Chargebee site
-   * @param {String} publishableApiKey Publishable API key generated for your Chargebee Site.
+   * @param {String} site Chargebee site. 
+   * Example: If the Chargebee domain url is https://mobile-test.chargebee.com, then the site value is 'mobile-test'.
+   * @param {String} publishableApiKey Publishable API key generated for your Chargebee Site. Refer: https://www.chargebee.com/docs/2.0/api_keys.html#types-of-api-keys_publishable-key
    * @param {String} androidSdkKey Android SDK key. Refer: https://www.chargebee.com/docs/1.0/mobile-playstore-notifications.html#app-id
    * @param {String} iOsSdkKey iOS SDK key. Refer: https://www.chargebee.com/docs/1.0/mobile-app-store-product-iap.html#connection-keys_app-id
    */
@@ -96,6 +97,7 @@ export default class Chargebee {
    * Retrieves the subscriptions by customer_id or subscription_id.
    * 
    * @param {Object} subscriptionRequest. Subscription Request object.
+   * Example: {customer_id:{customer_id : '<customer_id>', subscription_id : '<subscription_id>', status: 'active'}
    * @returns {Promise<Array<Subscription>>} Array of subscriptions
    */
   public static async retrieveSubscriptions(
