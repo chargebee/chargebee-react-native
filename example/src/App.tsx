@@ -5,7 +5,9 @@ import * as eva from '@eva-design/eva';
 import { ApplicationProvider } from '@ui-kitten/components';
 import { default as theme } from './theme.json';
 
-import Chargebee, { AuthenticationDetail, ChargebeeError } from '@chargebee/react-native-chargebee';
+import Chargebee, {
+  AuthenticationDetail, ChargebeeError
+} from '@chargebee/react-native-chargebee';
 
 import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen';
@@ -21,7 +23,7 @@ export default function App() {
   const androidSdkKey = 'androidSdkKey';
 
   useEffect(() => {
-    configure(site, apiKey, iOsSdkKey, androidSdkKey)
+    configure(site, apiKey, iOsSdkKey, androidSdkKey);
     console.debug('Configured Chargebee SDK');
   });
 
@@ -54,7 +56,12 @@ export default function App() {
     </ApplicationProvider>
   );
 }
-async function configure(site: string, apiKey: string, iOsSdkKey: string, androidSdkKey: string) {
+async function configure(
+  site: string,
+  apiKey: string,
+  iOsSdkKey: string,
+  androidSdkKey: string
+) {
   try {
     // TODO Implement in Android
     const configResult: AuthenticationDetail = await Chargebee.configure({

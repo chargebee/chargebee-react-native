@@ -9,9 +9,9 @@ export interface ChargebeeConfig {
 }
 
 export interface AuthenticationDetail {
-  appId: string | null,
-  status: string | null,
-  version: string | null
+  appId: string | null;
+  status: string | null;
+  version: string | null;
 }
 
 export interface Product {

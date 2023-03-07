@@ -26,9 +26,23 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
   }
 
   @ReactMethod
-  override fun configure(site: String, publishableApiKey: String, sdkKey: String) {
+  override fun configure(
+    site: String,
+    publishableApiKey: String,
+    sdkKey: String,
+    promise: Promise
+  ) {
     val packageName = currentActivity?.packageName ?: ""
-    Chargebee.configure(site, publishableApiKey, true, sdkKey, packageName)
+    Chargebee.configure(site, publishableApiKey, true, sdkKey, packageName) {
+      when (it) {
+        is ChargebeeResult.Success -> {
+          promise.resolve(it)
+        }
+        is ChargebeeResult.Error -> {
+          promise.reject("${it.exp.httpStatusCode}", it.exp.message, it.exp)
+        }
+      }
+    }
   }
 
   @ReactMethod
