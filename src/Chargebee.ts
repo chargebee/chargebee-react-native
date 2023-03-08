@@ -7,6 +7,7 @@ import {
   type SubscriptionsRequest,
   type Subscription,
   type AuthenticationDetail,
+  RetrieveProductIdentifiersRequest,
 } from './Purchases';
 
 const LINKING_ERROR =
@@ -44,9 +45,8 @@ export default class Chargebee {
     return ChargebeeReactNative.configure(site, publishableApiKey, sdkKey);
   }
 
-  // TODO: Refactor to use types for query
   public static async retrieveProductIdentifiers(
-    queryParams: Map<string, string>
+    queryParams: RetrieveProductIdentifiersRequest
   ): Promise<Array<string>> {
     return ChargebeeReactNative.retrieveProductIdentifiers(queryParams);
   }

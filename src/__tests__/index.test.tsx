@@ -1,5 +1,8 @@
 import { NativeModules, Platform } from 'react-native';
-import Chargebee, { SubscriptionsRequest } from '../index';
+import Chargebee, {
+  RetrieveProductIdentifiersRequest,
+  SubscriptionsRequest,
+} from '../index';
 
 describe('Chargebee React Native', () => {
   describe('Configuring Chargebee React Native SDK with Site, Publishable API key and SDK Key', () => {
@@ -59,8 +62,10 @@ describe('Chargebee React Native', () => {
   });
 
   it('retrieve Product Identifiers for the configured SDK', async () => {
-    const queryParams = new Map<string, string>();
-    queryParams.set('limit', '100');
+    const queryParams: RetrieveProductIdentifiersRequest = {
+      limit: '100',
+      offset: '1',
+    };
     await Chargebee.retrieveProductIdentifiers(queryParams);
 
     expect(
