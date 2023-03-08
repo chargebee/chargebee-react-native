@@ -6,7 +6,7 @@ import { ApplicationProvider } from '@ui-kitten/components';
 import { default as theme } from './theme.json';
 
 import Chargebee, {
-  AuthenticationDetail, ChargebeeError
+  AuthenticationDetail,
 } from '@chargebee/react-native-chargebee';
 
 import LoginScreen from './screens/LoginScreen';
@@ -63,21 +63,14 @@ async function configure(
   androidSdkKey: string
 ) {
   try {
-    // TODO Implement in Android
     const configResult: AuthenticationDetail = await Chargebee.configure({
       site: site,
       publishableApiKey: apiKey,
       androidSdkKey: androidSdkKey,
       iOsSdkKey: iOsSdkKey,
-    });  
-    console.log('SDK Configuration complete:', configResult)
-  } catch (error: ChargebeeError) {
-    console.error('SDK Config failed', error)
-    console.log('code', error.code)
-    console.log('message', error.message)
-    console.log('domain', error.domain)
-    console.log('userInfo', error.userInfo)
+    });
+    console.log('SDK Configuration complete:', configResult);
+  } catch (error) {
+    console.error('SDK Config failed', error);
   }
-  
 }
-

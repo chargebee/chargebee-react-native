@@ -24,9 +24,9 @@ extension CBError: Encodable {
     enum CodingKeys: String, CodingKey {
         case message = "message"
         case type = "type"
-        case apiErrorCode = "api_error_code"
+        case apiErrorCode = "apiErrorCode"
         case param = "param"
-        case httpStatusCode = "http_status_code"
+        case httpStatusCode = "httpStatusCode"
         
         }
     public func encode(to encoder: Encoder) throws {

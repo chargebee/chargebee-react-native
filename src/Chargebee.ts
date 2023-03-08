@@ -1,5 +1,4 @@
 import { NativeModules, Platform } from 'react-native';
-import type { ChargebeeError } from './ChargebeeError';
 import {
   sdkKeyForPlatform,
   type ChargebeeConfig,
