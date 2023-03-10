@@ -6,9 +6,7 @@ import com.chargebee.android.billingservice.GPErrorCode
 import com.chargebee.android.exceptions.CBException
 import com.chargebee.android.exceptions.CBProductIDResult
 import com.chargebee.android.exceptions.ChargebeeResult
-import com.chargebee.android.models.CBProduct
-import com.chargebee.android.models.CBSubscription
-import com.chargebee.android.models.PurchaseResult
+import com.chargebee.android.models.*
 import com.chargebee.android.models.toMap
 import com.chargebee.android.network.ReceiptDetail
 import com.chargebee.android.utils.*
@@ -26,9 +24,23 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
   }
 
   @ReactMethod
-  override fun configure(site: String, publishableApiKey: String, sdkKey: String) {
+  override fun configure(
+    site: String,
+    publishableApiKey: String,
+    sdkKey: String,
+    promise: Promise
+  ) {
     val packageName = currentActivity?.packageName ?: ""
-    Chargebee.configure(site, publishableApiKey, true, sdkKey, packageName)
+    Chargebee.configure(site, publishableApiKey, true, sdkKey, packageName) {
+      when (it) {
+        is ChargebeeResult.Success -> {
+          promise.resolve(it)
+        }
+        is ChargebeeResult.Error -> {
+          promise.reject("${it.exp.httpStatusCode}", it.exp.payload(), it.exp)
+        }
+      }
+    }
   }
 
   @ReactMethod

@@ -10,12 +10,19 @@ import Chargebee
 
 @objc(ChargebeeHelper)
 public class ChargebeeHelper: NSObject {
-    
+
     @objc public static let shared = ChargebeeHelper()
     private override init() {}
     
-    @objc public func configure(site: String, apiKey: String, sdkKey: String?) {
-        Chargebee.configure(site: site, apiKey: apiKey, sdkKey: sdkKey)
+    @objc public func configure(site: String, apiKey: String, sdkKey: String?, resolver: @escaping RCTPromiseResolveBlock, rejecter: @escaping RCTPromiseRejectBlock) {
+        Chargebee.configure(site: site, apiKey: apiKey, sdkKey:sdkKey) { result in
+            switch result {
+            case .success(let status):
+                resolver(status.asDictionary)
+            case .error(let error):
+                rejecter("\(error.httpStatusCode)", error.payload, error)
+            }
+        }
     }
     
     @objc public func retrieveProductIdentifiers(queryParams: Dictionary<String, String>, resolver: @escaping RCTPromiseResolveBlock, rejecter: @escaping RCTPromiseRejectBlock) {

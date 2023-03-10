@@ -11,6 +11,12 @@ export interface ChargebeeConfig {
   iOsSdkKey: string;
 }
 
+export interface AuthenticationDetail {
+  appId: string | null;
+  status: string | null;
+  version: string | null;
+}
+
 export interface Product {
   readonly id: string;
   readonly title: string;
