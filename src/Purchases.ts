@@ -1,6 +1,9 @@
 import { Platform } from 'react-native';
 import type { Double } from 'react-native/Libraries/Types/CodegenTypes';
 
+/**
+ * Chargebee SDK Config parameters.
+ */
 export interface ChargebeeConfig {
   site: string;
   publishableApiKey: string;
@@ -41,7 +44,7 @@ export interface Subscription {
 export interface SubscriptionsRequest {
   customer_id?: string;
   subscription_id?: string;
-  status?: string | null;
+  status?: string;
 }
 
 export interface RetrieveProductIdentifiersRequest {
