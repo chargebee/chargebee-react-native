@@ -51,7 +51,7 @@
   },
   "homepage": "https://github.com/chargebee/chargebee-react-native#readme",
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://hptest.jfrog.io/artifactory/api/npm/npm/"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^17.0.2",
@@ -106,8 +106,12 @@
   },
   "release-it": {
     "git": {
+      "requiredBranch": "master",
       "commitMessage": "chore: release ${version}",
       "tagName": "v${version}"
+    },
+    "hooks": {
+      "after:bump": "npx auto-changelog -p"
     },
     "npm": {
       "publish": true
