@@ -17,4 +17,4 @@ jobs:
       - name: Yarn Tests
         run: yarn test
       - name: Linter
-        run: yarn run tslint
+        run: yarn run eslint
