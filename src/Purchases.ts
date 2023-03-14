@@ -47,7 +47,7 @@ export interface SubscriptionsRequest {
   status?: string;
 }
 
-export interface RetrieveProductIdentifiersRequest {
+export interface ProductIdentifiersRequest {
   limit?: string;
   offset?: string;
 }

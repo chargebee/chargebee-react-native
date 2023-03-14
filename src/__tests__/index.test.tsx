@@ -1,20 +1,24 @@
 import { NativeModules, Platform } from 'react-native';
 import Chargebee, {
-  RetrieveProductIdentifiersRequest,
+  ProductIdentifiersRequest,
   SubscriptionsRequest,
 } from '../index';
 
 describe('Chargebee React Native', () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
+
   describe('Configuring Chargebee React Native SDK with Site, Publishable API key and SDK Key', () => {
     const testSite = 'testsite';
     const testPublishableApiKey = 'test-PublishableApiKey';
     const androidSdkKey = 'androidSdkKey';
     const iOsSdkKey = 'iOsSdkKey';
 
-    it('for Android', () => {
+    it('for Android', async () => {
       Platform.OS = 'android';
 
-      Chargebee.configure({
+      await Chargebee.configure({
         site: testSite,
         publishableApiKey: testPublishableApiKey,
         androidSdkKey: androidSdkKey,
@@ -28,10 +32,10 @@ describe('Chargebee React Native', () => {
       );
     });
 
-    it('for iOS', () => {
+    it('for iOS', async () => {
       Platform.OS = 'ios';
 
-      Chargebee.configure({
+      await Chargebee.configure({
         site: testSite,
         publishableApiKey: testPublishableApiKey,
         androidSdkKey: androidSdkKey,
@@ -48,8 +52,8 @@ describe('Chargebee React Native', () => {
     it('for Unsupported Platform', () => {
       Platform.OS = 'web';
 
-      let configure = () => {
-        Chargebee.configure({
+      let configure = async () => {
+        await Chargebee.configure({
           site: testSite,
           publishableApiKey: testPublishableApiKey,
           androidSdkKey: androidSdkKey,
@@ -57,12 +61,13 @@ describe('Chargebee React Native', () => {
         });
       };
 
-      expect(configure).toThrowError('Platform not supported.');
+      expect(configure).rejects.toThrow('Platform not supported.');
+      expect(NativeModules.ChargebeeReactNative.configure).not.toBeCalled();
     });
   });
 
   it('retrieve Product Identifiers for the configured SDK', async () => {
-    const queryParams: RetrieveProductIdentifiersRequest = {
+    const queryParams: ProductIdentifiersRequest = {
       limit: '100',
       offset: '1',
     };

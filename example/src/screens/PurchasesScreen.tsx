@@ -1,5 +1,5 @@
 import Chargebee, {
-  RetrieveProductIdentifiersRequest,
+  ProductIdentifiersRequest,
 } from '@chargebee/react-native-chargebee';
 import { Text } from '@ui-kitten/components';
 import React, { useEffect, useState } from 'react';
@@ -16,7 +16,7 @@ const PurchasesScreen = ({ navigation, customerId }) => {
   };
 
   useEffect(() => {
-    const queryParams: RetrieveProductIdentifiersRequest = {
+    const queryParams: ProductIdentifiersRequest = {
       limit: '2',
       offset: '1',
     };
