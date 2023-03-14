@@ -12,6 +12,8 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
+      - name: Yarn Install
+        run: yarn intsall
       - name: Yarn Tests
         run: yarn test
       - name: Linter
