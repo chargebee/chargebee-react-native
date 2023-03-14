@@ -13,7 +13,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Yarn Install
-        run: yarn intsall
+        run: yarn install
       - name: Yarn Tests
         run: yarn test
       - name: Linter
