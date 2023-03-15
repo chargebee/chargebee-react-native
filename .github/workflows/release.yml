@@ -2,7 +2,7 @@ name: Release to NPM and Github
 on: 
   push:
     branches: 
-      - master
+      - master-temp
       - next
 jobs:
   release:
@@ -47,9 +47,8 @@ jobs:
         env: 
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RELEASE_TYPE: ${{ github.event.inputs.release-type }}
       - name: Release package
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/master-temp'
         run: yarn release --ci
         env: 
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
