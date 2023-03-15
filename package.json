@@ -106,7 +106,7 @@
   },
   "release-it": {
     "git": {
-      "requiredBranch": "master",
+      "requiredBranch": ["master-temp", "next"],
       "commitMessage": "chore: release ${version}",
       "tagName": "v${version}"
     },
