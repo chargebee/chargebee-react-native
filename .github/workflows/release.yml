@@ -1,13 +1,13 @@
 name: Release to NPM and Github
 on: 
+  ## Remove for merge
   pull_request:
     branches:
       - release-prep-temp
-  workflow_dispatch:
-    inputs:
-      pre-release-type:
-        description: 'Release type (one of): alpha, beta, rc'
-        required: true
+  workflow_run:
+    workflows: Build React Native
+    branches: [master, next]
+    types: completed
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -16,7 +16,8 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-          ref: release-test
+          ## Remove for merge
+          ref: release-test 
       - name: Initialize Git Config
         run: |
           git config user.name "${GITHUB_ACTOR}"
@@ -43,14 +44,14 @@ jobs:
         env: 
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Pre-Release package
-        if: contains(github.event.inputs.pre-release-type, 'alpha')
-        run: yarn release --ci --preRelease=$RELEASE_TYPE --dry-run 
+        if: github.ref == 'refs/heads/next'
+        run: yarn release --ci --preRelease=beta --dry-run 
         env: 
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_TYPE: ${{ github.event.inputs.release-type }}
       - name: Release package
-        if: "!contains(github.event.inputs.pre-release-type, 'alpha')"
+        if: github.ref == 'refs/heads/master'
         run: yarn release --ci --dry-run 
         env: 
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
