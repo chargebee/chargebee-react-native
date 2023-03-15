@@ -11,12 +11,12 @@ Pod::Spec.new do |s|
   s.license      = package["license"]
   s.authors      = package["author"]
 
-  s.platforms    = { :ios => "11.0" }
+  s.platforms    = { :ios => "11.2" }
   s.source       = { :git => package["repository"], :tag => "#{s.version}" }
 
   s.source_files = "ios/**/*.{h,m,mm,swift}"
 
-  s.dependency   "Chargebee", '1.0.16'
+  s.dependency   "Chargebee", '1.0.18'
   
   s.dependency "React-Core"
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }

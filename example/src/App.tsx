@@ -1,60 +1,76 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import * as eva from '@eva-design/eva';
+import { ApplicationProvider } from '@ui-kitten/components';
+import { default as theme } from './theme.json';
 
-import { StyleSheet, View, Button } from 'react-native';
-import Chargebee from '@chargebee/react-native-chargebee';
+import Chargebee, {
+  AuthenticationDetail,
+} from '@chargebee/react-native-chargebee';
+
+import LoginScreen from './screens/LoginScreen';
+import HomeScreen from './screens/HomeScreen';
+import ProductDetail from './screens/ProductDetailScreen';
+import CoursesScreen from './screens/CoursesScreen';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   const site = 'site';
   const apiKey = 'apiKey';
-  const sdkKey = 'sdkKey';
+  const iOsSdkKey = 'iOsSdkKey';
+  const androidSdkKey = 'androidSdkKey';
 
-  React.useEffect(() => {
-    configure(site, apiKey, sdkKey);
-  }, []);
+  useEffect(() => {
+    configure(site, apiKey, iOsSdkKey, androidSdkKey);
+    console.debug('Configured Chargebee SDK');
+  });
 
   return (
-    <View style={styles.container}>
-      <Button
-        title="Configure"
-        onPress={() => configure(site, apiKey, sdkKey)}
-      />
-      <Button
-        title="Retrieve Product Identifers"
-        onPress={retrieveProductIdentifiers}
-      />
-    </View>
+    <ApplicationProvider {...eva} theme={{ ...eva.light, ...theme }}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Login"
+            component={LoginScreen}
+            options={{ title: 'Login' }}
+          />
+          <Stack.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{ title: 'Hello' }}
+          />
+          <Stack.Screen
+            name="ProductDetail"
+            component={ProductDetail}
+            options={{ title: 'Product Detail' }}
+          />
+          <Stack.Screen
+            name="Courses"
+            component={CoursesScreen}
+            options={{ title: 'Courses' }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </ApplicationProvider>
   );
 }
-
-const retrieveProductIdentifiers = () => {
-  const queryParams = new Map<string, string>();
-  queryParams.set('limit', '100');
-  Chargebee.retrieveProductIdentifiers(queryParams)
-    .then((result) => {
-      console.log(result);
-    })
-    .catch((e) => {
-      console.error(e);
+async function configure(
+  site: string,
+  apiKey: string,
+  iOsSdkKey: string,
+  androidSdkKey: string
+) {
+  try {
+    const configResult: AuthenticationDetail = await Chargebee.configure({
+      site: site,
+      publishableApiKey: apiKey,
+      androidSdkKey: androidSdkKey,
+      iOsSdkKey: iOsSdkKey,
     });
-};
-
-const configure = (site: string, apiKey: string, sdkKey: string) => {
-  Chargebee.configure({
-    site: site,
-    publishableApiKey: apiKey,
-    sdkKey: sdkKey,
-  });
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  box: {
-    width: 60,
-    height: 60,
-    marginVertical: 20,
-  },
-});
+    console.log('SDK Configuration complete:', configResult);
+  } catch (error) {
+    console.error('SDK Config failed', error);
+  }
+}

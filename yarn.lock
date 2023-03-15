@@ -2006,9 +2006,9 @@
   integrity sha512-KrwSpS1tKI70wuKl68DwJZYEvXktDHdZMG0k2AXD/rJVSlB23/X2CB2cutVR0HwNMJIal9HOUOBB2rVfa6UGtQ==
 
 "@react-native/codegen@^0.72.1":
-  version "0.72.1"
-  resolved "https://registry.yarnpkg.com/@react-native/codegen/-/codegen-0.72.1.tgz#28fd5e113c5db969fbc7fbfa3ee515bde7ce5ad7"
-  integrity sha512-GHI5np5u1yzPkVAfDuFOKVqpsiDMKJGHG8dEe0uUUkTuEcPxKmSifH0EXbVJm6pPFQO4AKH1J5j1dYtE44UTgA==
+  version "0.72.3"
+  resolved "https://registry.npmjs.org/@react-native/codegen/-/codegen-0.72.3.tgz"
+  integrity sha512-SsSiUeGm4n9/utbgnXTBSHKK9GyjSKxkhpQ9SMaOEwaXS8RaRnmerQu96FNa1fqMts63dDOwgTszUCu1KlUj3Q==
   dependencies:
     "@babel/parser" "^7.20.0"
     flow-parser "^0.185.0"
@@ -2668,7 +2668,7 @@ ast-types@0.14.2:
 
 ast-types@0.15.2:
   version "0.15.2"
-  resolved "https://registry.yarnpkg.com/ast-types/-/ast-types-0.15.2.tgz#39ae4809393c4b16df751ee563411423e85fb49d"
+  resolved "https://registry.npmjs.org/ast-types/-/ast-types-0.15.2.tgz"
   integrity sha512-c27loCv9QkZinsa5ProX751khO9DJl/AcB5c2KNtA6NRvHKS0PgLfcftz72KVq504vB0Gku5s2kUZzDBvQWvHg==
   dependencies:
     tslib "^2.0.1"
@@ -6335,7 +6335,7 @@ jscodeshift@^0.13.1:
 
 jscodeshift@^0.14.0:
   version "0.14.0"
-  resolved "https://registry.yarnpkg.com/jscodeshift/-/jscodeshift-0.14.0.tgz#7542e6715d6d2e8bde0b4e883f0ccea358b46881"
+  resolved "https://registry.npmjs.org/jscodeshift/-/jscodeshift-0.14.0.tgz"
   integrity sha512-7eCC1knD7bLUPuSCwXsMZUH51O8jIcoVyKtI6P0XM0IVzlGjckPy3FIwQlorzbN0Sg79oK+RlohN32Mqf/lrYA==
   dependencies:
     "@babel/core" "^7.13.16"
@@ -8352,7 +8352,7 @@ recast@^0.20.4:
 
 recast@^0.21.0:
   version "0.21.5"
-  resolved "https://registry.yarnpkg.com/recast/-/recast-0.21.5.tgz#e8cd22bb51bcd6130e54f87955d33a2b2e57b495"
+  resolved "https://registry.npmjs.org/recast/-/recast-0.21.5.tgz"
   integrity sha512-hjMmLaUXAm1hIuTqOdeYObMslq/q+Xff6QE3Y2P+uoHAg2nmVlLBps2hzh1UJDdMtDTMXOFewK6ky51JQIeECg==
   dependencies:
     ast-types "0.15.2"

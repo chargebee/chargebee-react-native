@@ -1,28 +1,76 @@
-import { NativeModules } from 'react-native';
-import Chargebee from '../index';
+import { NativeModules, Platform } from 'react-native';
+import Chargebee, {
+  ProductIdentifiersRequest,
+  SubscriptionsRequest,
+} from '../index';
 
 describe('Chargebee React Native', () => {
-  it('configures the CB RN SDK with Site, Publishable API key and SDK Key', () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
+
+  describe('Configuring Chargebee React Native SDK with Site, Publishable API key and SDK Key', () => {
     const testSite = 'testsite';
     const testPublishableApiKey = 'test-PublishableApiKey';
-    const sdkKey = 'sdkKey';
+    const androidSdkKey = 'androidSdkKey';
+    const iOsSdkKey = 'iOsSdkKey';
 
-    Chargebee.configure({
-      site: testSite,
-      publishableApiKey: testPublishableApiKey,
-      sdkKey: sdkKey,
+    it('for Android', async () => {
+      Platform.OS = 'android';
+
+      await Chargebee.configure({
+        site: testSite,
+        publishableApiKey: testPublishableApiKey,
+        androidSdkKey: androidSdkKey,
+        iOsSdkKey: iOsSdkKey,
+      });
+
+      expect(NativeModules.ChargebeeReactNative.configure).toHaveBeenCalledWith(
+        testSite,
+        testPublishableApiKey,
+        androidSdkKey
+      );
     });
 
-    expect(NativeModules.ChargebeeReactNative.configure).toHaveBeenCalledWith(
-      testSite,
-      testPublishableApiKey,
-      sdkKey
-    );
+    it('for iOS', async () => {
+      Platform.OS = 'ios';
+
+      await Chargebee.configure({
+        site: testSite,
+        publishableApiKey: testPublishableApiKey,
+        androidSdkKey: androidSdkKey,
+        iOsSdkKey: iOsSdkKey,
+      });
+
+      expect(NativeModules.ChargebeeReactNative.configure).toHaveBeenCalledWith(
+        testSite,
+        testPublishableApiKey,
+        iOsSdkKey
+      );
+    });
+
+    it('for Unsupported Platform', () => {
+      Platform.OS = 'web';
+
+      let configure = async () => {
+        await Chargebee.configure({
+          site: testSite,
+          publishableApiKey: testPublishableApiKey,
+          androidSdkKey: androidSdkKey,
+          iOsSdkKey: iOsSdkKey,
+        });
+      };
+
+      expect(configure).rejects.toThrow('Platform not supported.');
+      expect(NativeModules.ChargebeeReactNative.configure).not.toBeCalled();
+    });
   });
 
   it('retrieve Product Identifiers for the configured SDK', async () => {
-    const queryParams = new Map<string, string>();
-    queryParams.set('limit', '100');
+    const queryParams: ProductIdentifiersRequest = {
+      limit: '100',
+      offset: '1',
+    };
     await Chargebee.retrieveProductIdentifiers(queryParams);
 
     expect(
@@ -30,6 +78,44 @@ describe('Chargebee React Native', () => {
     ).toBeCalledTimes(1);
     expect(
       NativeModules.ChargebeeReactNative.retrieveProductIdentifiers
+    ).toHaveBeenCalledWith(queryParams);
+  });
+
+  it('retrieve Products by Product IDs for the configured SDK', async () => {
+    const productIds = ['product-id-1'];
+    await Chargebee.retrieveProducts(productIds);
+
+    expect(NativeModules.ChargebeeReactNative.retrieveProducts).toBeCalledTimes(
+      1
+    );
+    expect(
+      NativeModules.ChargebeeReactNative.retrieveProducts
+    ).toHaveBeenCalledWith(productIds);
+  });
+
+  it('purchase Product by Product ID and Customer ID for the configured SDK', async () => {
+    const productId = 'product-id-1';
+    const customerId = 'customer-id-1';
+    await Chargebee.purchaseProduct(productId, customerId);
+
+    expect(NativeModules.ChargebeeReactNative.purchaseProduct).toBeCalledTimes(
+      1
+    );
+    expect(
+      NativeModules.ChargebeeReactNative.purchaseProduct
+    ).toHaveBeenCalledWith(productId, customerId);
+  });
+
+  it('retrieve subscriptions by Subscription ID, Subscription status or Customer ID', async () => {
+    const customerId = 'customer-id-1';
+    const queryParams: SubscriptionsRequest = { customer_id: customerId };
+    await Chargebee.retrieveSubscriptions(queryParams);
+
+    expect(
+      NativeModules.ChargebeeReactNative.retrieveSubscriptions
+    ).toBeCalledTimes(1);
+    expect(
+      NativeModules.ChargebeeReactNative.retrieveSubscriptions
     ).toHaveBeenCalledWith(queryParams);
   });
 });

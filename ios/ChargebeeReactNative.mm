@@ -7,10 +7,12 @@ RCT_EXPORT_MODULE()
 RCT_REMAP_METHOD(configure,
                 configureWithSite:(NSString *)site
                 withPublishableApiKey:(NSString *)publishableApiKey
-                withSdkKey:(NSString *)sdkKey)
+                withSdkKey:(NSString *)sdkKey
+                withResolver:(RCTPromiseResolveBlock)resolve
+                withRejecter:(RCTPromiseRejectBlock)reject)
 {
-    ChargebeeHelper* helper = [[ChargebeeHelper alloc] init];
-    [helper configureWithSite:site apiKey:publishableApiKey sdkKey:sdkKey];
+    ChargebeeHelper* helper = [ChargebeeHelper shared];
+    [helper configureWithSite:site apiKey:publishableApiKey sdkKey:sdkKey resolver: resolve rejecter: reject];
 }
 
 RCT_REMAP_METHOD(retrieveProductIdentifiers,
@@ -18,8 +20,36 @@ RCT_REMAP_METHOD(retrieveProductIdentifiers,
                  withResolver:(RCTPromiseResolveBlock)resolve
                  withRejecter:(RCTPromiseRejectBlock)reject)
 {
-    ChargebeeHelper* helper = [[ChargebeeHelper alloc] init];
+    ChargebeeHelper* helper = [ChargebeeHelper shared];
     [helper retrieveProductIdentifiersWithQueryParams:queryParams resolver:resolve rejecter:reject];
+}
+
+RCT_REMAP_METHOD(retrieveProducts,
+                 retrieveProductsWithProductIds:(NSArray *)productIds
+                 withResolver:(RCTPromiseResolveBlock)resolve
+                 withRejecter:(RCTPromiseRejectBlock)reject)
+{
+    ChargebeeHelper* helper = [ChargebeeHelper shared];
+    [helper retrieveProductsWithProductIds:productIds resolver:resolve rejecter:reject];
+}
+
+RCT_REMAP_METHOD(purchaseProduct,
+                 purchaseProductWithProduct:(NSString *)productId
+                 withCustomerId:(NSString *)customerId
+                 withResolver:(RCTPromiseResolveBlock)resolve
+                 withRejecter:(RCTPromiseRejectBlock)reject)
+{
+    ChargebeeHelper* helper = [ChargebeeHelper shared];
+    [helper purchaseProductWithProductId:productId customerId:customerId resolver:resolve rejecter:reject];
+}
+
+RCT_REMAP_METHOD(retrieveSubscriptions,
+                 retrieveSubscriptionsWithQueryParams:(NSDictionary *)queryParams
+                 withResolver:(RCTPromiseResolveBlock)resolve
+                 withRejecter:(RCTPromiseRejectBlock)reject)
+{
+    ChargebeeHelper* helper = [ChargebeeHelper shared];
+    [helper retrieveSubscriptionsWithQueryParams:queryParams resolver:resolve rejecter:reject];
 }
 
 // Don't compile this code when we build for the old architecture.
