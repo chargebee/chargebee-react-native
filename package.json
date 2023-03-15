@@ -1,6 +1,6 @@
 {
   "name": "@chargebee/react-native-chargebee",
-  "version": "2.0.0",
+  "version": "1.2.0",
   "description": "Package for Chargebee In-App Purchases",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -106,8 +106,12 @@
   },
   "release-it": {
     "git": {
+      "requiredBranch": ["master-temp", "next"],
       "commitMessage": "chore: release ${version}",
       "tagName": "v${version}"
+    },
+    "hooks": {
+      "after:bump": "npx auto-changelog -p"
     },
     "npm": {
       "publish": true
@@ -117,7 +121,8 @@
     },
     "plugins": {
       "@release-it/conventional-changelog": {
-        "preset": "angular"
+        "preset": "angular",
+        "infile": "CHANGELOG.md"
       }
     }
   },
