@@ -47,6 +47,11 @@ export interface SubscriptionsRequest {
   status?: string;
 }
 
+export interface ProductIdentifiersRequest {
+  limit?: string;
+  offset?: string;
+}
+
 export function sdkKeyForPlatform(
   androidSdkKey: string,
   iOsSdkKey: string

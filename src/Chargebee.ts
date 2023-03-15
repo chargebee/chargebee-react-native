@@ -7,6 +7,7 @@ import {
   type SubscriptionsRequest,
   type Subscription,
   type AuthenticationDetail,
+  type ProductIdentifiersRequest,
 } from './Purchases';
 
 const LINKING_ERROR =
@@ -36,14 +37,14 @@ const ChargebeeReactNative = ChargebeeReactNativeModule
 export default class Chargebee {
   /**
    * Sets up Chargebee SDK with site, API key and SDK IDs for Android and iOS.
-   * 
-   * @param {String} site Chargebee site. 
-   * Example: If the Chargebee domain url is https://mobile-test.chargebee.com, then the site value is 'mobile-test'.
+   *
+   * @param {String} site Chargebee site.
+   * Example: If the Chargebee domain url is https://mobile-test.chargebee.com, then the site value is 'mobile-test'
    * @param {String} publishableApiKey Publishable API key generated for your Chargebee Site. Refer: https://www.chargebee.com/docs/2.0/api_keys.html#types-of-api-keys_publishable-key
    * @param {String} androidSdkKey Android SDK key. Refer: https://www.chargebee.com/docs/1.0/mobile-playstore-notifications.html#app-id
    * @param {String} iOsSdkKey iOS SDK key. Refer: https://www.chargebee.com/docs/1.0/mobile-app-store-product-iap.html#connection-keys_app-id
    */
-  public static configure({
+  public static async configure({
     site,
     publishableApiKey,
     androidSdkKey,
@@ -53,23 +54,24 @@ export default class Chargebee {
     return ChargebeeReactNative.configure(site, publishableApiKey, sdkKey);
   }
 
-  // TODO: Refactor to use types for query
   /**
    * Retrieves available product identifiers.
-   * 
-   * @param {Map} queryParams Query Parameters
-   * Example: new Map<string, string>([["limit", "100"]]);
+   *
+   * @param {Object} productIdentitifiersRequest. Product Identifiers Request object.
+   * Example: {limit : '100', offset : '1'}
    * @returns {Promise<Array<string>>} Array of product identifiers
    */
   public static async retrieveProductIdentifiers(
-    queryParams: Map<string, string>
+    productIdentitifiersRequest: ProductIdentifiersRequest
   ): Promise<Array<string>> {
-    return ChargebeeReactNative.retrieveProductIdentifiers(queryParams);
+    return ChargebeeReactNative.retrieveProductIdentifiers(
+      productIdentitifiersRequest
+    );
   }
 
   /**
    * Retrieves products for give product identifiers.
-   * 
+   *
    * @param {Array} productIds Array of product identifiers
    * @returns {Promise<Array<Product>>} Array of products
    */
@@ -82,7 +84,7 @@ export default class Chargebee {
   // TODO: Refactor to pass Product object
   /**
    * Purchase product for the customer.
-   * 
+   *
    * @param {string} productId Product identifier
    * @param {string} customerId Optional. Customer Identifier
    * @returns {Promise<Purchase>} Purchase result
@@ -96,9 +98,9 @@ export default class Chargebee {
 
   /**
    * Retrieves the subscriptions by customer_id or subscription_id.
-   * 
+   *
    * @param {Object} subscriptionRequest. Subscription Request object.
-   * Example: {customer_id:{customer_id : '<customer_id>', subscription_id : '<subscription_id>', status: 'active'}
+   * Example: {customer_id : '<customer_id>', subscription_id : '<subscription_id>', status: 'active'}
    * @returns {Promise<Array<Subscription>>} Array of subscriptions
    */
   public static async retrieveSubscriptions(
