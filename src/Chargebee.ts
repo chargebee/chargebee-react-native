@@ -55,7 +55,7 @@ export default class Chargebee {
   }
 
   /**
-   * Retrieves available product identifiers.
+   * Retrieves all available product identifiers.
    *
    * @param {Object} productIdentitifiersRequest. Product Identifiers Request object.
    * Example: {limit : '100', offset : '1'}
