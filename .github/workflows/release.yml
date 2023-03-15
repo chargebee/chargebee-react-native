@@ -43,7 +43,7 @@ jobs:
         env: 
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Pre-Release package
-        if: contains(github.event.inputs.pre-release-type, "alpha")
+        if: contains(github.event.inputs.pre-release-type, 'alpha')
         run: yarn release --ci --preRelease=$RELEASE_TYPE --dry-run 
         env: 
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
