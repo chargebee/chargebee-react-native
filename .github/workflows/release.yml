@@ -42,7 +42,7 @@ jobs:
             npm config set //hptest.jfrog.io/artifactory/api/npm/npm/:_authToken=$NPM_TOKEN
         env: 
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: PreRelease package
+      - name: Pre-Release package
         if: "contains(fromJSON('["alpha", "beta", "rc"]'), github.event.inputs.pre-release-type)"
         run: yarn release --ci --preRelease=$RELEASE_TYPE --dry-run 
         env: 
