@@ -1,5 +1,8 @@
 name: Release to NPM and Github
-on: workflow_dispatch
+on: 
+  pull_request:
+    branches:
+      - "release-prep-temp" 
 jobs:
   release:
     runs-on: ubuntu-latest
