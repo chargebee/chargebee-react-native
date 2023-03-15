@@ -41,6 +41,7 @@ jobs:
         run: |
             npm config set registry https://hptest.jfrog.io/artifactory/api/npm/npm/
             npm config set //hptest.jfrog.io/artifactory/api/npm/npm/:_authToken=$NPM_TOKEN
+            echo github.ref $github.ref
         env: 
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Pre-Release package
