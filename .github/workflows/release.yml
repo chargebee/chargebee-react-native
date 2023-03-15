@@ -23,7 +23,7 @@ jobs:
             npm config set //hptest.jfrog.io/artifactory/api/npm/npm/:_authToken=$NPM_TOKEN
         env: 
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: Release
+      - name: Release package
         run: yarn release --dry-run --ci
         env: 
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
