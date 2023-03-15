@@ -1,9 +1,5 @@
 name: Build React Native
 on:
-  push: 
-    branches:
-      - master
-      - next
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
