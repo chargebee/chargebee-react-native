@@ -43,13 +43,13 @@
     "in-app purchases",
     "iap"
   ],
-  "repository": "https://github.com/chargebee/chargebee-react-native",
-  "author": "Chargebee, Inc (https://github.com/chargebee/)",
+  "repository": "https://github.com/cb-haripriyan/chargebee-react-native",
+  "author": "Chargebee, Inc (https://github.com/cb-haripriyan/)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/chargebee/chargebee-react-native/issues"
+    "url": "https://github.com/cb-haripriyan/chargebee-react-native/issues"
   },
-  "homepage": "https://github.com/chargebee/chargebee-react-native#readme",
+  "homepage": "https://github.com/cb-haripriyan/chargebee-react-native#readme",
   "publishConfig": {
     "registry": "https://hptest.jfrog.io/artifactory/api/npm/npm/"
   },
