@@ -1,6 +1,6 @@
 {
   "name": "@chargebee/react-native-chargebee",
-  "version": "1.2.0",
+  "version": "2.0.0-beta.0",
   "description": "Package for Chargebee In-App Purchases",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -103,7 +103,10 @@
   },
   "release-it": {
     "git": {
-      "requiredBranch": ["master-temp", "next"],
+      "requiredBranch": [
+        "master-temp",
+        "next"
+      ],
       "commitMessage": "chore: release ${version}",
       "tagName": "v${version}"
     },
