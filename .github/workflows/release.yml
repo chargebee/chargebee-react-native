@@ -52,7 +52,7 @@ jobs:
           echo "config"
           npm config list
           echo "release"
-          npm run release --ci --preRelease=beta --dry-run --verbose
+          yarn release --ci --preRelease=beta --dry-run --verbose
         env: 
           NPM_TOKEN: ${{ secrets.RN_SDK_NPM_WRITE_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
