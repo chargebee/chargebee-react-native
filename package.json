@@ -49,10 +49,7 @@
   "bugs": {
     "url": "https://github.com/cb-haripriyan/chargebee-react-native/issues"
   },
-  "homepage": "https://github.com/cb-haripriyan/chargebee-react-native#readme",
-  "publishConfig": {
-    "registry": "https://hptest.jfrog.io/artifactory/api/npm/npm/"
-  },
+  "homepage": "https://github.com/chargebee/chargebee-react-native#readme",
   "devDependencies": {
     "@commitlint/config-conventional": "^17.0.2",
     "@evilmartians/lefthook": "^1.2.2",
