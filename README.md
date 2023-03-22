@@ -16,7 +16,7 @@ Installation
 ------------
 
 ```sh
-yarn add @chargebee/react-native-chargebee
+yarn add @chargebee/react-native-chargebee@beta
 ```
 
 Example project
