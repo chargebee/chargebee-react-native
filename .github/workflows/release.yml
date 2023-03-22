@@ -2,18 +2,17 @@ name: Release to NPM and Github
 on: 
   push:
     branches: 
-      - master-temp
+      - master
       - next
 jobs:
   release:
     runs-on: ubuntu-latest
+    environment: production
     steps:
       - name: Checkout Source
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-          ## Remove for merge
-          ref: release-test 
       - name: Initialize Git Config
         run: |
           git config user.name "${GITHUB_ACTOR}"
@@ -35,21 +34,28 @@ jobs:
         run: yarn install
       - name: Initialize NPM config
         run: |
-            npm config set registry https://hptest.jfrog.io/artifactory/api/npm/npm/
-            npm config set //hptest.jfrog.io/artifactory/api/npm/npm/:_authToken=$NPM_TOKEN
+            npm config set registry=https://registry.npmjs.com/
+            npm config set //registry.npmjs.com/:_authToken=$NPM_TOKEN
+            echo "whoami"
+            npm whoami
+            echo "config"
+            npm config list
         env: 
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.RN_SDK_NPM_WRITE_TOKEN }}
       - name: Yarn Tests
         run: yarn test
       - name: Pre-Release package
         if: github.ref == 'refs/heads/next'
-        run: yarn release --ci --preRelease=beta
+        run: |
+          echo "whoami"
+          npm whoami
+          npm run release --ci --preRelease=beta --dry-run
         env: 
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.RN_SDK_NPM_WRITE_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Release package
-        if: github.ref == 'refs/heads/master-temp'
+        if: github.ref == 'refs/heads/master'
         run: yarn release --ci
         env: 
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.RN_SDK_NPM_WRITE_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
