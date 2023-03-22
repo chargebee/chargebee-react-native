@@ -51,7 +51,7 @@ jobs:
           npm whoami
           echo "config"
           npm config list
-          npm run release -- --ci --preRelease=beta --dry-run --verbose
+          npm run release -- --ci --preRelease=beta --verbose
         env: 
           NPM_TOKEN: ${{ secrets.RN_SDK_NPM_WRITE_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
