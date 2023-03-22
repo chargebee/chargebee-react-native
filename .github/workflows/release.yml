@@ -51,14 +51,13 @@ jobs:
           npm whoami
           echo "config"
           npm config list
-          echo "release"
-          yarn release --ci --preRelease=beta --dry-run --verbose
+          npm run release -- --ci --preRelease=beta --dry-run --verbose
         env: 
           NPM_TOKEN: ${{ secrets.RN_SDK_NPM_WRITE_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Release package
         if: github.ref == 'refs/heads/master'
-        run: yarn release --ci
+        run: npm run release -- --ci --dry-run --verbose
         env: 
           NPM_TOKEN: ${{ secrets.RN_SDK_NPM_WRITE_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
