@@ -41,7 +41,7 @@ jobs:
         run: yarn test
       - name: Pre-Release package
         if: github.ref == 'refs/heads/next'
-        run: yarn release --ci --preRelease=beta
+        run: yarn release --ci --preRelease=beta --dry-run
         env: 
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
