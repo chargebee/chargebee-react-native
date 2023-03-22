@@ -37,18 +37,18 @@ jobs:
             npm config set registry https://registry.npmjs.com/ 
             npm config set //registry.npmjs.com/:_authToken=$NPM_TOKEN
         env: 
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.RN_SDK_NPM_WRITE_TOKEN }}
       - name: Yarn Tests
         run: yarn test
       - name: Pre-Release package
         if: github.ref == 'refs/heads/next'
         run: yarn release --ci --preRelease=beta --dry-run
         env: 
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.RN_SDK_NPM_WRITE_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Release package
         if: github.ref == 'refs/heads/master'
         run: yarn release --ci
         env: 
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.RN_SDK_NPM_WRITE_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
