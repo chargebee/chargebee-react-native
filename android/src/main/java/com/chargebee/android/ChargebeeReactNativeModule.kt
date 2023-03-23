@@ -37,7 +37,7 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
           promise.resolve(it)
         }
         is ChargebeeResult.Error -> {
-          promise.reject("${it.exp.httpStatusCode}", it.exp.payload(), it.exp)
+          promise.reject("${it.exp.httpStatusCode}", it.exp.message, it.exp)
         }
       }
     }
