@@ -6,7 +6,7 @@ import { ApplicationProvider } from '@ui-kitten/components';
 import { default as theme } from './theme.json';
 
 import Chargebee, {
-  AuthenticationDetail,
+  AuthenticationDetail
 } from '@chargebee/react-native-chargebee';
 
 import LoginScreen from './screens/LoginScreen';

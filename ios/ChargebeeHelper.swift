@@ -20,7 +20,7 @@ public class ChargebeeHelper: NSObject {
             case .success(let status):
                 resolver(status.asDictionary)
             case .error(let error):
-                rejecter("\(error.httpStatusCode)", error.payload, error)
+                rejecter("\(error.httpStatusCode)", error.errorDescription, error.asNSError)
             }
         }
     }
