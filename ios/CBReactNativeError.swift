@@ -8,7 +8,10 @@
 import Foundation
 import Chargebee
 
-enum CBReactNativeError: String, Error {
-    case systemError = "System error"
+enum CBReactNativeError: Int, Error {
+    case unknown = 0
+    case invalidSdkConfiguration = 1
+    case systemError = 100
+//    case systemError = "System error"
 }
 
