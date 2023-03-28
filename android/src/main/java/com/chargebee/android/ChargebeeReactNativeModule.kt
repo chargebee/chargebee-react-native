@@ -38,7 +38,7 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
         }
         is ChargebeeResult.Error -> {
           val messageUserInfo = it.exp.messageUserInfo()
-          promise.reject("${it.exp.httpStatusCode}", messageUserInfo.getString("message"), it.exp, messageUserInfo)
+          promise.reject("${CBReactNativeError.INVALID_SDK_CONFIGURATION.code}", messageUserInfo.getString("message"), it.exp, messageUserInfo)
         }
       }
     }
@@ -54,7 +54,8 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
           promise.resolve(convertArrayToWritableArray(identifiers))
         }
         is CBProductIDResult.Error -> {
-          promise.reject(it.exp.message, it.exp)
+          val messageUserInfo = it.exp.messageUserInfo()
+          promise.reject("${it.exp.errorCode().code}", messageUserInfo.getString("message"), it.exp, messageUserInfo)
         }
       }
     }

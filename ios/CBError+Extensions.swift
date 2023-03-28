@@ -19,9 +19,17 @@ extension CBError {
             userInfo["apiErrorCode"] = response.apiErrorCode
             userInfo["param"] = response.param
             userInfo["httpStatusCode"] = response.httpStatusCode
-            return NSError.init(domain: "CBError", code: httpStatusCode, userInfo: userInfo)
+            return NSError.init(domain: "ChargebeeError", code: httpStatusCode, userInfo: userInfo)
         }
 
     }
     
+}
+
+extension CBPurchaseError {
+    var userInfo: [String: Any] {
+        var userInfo: [String: Any] = [:]
+        userInfo["message"] = self.errorDescription
+        return userInfo
+    }
 }
