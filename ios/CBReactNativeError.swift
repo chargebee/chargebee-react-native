@@ -30,9 +30,9 @@ enum CBReactNativeError: Int, Error {
     case purchaseCancelled = 2009
     case storeProblem = 2010
     case invalidReceipt = 2011
-    case productsNotFound = 2012
-    case requestFailed = 2013
-    
+    case requestFailed = 2012
+    case productPurchasedAlready = 2013
+
     // MARK: General Errors
     case systemError = 3000
     
@@ -41,8 +41,8 @@ enum CBReactNativeError: Int, Error {
 extension CBReactNativeError {
     static func errorCode(purchaseError: CBPurchaseError) -> CBReactNativeError {
         switch purchaseError {
-        case .productIDNotFound, .productsNotFound:
-            return CBReactNativeError.productsNotFound
+        case .productIDNotFound, .productsNotFound, .productNotAvailable:
+            return CBReactNativeError.productNotAvailable
         case .skRequestFailed:
             return CBReactNativeError.requestFailed
         case .cannotMakePayments:
@@ -69,8 +69,6 @@ extension CBReactNativeError {
             return CBReactNativeError.unknown
         case .paymentNotAllowed:
             return CBReactNativeError.paymentNotAllowed
-        case .productNotAvailable:
-            return CBReactNativeError.productNotAvailable
         case .invalidOffer, .invalidPrice, .invalidPromoCode, .invalidPromoOffer:
             return CBReactNativeError.invalidOffer
         case .invalidSandbox:

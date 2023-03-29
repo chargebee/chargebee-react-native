@@ -32,10 +32,7 @@ public class ChargebeeHelper: NSObject {
                     resolver(products.ids)
                 case let .failure(error):
                     if let error = error as? CBPurchaseError {
-                        let sdkError = NSError.init(domain: "StoreError",
-                                                    code: CBReactNativeError.errorCode(purchaseError: error).rawValue,
-                                                    userInfo: error.userInfo)
-                        rejecter("\(sdkError.code)", error.localizedDescription, sdkError)
+                        reject(withPurchaseError: error, using: rejecter)
                     } else {
                         rejecter("\(CBReactNativeError.unknown.rawValue)", error.localizedDescription, error)
                     }
@@ -119,6 +116,7 @@ public class ChargebeeHelper: NSObject {
                 let data = list.map { $0.subscription.asDictionary }
                 resolver(data)
             case let .error(error):
+                // retrieveSubscriptions throw the error when the API returns an empty list
                 if (error.errorDescription?.contains("Subscription Not found") ?? false) {
                     resolver([])
                 } else {
@@ -127,4 +125,12 @@ public class ChargebeeHelper: NSObject {
             }
         }
     }
+
+}
+
+fileprivate func reject(withPurchaseError error: CBPurchaseError, using rejecter: RCTPromiseRejectBlock) {
+    let purchaseError = NSError.init(domain: "StoreError",
+                                code: CBReactNativeError.errorCode(purchaseError: error).rawValue,
+                                userInfo: error.userInfo)
+    rejecter("\(purchaseError.code)", error.localizedDescription, purchaseError)
 }
