@@ -47,10 +47,7 @@ public class ChargebeeHelper: NSObject {
                     let formattedProducts = products.map { $0.asDictionary }
                     resolver(formattedProducts)
                 case let .failure(error):
-                    let sdkError = NSError.init(domain: "StoreError",
-                                                code: CBReactNativeError.errorCode(purchaseError: error).rawValue,
-                                                userInfo: error.userInfo)
-                    rejecter("\(sdkError.code)", error.localizedDescription, sdkError)
+                    reject(withPurchaseError: error, using: rejecter)
             }
         }
     }
@@ -69,10 +66,7 @@ public class ChargebeeHelper: NSObject {
                                 resolver(purchasedProduct.asDictionary)
                             } catch (let error) {
                                 if let error = error as? CBPurchaseError {
-                                    let sdkError = NSError.init(domain: "StoreError",
-                                                                code: CBReactNativeError.errorCode(purchaseError: error).rawValue,
-                                                                userInfo: error.userInfo)
-                                    rejecter("\(sdkError.code)", error.localizedDescription, sdkError)
+                                    reject(withPurchaseError: error, using: rejecter)
                                 } else {
                                     rejecter("\(CBReactNativeError.unknown.rawValue)", error.localizedDescription, error)
                                 }
@@ -80,10 +74,7 @@ public class ChargebeeHelper: NSObject {
                         case .failure(let error):
                             switch error {
                             case let error as CBPurchaseError:
-                                let sdkError = NSError.init(domain: "StoreError",
-                                                            code: CBReactNativeError.errorCode(purchaseError: error).rawValue,
-                                                            userInfo: error.userInfo)
-                                rejecter("\(sdkError.code)", error.localizedDescription, sdkError)
+                                reject(withPurchaseError: error, using: rejecter)
                             case let error as CBError:
                                 switch error {
                                 case .invalidRequest:
@@ -100,10 +91,7 @@ public class ChargebeeHelper: NSObject {
                         }
                     }
                 case let .failure(error):
-                    let sdkError = NSError.init(domain: "StoreError",
-                                                code: CBReactNativeError.errorCode(purchaseError: error).rawValue,
-                                                userInfo: error.userInfo)
-                    rejecter("\(sdkError.code)", error.localizedDescription, sdkError)
+                    reject(withPurchaseError: error, using: rejecter)
                 }
             }
         }

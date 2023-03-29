@@ -4,6 +4,7 @@ import Chargebee, {
 } from '@chargebee/react-native-chargebee';
 import { Text } from '@ui-kitten/components';
 import React, { useEffect, useState } from 'react';
+import { Platform } from 'react-native';
 import { StyleSheet } from 'react-native';
 import LoginForm from '../components/LoginForm';
 import type { LoginFunction } from '../types/CBee';
@@ -40,11 +41,27 @@ const LoginScreen = ({ navigation }) => {
     console.log('Fetching Subscriptions for :', subscriptionRequests);
     Chargebee.retrieveSubscriptions(subscriptionRequests)
       .then((subscriptions: Array<Subscription>) => {
+        console.log('Subscriptions found for User', subscriptions);
         setSubscriptions(subscriptions);
       })
       .catch((error) => {
-        console.error(error);
-        console.log('No Subscriptions found for User');
+        console.log('No Subscriptions found for User', error);
+        console.log(
+          '=========================',
+          Platform.OS,
+          '========================='
+        );
+        const errorModel = {
+          code: error.code,
+          message: error.message,
+          userInfo: {
+            message: error.userInfo?.message,
+            apiErrorCode: error.userInfo?.apiErrorCode,
+            httpStatusCode: error.userInfo?.httpStatusCode,
+          },
+        };
+        console.error(errorModel);
+        console.log('=========================');
         setSubscriptions([]);
       });
   };
