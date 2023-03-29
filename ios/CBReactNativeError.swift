@@ -9,79 +9,70 @@ import Foundation
 import Chargebee
 
 enum CBReactNativeError: Int, Error {
+    
     case unknown = 0
-    case invalidSdkConfiguration = 1
-    case invalidCatalogVersion = 2
-    case invalidClient = 3
-    case invalidOffer = 4
-    case invalidPrice = 5
-    case invalidPromoCode = 6
-    case invalidPromoOffer = 7
-    case invalidPurchase = 8
-    case invalidSandbox = 9
-    case networkConnectionFailed = 10
-    case paymentFailed = 11
-    case paymentNotAllowed = 12
-    case privacyAcknowledgementRequired = 13
-    case productNotAvailable = 14
-    case cannotMakePayments = 15
-    case invalidCustomerId = 16
-    case invalidSDKKey = 17
-    case noProductToRestore = 18
-    case productIDNotFound = 19
-    case productsNotFound = 20
-    case skRequestFailed = 21
-    case userCancelled = 22
-    case resourceNotFound = 23
-    case systemError = 100
-
+    
+    // MARK: Chargebee Errors
+    case invalidSdkConfiguration = 1000
+    case invalidCatalogVersion = 1001
+    case cannotMakePayments = 1002
+    case noProductToRestore = 1003
+    
+    // MARK: Store Errors
+    case invalidOffer = 2001
+    case invalidPurchase = 2002
+    case invalidSandbox = 2003
+    case networkError = 2004
+    case paymentFailed = 2005
+    case paymentNotAllowed = 2006
+    case productNotAvailable = 2007
+    case purchaseNotAllowed = 2008
+    case purchaseCancelled = 2009
+    case storeProblem = 2010
+    case invalidReceipt = 2011
+    case productsNotFound = 2012
+    case requestFailed = 2013
+    
+    // MARK: General Errors
+    case systemError = 3000
+    
 }
 
 extension CBReactNativeError {
     static func errorCode(purchaseError: CBPurchaseError) -> CBReactNativeError {
         switch purchaseError {
-        case .productIDNotFound:
-            return CBReactNativeError.productIDNotFound
-        case .productsNotFound:
+        case .productIDNotFound, .productsNotFound:
             return CBReactNativeError.productsNotFound
         case .skRequestFailed:
-            return CBReactNativeError.skRequestFailed
+            return CBReactNativeError.requestFailed
         case .cannotMakePayments:
             return CBReactNativeError.cannotMakePayments
         case .noProductToRestore:
             return CBReactNativeError.noProductToRestore
         case .invalidSDKKey:
-            return CBReactNativeError.invalidSDKKey
+            return CBReactNativeError.invalidSdkConfiguration
         case .invalidCustomerId:
-            return CBReactNativeError.invalidCustomerId
+            return CBReactNativeError.invalidSdkConfiguration
         case .invalidCatalogVersion:
             return CBReactNativeError.invalidCatalogVersion
         case .userCancelled:
-            return CBReactNativeError.userCancelled
+            return CBReactNativeError.purchaseCancelled
         case .paymentFailed:
             return CBReactNativeError.paymentFailed
         case .invalidPurchase:
             return CBReactNativeError.invalidPurchase
-        case .invalidClient:
-            return CBReactNativeError.invalidClient
+        case .invalidClient, .privacyAcknowledgementRequired:
+            return CBReactNativeError.purchaseNotAllowed
         case .networkConnectionFailed:
-            return CBReactNativeError.networkConnectionFailed
-        case .privacyAcknowledgementRequired:
-            return CBReactNativeError.privacyAcknowledgementRequired
+            return CBReactNativeError.networkError
         case .unknown:
             return CBReactNativeError.unknown
         case .paymentNotAllowed:
             return CBReactNativeError.paymentNotAllowed
         case .productNotAvailable:
             return CBReactNativeError.productNotAvailable
-        case .invalidOffer:
+        case .invalidOffer, .invalidPrice, .invalidPromoCode, .invalidPromoOffer:
             return CBReactNativeError.invalidOffer
-        case .invalidPromoCode:
-            return CBReactNativeError.invalidPromoCode
-        case .invalidPrice:
-            return CBReactNativeError.invalidPrice
-        case .invalidPromoOffer:
-            return CBReactNativeError.invalidPromoOffer
         case .invalidSandbox:
             return CBReactNativeError.invalidSandbox
         }

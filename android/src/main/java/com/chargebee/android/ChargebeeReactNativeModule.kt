@@ -123,7 +123,8 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
           promise.resolve(convertSubscriptionsToDictionary(subscriptions))
         }
         is ChargebeeResult.Error ->{
-          promise.reject(it.exp.message, it.exp)
+          val messageUserInfo = it.exp.messageUserInfo()
+          promise.reject("${CBReactNativeError.INVALID_SDK_CONFIGURATION.code}", messageUserInfo.getString("message"), it.exp, messageUserInfo)
         }
       }
     }
