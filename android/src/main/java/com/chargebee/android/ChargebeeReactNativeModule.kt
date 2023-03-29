@@ -73,8 +73,9 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
           }
 
           override fun onError(error: CBException) {
+            val cbReactNativeError = error.httpStatusCode?.let { it -> CBReactNativeError.fromBillingCode(it) } ?: CBReactNativeError.UNKNOWN
             val messageUserInfo = error.messageUserInfo()
-            promise.reject("${CBReactNativeError.SYSTEM_ERROR.code}", messageUserInfo.getString("message"), error, messageUserInfo)
+            promise.reject("${cbReactNativeError.code}", messageUserInfo.getString("message"), error, messageUserInfo)
           }
         })
     }
