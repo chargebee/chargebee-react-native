@@ -3,6 +3,7 @@ import Chargebee, {
 } from '@chargebee/react-native-chargebee';
 import { Text } from '@ui-kitten/components';
 import React, { useEffect, useState } from 'react';
+import { Platform } from 'react-native';
 import { Products } from '../components/Product';
 
 const PurchasesScreen = ({ navigation, customerId }) => {
@@ -16,18 +17,39 @@ const PurchasesScreen = ({ navigation, customerId }) => {
   };
 
   useEffect(() => {
+    fetchProductIdentifiers();
+  }, []);
+
+  async function fetchProductIdentifiers() {
     const queryParams: ProductIdentifiersRequest = {
-      limit: '2',
+      limit: '10',
       offset: '1',
     };
-    Chargebee.retrieveProductIdentifiers(queryParams)
-      .then((products) => {
-        setProducts(products);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
+    try {
+      console.log('Fetching products');
+      const products = await Chargebee.retrieveProductIdentifiers(queryParams);
+      setProducts(products);
+      console.log('Fetched products', products);
+    } catch (error) {
+      console.log('Error when fetching product identifiers', error);
+      console.log(
+        '=========================',
+        Platform.OS,
+        '========================='
+      );
+      const errorModel = {
+        code: error.code, // RNErrorCode
+        message: error.message, // Message
+        userInfo: {
+          message: error.userInfo?.message, // Message
+          apiErrorCode: error.userInfo?.apiErrorCode, // API Error Code
+          httpStatusCode: error.userInfo?.httpStatusCode, // HTTP Status Code
+        },
+      };
+      console.error(errorModel);
+      console.log('=========================');
+    }
+  }
 
   return (
     <>
