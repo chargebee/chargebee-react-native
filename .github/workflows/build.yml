@@ -25,7 +25,8 @@ jobs:
       - name: Install dependencies
         if: steps.cache-nodemodules.outputs.cache-hit != 'true'
         run: yarn install
-      - name: Yarn Tests
-        run: yarn test
       - name: Linter
         run: yarn run eslint
+      - name: Yarn Tests
+        run: yarn test
+      

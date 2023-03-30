@@ -13,6 +13,7 @@ import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen';
 import ProductDetail from './screens/ProductDetailScreen';
 import CoursesScreen from './screens/CoursesScreen';
+import { Platform } from 'react-native';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,7 +25,7 @@ export default function App() {
 
   useEffect(() => {
     configure(site, apiKey, iOsSdkKey, androidSdkKey);
-    console.debug('Configured Chargebee SDK');
+    console.debug('Configuring Chargebee SDK');
   });
 
   return (
@@ -69,8 +70,24 @@ async function configure(
       androidSdkKey: androidSdkKey,
       iOsSdkKey: iOsSdkKey,
     });
-    console.log('SDK Configuration complete:', configResult);
+    console.log('SDK Configuration completed:', configResult);
   } catch (error) {
-    console.error('SDK Config failed', error);
+    console.error('SDK Configuration failed', error);
+    console.log(
+      '=========================',
+      Platform.OS,
+      '========================='
+    );
+    const errorModel = {
+      code: error.code, 
+      message: error.message,
+      userInfo: {
+        message: error.userInfo.message, 
+        apiErrorCode: error.userInfo.apiErrorCode,
+        httpStatusCode: error.userInfo.httpStatusCode, 
+      },
+    };
+    console.error(errorModel);
+    console.log('=========================');
   }
 }

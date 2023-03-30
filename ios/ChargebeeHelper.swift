@@ -20,7 +20,7 @@ public class ChargebeeHelper: NSObject {
             case .success(let status):
                 resolver(status.asDictionary)
             case .error(let error):
-                rejecter("\(error.httpStatusCode)", error.payload, error)
+                rejecter("\(CBReactNativeError.invalidSdkConfiguration.rawValue)", error.errorDescription, error.asNSError)
             }
         }
     }
@@ -30,8 +30,12 @@ public class ChargebeeHelper: NSObject {
             switch result {
                 case let .success(products):
                     resolver(products.ids)
-                case let .failure(error as NSError):
-                    rejecter("\(error.code)", error.localizedDescription, error)
+                case let .failure(error):
+                    if let error = error as? CBPurchaseError {
+                        reject(withPurchaseError: error, using: rejecter)
+                    } else {
+                        rejecter("\(CBReactNativeError.unknown.rawValue)", error.localizedDescription, error)
+                    }
             }
         }
     }
@@ -42,8 +46,8 @@ public class ChargebeeHelper: NSObject {
                 case let .success(products):
                     let formattedProducts = products.map { $0.asDictionary }
                     resolver(formattedProducts)
-                case let .failure(error as NSError):
-                    rejecter("\(error.code)", error.localizedDescription, error)
+                case let .failure(error):
+                    reject(withPurchaseError: error, using: rejecter)
             }
         }
     }
@@ -60,15 +64,34 @@ public class ChargebeeHelper: NSObject {
                             do {
                                 let purchasedProduct = try CBPurchaseResult(fromTuple: result)
                                 resolver(purchasedProduct.asDictionary)
-                            } catch (let error as NSError) {
-                                rejecter("\(error.code)", error.localizedDescription, error)
+                            } catch (let error) {
+                                if let error = error as? CBPurchaseError {
+                                    reject(withPurchaseError: error, using: rejecter)
+                                } else {
+                                    rejecter("\(CBReactNativeError.unknown.rawValue)", error.localizedDescription, error)
+                                }
                             }
-                        case .failure(let error as NSError):
-                            rejecter("\(error.code)", error.localizedDescription, error)
+                        case .failure(let error):
+                            switch error {
+                            case let error as CBPurchaseError:
+                                reject(withPurchaseError: error, using: rejecter)
+                            case let error as CBError:
+                                switch error {
+                                case .invalidRequest:
+                                    rejecter("\(CBReactNativeError.invalidReceipt.rawValue)", error.errorDescription, error.asNSError)
+                                case .operationFailed:
+                                    rejecter("\(CBReactNativeError.systemError.rawValue)", error.errorDescription, error.asNSError)
+                                default:
+                                    rejecter("\(CBReactNativeError.unknown.rawValue)", error.localizedDescription, error)
+                                }
+                            default:
+                                rejecter("\(CBReactNativeError.unknown.rawValue)", error.localizedDescription, error)
+                            }
+                        
                         }
                     }
-                case let .failure(error as NSError):
-                    rejecter("\(error.code)", error.localizedDescription, error)
+                case let .failure(error):
+                    reject(withPurchaseError: error, using: rejecter)
                 }
             }
         }
@@ -80,9 +103,22 @@ public class ChargebeeHelper: NSObject {
             case let .success(list):
                 let data = list.map { $0.subscription.asDictionary }
                 resolver(data)
-            case let .error(error as NSError):
-                rejecter("\(error.code)", error.localizedDescription, error)
+            case let .error(error):
+                // retrieveSubscriptions throw the error when the API returns an empty list
+                if (error.errorDescription?.contains("Subscription Not found") ?? false) {
+                    resolver([])
+                } else {
+                    rejecter("\(CBReactNativeError.invalidSdkConfiguration.rawValue)", error.errorDescription, error.asNSError)
+                }
             }
         }
     }
+
+}
+
+fileprivate func reject(withPurchaseError error: CBPurchaseError, using rejecter: RCTPromiseRejectBlock) {
+    let purchaseError = NSError.init(domain: "StoreError",
+                                code: CBReactNativeError.errorCode(purchaseError: error).rawValue,
+                                userInfo: error.userInfo)
+    rejecter("\(purchaseError.code)", error.localizedDescription, purchaseError)
 }
