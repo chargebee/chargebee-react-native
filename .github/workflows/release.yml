@@ -53,3 +53,10 @@ jobs:
         env: 
           NPM_TOKEN: ${{ secrets.RN_SDK_NPM_WRITE_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+      - name: Create PR for package.json and changelogs
+        run: | 
+          VERSION=$(cat package.json | jq -r '.version')
+          gh pr create -B master-temp -H docs-v${VERSION} --title 'Update post release docs into ${{ env.BRANCH_NAME }} ' --body 'Created by Github action'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
