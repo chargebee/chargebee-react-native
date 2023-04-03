@@ -36,9 +36,6 @@ jobs:
         run: |
             npm config set registry=https://registry.npmjs.com/
             npm config set //registry.npmjs.com/:_authToken=$NPM_TOKEN
-            echo "whoami"
-            npm whoami
-            echo "config"
             npm config list
         env: 
           NPM_TOKEN: ${{ secrets.RN_SDK_NPM_WRITE_TOKEN }}
@@ -46,12 +43,7 @@ jobs:
         run: yarn test
       - name: Pre-Release package
         if: github.ref == 'refs/heads/next'
-        run: |
-          echo "whoami"
-          npm whoami
-          echo "config"
-          npm config list
-          npm run release -- --ci --preRelease=beta --verbose
+        run: npm run release -- --ci --preRelease=beta --verbose
         env: 
           NPM_TOKEN: ${{ secrets.RN_SDK_NPM_WRITE_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
