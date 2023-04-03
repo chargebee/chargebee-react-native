@@ -8,16 +8,21 @@ Requirements
 
 The following requirements must be set up prior to installing Chargebee's React Native SDK
 
--   React Native with version >= 0.71.0
+-   Recommended React Native version >= 0.71.0. Minimum supported React Native version 0.67
 -   Requirements for Android https://github.com/chargebee/chargebee-android#requirements
 -   Requirements for iOS https://github.com/chargebee/chargebee-ios#requirements
 
 Installation
 ------------
 
+If you are using yarn, you can add the SDK by using the below command.
+
 ```sh
 yarn add @chargebee/react-native-chargebee@beta
 ```
+
+For iOS, perform `pod install` after adding the SDK, to install the corresponding cocoapod package.
+
 
 Example project
 ---------------
