@@ -15,6 +15,7 @@ public class ChargebeeHelper: NSObject {
     private override init() {}
     
     @objc public func configure(site: String, apiKey: String, sdkKey: String?, resolver: @escaping RCTPromiseResolveBlock, rejecter: @escaping RCTPromiseRejectBlock) {
+        Chargebee.environment = "cb_rn_ios_sdk"
         Chargebee.configure(site: site, apiKey: apiKey, sdkKey:sdkKey) { result in
             switch result {
             case .success(let status):

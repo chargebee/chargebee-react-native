@@ -26,6 +26,7 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
     promise: Promise
   ) {
     val packageName = currentActivity?.packageName ?: ""
+    Chargebee.environment = "cb_rn_android_sdk"
     Chargebee.configure(site, publishableApiKey, true, sdkKey, packageName) {
       when (it) {
         is ChargebeeResult.Success -> {
