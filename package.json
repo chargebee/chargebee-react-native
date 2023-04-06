@@ -1,6 +1,6 @@
 {
   "name": "@chargebee/react-native-chargebee",
-  "version": "2.0.0-beta.0",
+  "version": "2.0.0-beta.1",
   "description": "Package for Chargebee In-App Purchases",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -104,8 +104,15 @@
   "release-it": {
     "git": {
       "requiredBranch": ["master", "next"],
-      "commitMessage": "chore: release ${version}",
-      "tagName": "v${version}"
+      "commitMessage": "chore: release ${version} [skip ci]",
+      "tagName": "v${version}",
+      "push": false
+    },
+    "hooks": {
+      "after:git:afterRelease": [
+        "git checkout -b docs-v${version}",
+        "git push origin docs-v${version}"
+      ]
     },
     "npm": {
       "publish": true
