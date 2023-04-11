@@ -3,6 +3,7 @@ package com.chargebee.android.utils
 import com.chargebee.android.models.CBProduct
 import com.chargebee.android.models.PurchaseResult
 import com.chargebee.android.models.SubscriptionDetailsWrapper
+import com.chargebee.android.network.CBCustomer
 import com.facebook.react.bridge.*
 
 
@@ -75,4 +76,12 @@ internal fun convertQueryParamsToArray(queryParams: ReadableMap): Array<String> 
   if (queryParams != null)
     return arrayOf(queryParams.getString("limit") ?: "")
   return arrayOf("")
+}
+
+internal fun convertReadableMapToCustomer(customerMap: ReadableMap): CBCustomer {
+  val id = customerMap.getString("id")
+  val firstName = customerMap.getString("firstName")
+  val lastName = customerMap.getString("lastName")
+  val email = customerMap.getString("email")
+  return CBCustomer(id, firstName, lastName, email)
 }

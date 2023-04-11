@@ -79,12 +79,12 @@ async function configure(
       '========================='
     );
     const errorModel = {
-      code: error.code, 
+      code: error.code,
       message: error.message,
       userInfo: {
-        message: error.userInfo.message, 
+        message: error.userInfo.message,
         apiErrorCode: error.userInfo.apiErrorCode,
-        httpStatusCode: error.userInfo.httpStatusCode, 
+        httpStatusCode: error.userInfo.httpStatusCode,
       },
     };
     console.error(errorModel);

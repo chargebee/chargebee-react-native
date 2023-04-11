@@ -15,7 +15,7 @@ export interface Spec extends TurboModule {
   ): Promise<AuthenticationDetail>;
   retrieveProductIdentifiers(queryParams: Object): Promise<Array<string>>;
   retrieveProducts(productIds: Array<string>): Promise<Product>;
-  purchaseProduct(productId: string, customerId: string): Promise<Purchase>;
+  purchaseProduct(productId: string, customer: Object): Promise<Purchase>;
   retrieveSubscriptions(queryParams: Object): Promise<Array<Subscription>>;
 }
 
