@@ -106,10 +106,17 @@ You can present any of the above products to your users for them to purchase.
 
 #### Buy or Subscribe Product
 
-Pass the product and customer identifier to the following function when your customer chooses the product to purchase.
+Pass the product and customer to the following function when your customer chooses the product to purchase.
 
-`customerId` -  **Optional parameter**. Although this is an optional parameter, we recommend passing customerId if it is available before user subscribes on your App. Passing this parameter ensures that customerId in your database matches with the customerId in Chargebee.
-In case this parameter is not passed, then the **customerId** will be the same as the **SubscriptionId** created in Chargebee.
+`id` -  **Optional parameter**. Although this is an optional parameter, we recommend passing it if available, before user subscribes on your App. Passing this parameter ensures that customer id in your database matches with that in Chargebee.
+In case this parameter is not passed, then the **id** will be the same as the **SubscriptionId** created in Chargebee.
+
+`firstName` -  **Optional parameter**. Contains First name of customer.
+
+`lastName` -  **Optional parameter**. Contains Last name of customer.
+
+`email` -  **Optional parameter**. Contains email of customer.
+
 
 ```ts
 import Chargebee, { Purchase, Customer } from '@chargebee/react-native-chargebee';
