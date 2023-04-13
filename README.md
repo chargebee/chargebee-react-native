@@ -127,7 +127,7 @@ const customer: Customer = {
       email: 'fname@domain.com',
     };
 try {
-    const result: Purchase = await Chargebee.purchaseProduct("product-id", 'customer-id');
+    const result: Purchase = await Chargebee.purchaseProduct("product-id", customer);
     console.log(result);
 } catch (error) {
     console.error(error);
