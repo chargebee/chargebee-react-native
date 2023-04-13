@@ -112,8 +112,13 @@ Pass the product and customer identifier to the following function when your cus
 In case this parameter is not passed, then the **customerId** will be the same as the **SubscriptionId** created in Chargebee.
 
 ```ts
-import Chargebee, { Purchase } from '@chargebee/react-native-chargebee';
-
+import Chargebee, { Purchase, Customer } from '@chargebee/react-native-chargebee';
+const customer: Customer = {
+      id: 'id',
+      firstName: 'fname',
+      lastName: 'lname',
+      email: 'fname@domain.com',
+    };
 try {
     const result: Purchase = await Chargebee.purchaseProduct("product-id", 'customer-id');
     console.log(result);

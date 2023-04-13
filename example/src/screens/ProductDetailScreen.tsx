@@ -1,6 +1,7 @@
 import Chargebee, {
   Product,
   Purchase,
+  Customer,
 } from '@chargebee/react-native-chargebee';
 import React, { useEffect, useState } from 'react';
 import { Platform } from 'react-native';
@@ -15,9 +16,15 @@ const ProductDetail = ({ navigation, route }) => {
 
   const purchaseProduct = async (product: Product) => {
     const productId = product.id;
-    console.log('Purchasing ', productId, customerId);
+    const customer: Customer = {
+      id: customerId,
+      firstName: 'Bruce',
+      lastName: 'Wayne',
+      email: 'bruce@wayne.com',
+    };
+    console.log('Purchasing ', productId, customer);
     try {
-      const purchase = await Chargebee.purchaseProduct(productId, customerId);
+      const purchase = await Chargebee.purchaseProduct(productId, customer);
       setProductPurchased(purchase);
       console.log(purchase);
       setShowSuccess(true);

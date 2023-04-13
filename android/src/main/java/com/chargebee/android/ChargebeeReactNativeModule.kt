@@ -26,6 +26,7 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
     promise: Promise
   ) {
     val packageName = currentActivity?.packageName ?: ""
+    Chargebee.environment = "cb_rn_android_sdk"
     Chargebee.configure(site, publishableApiKey, true, sdkKey, packageName) {
       when (it) {
         is ChargebeeResult.Success -> {
@@ -82,7 +83,7 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
   }
 
   @ReactMethod
-  override fun purchaseProduct(productId: String, customerId: String, promise: Promise) {
+  override fun purchaseProduct(productId: String, customer: ReadableMap, promise: Promise) {
     val activity = currentActivity
     activity?.let {
       val productIds = arrayListOf(productId)
@@ -92,7 +93,7 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
             if (productDetails.size > 0) {
               CBPurchase.purchaseProduct(
                 productDetails.first(),
-                customerId,
+                convertReadableMapToCustomer(customer),
                 object : CBCallback.PurchaseCallback<String> {
 
                   override fun onSuccess(receiptDetail: ReceiptDetail, status: Boolean) {

@@ -15,6 +15,7 @@ public class ChargebeeHelper: NSObject {
     private override init() {}
     
     @objc public func configure(site: String, apiKey: String, sdkKey: String?, resolver: @escaping RCTPromiseResolveBlock, rejecter: @escaping RCTPromiseRejectBlock) {
+        Chargebee.environment = "cb_rn_ios_sdk"
         Chargebee.configure(site: site, apiKey: apiKey, sdkKey:sdkKey) { result in
             switch result {
             case .success(let status):
@@ -52,13 +53,14 @@ public class ChargebeeHelper: NSObject {
         }
     }
     
-    @objc public func purchaseProduct(productId: String, customerId: String, resolver: @escaping RCTPromiseResolveBlock, rejecter: @escaping RCTPromiseRejectBlock) {
+    @objc public func purchaseProduct(productId: String, customer: Dictionary<String, String>, resolver: @escaping RCTPromiseResolveBlock, rejecter: @escaping RCTPromiseRejectBlock) {
+        let customer = CBCustomer.fromDictionary(customer: customer)
         CBPurchase.shared.retrieveProducts(withProductID: [productId]) { result in
             DispatchQueue.main.async {
                 switch result {
                 case let .success(products):
                     let  product: CBProduct = products.self.first!;
-                    CBPurchase.shared.purchaseProduct(product: product, customerId: customerId) { result in
+                    CBPurchase.shared.purchaseProduct(product: product, customer: customer) { result in
                         switch result {
                         case .success(let result):
                             do {
@@ -98,6 +100,7 @@ public class ChargebeeHelper: NSObject {
     }
     
     @objc public func retrieveSubscriptions(queryParams: Dictionary<String, String>, resolver: @escaping RCTPromiseResolveBlock, rejecter: @escaping RCTPromiseRejectBlock) {
+        
         Chargebee.shared.retrieveSubscriptions(queryParams: queryParams) { result in
             switch result {
             case let .success(list):

@@ -8,6 +8,7 @@ import {
   type Subscription,
   type AuthenticationDetail,
   type ProductIdentifiersRequest,
+  Customer,
 } from './Purchases';
 
 const LINKING_ERROR =
@@ -86,14 +87,15 @@ export default class Chargebee {
    * Purchase product for the customer.
    *
    * @param {string} productId Product identifier
-   * @param {string} customerId Optional. Customer Identifier
+   * @param {Object} customer Optional. Customer object.
+   * If the `id` is not passed in the customer's details, then the value of customerId will be the same as the SubscriptionId created in Chargebee.
    * @returns {Promise<Purchase>} Purchase result
    */
   public static async purchaseProduct(
     productId: string,
-    customerId: string | null
+    customer: Customer | null
   ): Promise<Purchase> {
-    return ChargebeeReactNative.purchaseProduct(productId, customerId);
+    return ChargebeeReactNative.purchaseProduct(productId, customer);
   }
 
   /**

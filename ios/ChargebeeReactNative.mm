@@ -35,12 +35,12 @@ RCT_REMAP_METHOD(retrieveProducts,
 
 RCT_REMAP_METHOD(purchaseProduct,
                  purchaseProductWithProduct:(NSString *)productId
-                 withCustomerId:(NSString *)customerId
+                 withCustomer:(NSDictionary *)customer
                  withResolver:(RCTPromiseResolveBlock)resolve
                  withRejecter:(RCTPromiseRejectBlock)reject)
 {
     ChargebeeHelper* helper = [ChargebeeHelper shared];
-    [helper purchaseProductWithProductId:productId customerId:customerId resolver:resolve rejecter:reject];
+    [helper purchaseProductWithProductId:productId customer:customer resolver:resolve rejecter:reject];
 }
 
 RCT_REMAP_METHOD(retrieveSubscriptions,

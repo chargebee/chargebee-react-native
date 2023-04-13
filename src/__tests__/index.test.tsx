@@ -1,5 +1,6 @@
 import { NativeModules, Platform } from 'react-native';
 import Chargebee, {
+  Customer,
   ProductIdentifiersRequest,
   SubscriptionsRequest,
 } from '../index';
@@ -96,19 +97,31 @@ describe('Chargebee React Native', () => {
   it('purchase Product by Product ID and Customer ID for the configured SDK', async () => {
     const productId = 'product-id-1';
     const customerId = 'customer-id-1';
-    await Chargebee.purchaseProduct(productId, customerId);
+    const customer: Customer = {
+      id: customerId,
+      firstName: 'Bruce',
+      lastName: 'Wayne',
+      email: 'bruce@wayne.com',
+    };
+    await Chargebee.purchaseProduct(productId, customer);
 
     expect(NativeModules.ChargebeeReactNative.purchaseProduct).toBeCalledTimes(
       1
     );
     expect(
       NativeModules.ChargebeeReactNative.purchaseProduct
-    ).toHaveBeenCalledWith(productId, customerId);
+    ).toHaveBeenCalledWith(productId, customer);
   });
 
   it('retrieve subscriptions by Subscription ID, Subscription status or Customer ID', async () => {
     const customerId = 'customer-id-1';
-    const queryParams: SubscriptionsRequest = { customer_id: customerId };
+    const subscriptionId = 'subscription-id-1';
+    const status = 'active';
+    const queryParams: SubscriptionsRequest = {
+      customer_id: customerId,
+      subscription_id: subscriptionId,
+      status: status,
+    };
     await Chargebee.retrieveSubscriptions(queryParams);
 
     expect(
