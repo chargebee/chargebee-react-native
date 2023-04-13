@@ -1,5 +1,5 @@
 
-# [2.0.0-beta.1](https://github.com/chargebee/chargebee-react-native/compare/v1.1.6...v2.0.0-beta.1) (2023-04-03)
+# [2.0.0-beta.2](https://github.com/chargebee/chargebee-react-native/compare/v1.1.6...v2.0.0-beta.2) (2023-04-13)
 
 
 ### Bug Fixes
