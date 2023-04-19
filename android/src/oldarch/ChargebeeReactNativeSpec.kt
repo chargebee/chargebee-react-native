@@ -1,4 +1,4 @@
-package com.chargebee.android
+package com.chargebee.android.reactnative
 
 import com.facebook.react.bridge.*
 

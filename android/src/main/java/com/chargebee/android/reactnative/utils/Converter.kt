@@ -1,7 +1,7 @@
-package com.chargebee.android.utils
+package com.chargebee.android.reactnative.utils
 
 import com.chargebee.android.models.CBProduct
-import com.chargebee.android.models.PurchaseResult
+import com.chargebee.android.reactnative.models.PurchaseResult
 import com.chargebee.android.models.SubscriptionDetailsWrapper
 import com.chargebee.android.network.CBAuthResponse
 import com.chargebee.android.network.CBCustomer

@@ -1,4 +1,4 @@
-package com.chargebee.android.models
+package com.chargebee.android.reactnative.models
 
 import com.chargebee.android.exceptions.CBException
 import com.facebook.react.bridge.WritableMap
