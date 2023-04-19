@@ -30,7 +30,7 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
     Chargebee.configure(site, publishableApiKey, true, sdkKey, packageName) {
       when (it) {
         is ChargebeeResult.Success -> {
-          promise.resolve(it)
+          promise.resolve(convertAuthenticationDetailToDictionary(it.data))
         }
         is ChargebeeResult.Error -> {
           val messageUserInfo = it.exp.messageUserInfo()
