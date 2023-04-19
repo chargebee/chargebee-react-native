@@ -3,6 +3,7 @@ package com.chargebee.android.utils
 import com.chargebee.android.models.CBProduct
 import com.chargebee.android.models.PurchaseResult
 import com.chargebee.android.models.SubscriptionDetailsWrapper
+import com.chargebee.android.network.CBAuthResponse
 import com.chargebee.android.network.CBCustomer
 import com.facebook.react.bridge.*
 
@@ -84,4 +85,14 @@ internal fun convertReadableMapToCustomer(customerMap: ReadableMap): CBCustomer 
   val lastName = customerMap.getString("lastName")
   val email = customerMap.getString("email")
   return CBCustomer(id, firstName, lastName, email)
+}
+
+internal fun convertAuthenticationDetailToDictionary(authResponseData: Any): WritableMap {
+  val writableMap: WritableMap = WritableNativeMap()
+  if(authResponseData is CBAuthResponse) {
+    writableMap.putString("appId", authResponseData?.in_app_detail?.app_id)
+    writableMap.putString("version", authResponseData?.in_app_detail?.product_catalog_version)
+    writableMap.putString("status", authResponseData?.in_app_detail?.status)
+  }
+  return writableMap
 }
