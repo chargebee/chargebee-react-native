@@ -114,7 +114,8 @@
     "hooks": {
       "after:git:afterRelease": [
         "git checkout -b docs-v${version}",
-        "git push origin docs-v${version}"
+        "git push origin docs-v${version}",
+        "git push origin v${version}"
       ]
     },
     "npm": {
