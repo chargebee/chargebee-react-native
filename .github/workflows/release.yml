@@ -36,9 +36,6 @@ jobs:
         run: |
             npm config set registry=https://registry.npmjs.com/
             npm config set //registry.npmjs.com/:_authToken=$NPM_TOKEN
-            echo "whoami"
-            npm whoami
-            echo "config"
             npm config list
         env: 
           NPM_TOKEN: ${{ secrets.RN_SDK_NPM_WRITE_TOKEN }}
@@ -46,19 +43,20 @@ jobs:
         run: yarn test
       - name: Pre-Release package
         if: github.ref == 'refs/heads/next'
-        run: |
-          echo "whoami"
-          npm whoami
-          echo "config"
-          npm config list
-          echo "release"
-          npm run release --ci --preRelease=beta --dry-run --verbose
+        run: npm run release -- --ci --preRelease=beta --dry-run --verbose
         env: 
           NPM_TOKEN: ${{ secrets.RN_SDK_NPM_WRITE_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Release package
         if: github.ref == 'refs/heads/master'
-        run: yarn release --ci
+        run: npm run release -- --ci --dry-run --verbose
         env: 
           NPM_TOKEN: ${{ secrets.RN_SDK_NPM_WRITE_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+      - name: Create PR for package.json and changelogs
+        run: | 
+          VERSION=$(cat package.json | jq -r '.version')
+          gh pr create -B master -H docs-v${VERSION} --title 'Update post release docs into ${{ env.BRANCH_NAME }} ' --body 'Created by Github action'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 

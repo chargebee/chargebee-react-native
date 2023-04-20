@@ -103,12 +103,19 @@
   },
   "release-it": {
     "git": {
-      "requiredBranch": ["master-temp", "next"],
-      "commitMessage": "chore: release ${version}",
-      "tagName": "v${version}"
+      "requiredBranch": [
+        "master",
+        "next"
+      ],
+      "commitMessage": "chore: release ${version} [skip ci]",
+      "tagName": "v${version}",
+      "push": false
     },
     "hooks": {
-      "after:bump": "npx auto-changelog -p"
+      "after:git:afterRelease": [
+        "git checkout -b docs-v${version}",
+        "git push origin docs-v${version}"
+      ]
     },
     "npm": {
       "publish": true
