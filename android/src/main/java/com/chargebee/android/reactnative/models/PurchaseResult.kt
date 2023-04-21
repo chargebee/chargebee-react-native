@@ -1,4 +1,4 @@
-package com.chargebee.android.models
+package com.chargebee.android.reactnative.models
 
 import com.chargebee.android.network.ReceiptDetail
 import java.io.Serializable

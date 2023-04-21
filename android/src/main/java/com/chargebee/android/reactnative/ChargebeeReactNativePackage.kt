@@ -1,5 +1,6 @@
-package com.chargebee.android
+package com.chargebee.android.reactnative
 
+import com.chargebee.android.reactnative.BuildConfig
 import com.facebook.react.TurboReactPackage
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.NativeModule

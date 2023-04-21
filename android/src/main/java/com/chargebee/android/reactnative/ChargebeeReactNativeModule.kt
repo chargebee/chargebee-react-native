@@ -1,5 +1,8 @@
-package com.chargebee.android
+package com.chargebee.android.reactnative
 
+import com.chargebee.android.Chargebee
+import com.chargebee.android.reactnative.ChargebeeReactNativeSpec
+import com.chargebee.android.ErrorDetail
 import com.chargebee.android.billingservice.CBCallback
 import com.chargebee.android.billingservice.CBPurchase
 import com.chargebee.android.billingservice.GPErrorCode
@@ -8,7 +11,15 @@ import com.chargebee.android.exceptions.CBProductIDResult
 import com.chargebee.android.exceptions.ChargebeeResult
 import com.chargebee.android.models.*
 import com.chargebee.android.network.ReceiptDetail
-import com.chargebee.android.utils.*
+import com.chargebee.android.reactnative.models.*
+import com.chargebee.android.reactnative.utils.convertArrayToWritableArray
+import com.chargebee.android.reactnative.utils.convertAuthenticationDetailToDictionary
+import com.chargebee.android.reactnative.utils.convertListToWritableArray
+import com.chargebee.android.reactnative.utils.convertPurchaseResultToDictionary
+import com.chargebee.android.reactnative.utils.convertQueryParamsToArray
+import com.chargebee.android.reactnative.utils.convertReadableArray
+import com.chargebee.android.reactnative.utils.convertReadableMapToCustomer
+import com.chargebee.android.reactnative.utils.convertSubscriptionsToDictionary
 import com.facebook.react.bridge.*
 
 class ChargebeeReactNativeModule internal constructor(context: ReactApplicationContext) :
@@ -34,7 +45,12 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
         }
         is ChargebeeResult.Error -> {
           val messageUserInfo = it.exp.messageUserInfo()
-          promise.reject("${CBReactNativeError.INVALID_SDK_CONFIGURATION.code}", messageUserInfo.getString("message"), it.exp, messageUserInfo)
+          promise.reject(
+            "${CBReactNativeError.INVALID_SDK_CONFIGURATION.code}",
+            messageUserInfo.getString("message"),
+            it.exp,
+            messageUserInfo
+          )
         }
       }
     }
@@ -125,14 +141,19 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
   @ReactMethod
   override fun retrieveSubscriptions(queryParams: ReadableMap, promise: Promise) {
     Chargebee.retrieveSubscriptions(queryParams.toMap()) {
-      when(it){
+      when (it) {
         is ChargebeeResult.Success -> {
           val subscriptions = (it.data as CBSubscription).list
           promise.resolve(convertSubscriptionsToDictionary(subscriptions))
         }
-        is ChargebeeResult.Error ->{
+        is ChargebeeResult.Error -> {
           val messageUserInfo = it.exp.messageUserInfo()
-          promise.reject("${CBReactNativeError.INVALID_SDK_CONFIGURATION.code}", messageUserInfo.getString("message"), it.exp, messageUserInfo)
+          promise.reject(
+            "${CBReactNativeError.INVALID_SDK_CONFIGURATION.code}",
+            messageUserInfo.getString("message"),
+            it.exp,
+            messageUserInfo
+          )
         }
       }
     }

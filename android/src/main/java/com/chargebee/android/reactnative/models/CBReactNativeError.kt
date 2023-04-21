@@ -1,4 +1,4 @@
-package com.chargebee.android.models
+package com.chargebee.android.reactnative.models
 
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClient.BillingResponseCode.*
