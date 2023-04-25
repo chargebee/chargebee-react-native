@@ -114,15 +114,15 @@
     "hooks": {
       "after:git:afterRelease": [
         "git checkout -b docs-v${version}",
-        "git push origin docs-v${version}",
-        "git push origin v${version}"
+        "git push origin docs-v${version}"
       ]
     },
     "npm": {
       "publish": true
     },
     "github": {
-      "release": true
+      "release": true,
+      "draft": true
     },
     "plugins": {
       "@release-it/conventional-changelog": {
