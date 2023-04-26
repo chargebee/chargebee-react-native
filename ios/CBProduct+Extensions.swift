@@ -14,7 +14,7 @@ extension CBProduct {
         var productDictionary: [String: Any] = [:]
         productDictionary["id"] = skProduct.productIdentifier
         productDictionary["title"] = skProduct.localizedTitle
-        productDictionary["price"] = skProduct.price
+        productDictionary["price"] = skProduct.price.doubleValue
         productDictionary["currencyCode"] = skProduct.priceLocale.currencyCode
         return productDictionary
     }
