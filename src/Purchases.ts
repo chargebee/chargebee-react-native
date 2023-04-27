@@ -20,7 +20,7 @@ export interface AuthenticationDetail {
 export interface Product {
   readonly id: string;
   readonly title: string;
-  readonly price: string;
+  readonly price: Double;
   readonly currencyCode: string;
 }
 

@@ -1,5 +1,6 @@
 package com.chargebee.android.reactnative.utils
 
+import com.android.billingclient.api.SkuDetails
 import com.chargebee.android.models.CBProduct
 import com.chargebee.android.reactnative.models.PurchaseResult
 import com.chargebee.android.models.SubscriptionDetailsWrapper
@@ -38,9 +39,13 @@ internal fun convertProductToDictionary(product: CBProduct): WritableMap {
   val writableMap: WritableMap = WritableNativeMap()
   writableMap.putString("id", product.productId)
   writableMap.putString("title", product.productTitle)
-  writableMap.putString("price", product.productPrice)
+  writableMap.putDouble("price", convertPriceAmountInMicros(product.skuDetails))
   writableMap.putString("currencyCode", product.skuDetails.priceCurrencyCode)
   return writableMap
+}
+
+fun convertPriceAmountInMicros(skuDetails: SkuDetails): Double {
+  return skuDetails.priceAmountMicros / 1_000_000.0
 }
 
 internal fun convertPurchaseResultToDictionary(product: PurchaseResult, status: Boolean): WritableMap {
