@@ -1,5 +1,13 @@
 
 
+# [2.0.0-beta.5](https://github.com/chargebee/chargebee-react-native/compare/v2.0.0-beta.2...v2.0.0-beta.5) (2023-04-27)
+
+
+### Bug Fixes
+
+* price field for android ([#114](https://github.com/chargebee/chargebee-react-native/issues/114)) ([c22e701](https://github.com/chargebee/chargebee-react-native/commit/c22e701e9b02162541243e8ba5fc377aaf17f4ed))
+
+
 # 2.0.0-beta.4 (2023-04-21)
 
 
