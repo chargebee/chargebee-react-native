@@ -1,5 +1,4 @@
 import { Platform } from 'react-native';
-import type { Double } from 'react-native/Libraries/Types/CodegenTypes';
 
 /**
  * Chargebee SDK Config parameters.
@@ -20,7 +19,7 @@ export interface AuthenticationDetail {
 export interface Product {
   readonly id: string;
   readonly title: string;
-  readonly price: Double;
+  readonly price: number;
   readonly currencyCode: string;
 }
 
@@ -35,10 +34,10 @@ export interface Subscription {
   readonly customerId: string;
   readonly status: string;
   readonly planId: string | null;
-  readonly planAmount: Double | null;
-  readonly activatedAt: Double | null;
-  readonly currentTermStart: Double | null;
-  readonly currentTermEnd: Double | null;
+  readonly planAmount: number | null;
+  readonly activatedAt: number | null;
+  readonly currentTermStart: number | null;
+  readonly currentTermEnd: number | null;
 }
 
 export interface SubscriptionsRequest {

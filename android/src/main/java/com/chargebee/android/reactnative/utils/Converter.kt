@@ -86,9 +86,9 @@ internal fun convertQueryParamsToArray(queryParams: ReadableMap): Array<String> 
 
 internal fun convertReadableMapToCustomer(customerMap: ReadableMap): CBCustomer {
   val id = customerMap.getString("id")
-  val firstName = customerMap.getString("firstName")
-  val lastName = customerMap.getString("lastName")
-  val email = customerMap.getString("email")
+  val firstName = customerMap.getString("firstName") ?: ""
+  val lastName = customerMap.getString("lastName") ?: ""
+  val email = customerMap.getString("email") ?: ""
   return CBCustomer(id, firstName, lastName, email)
 }
 
