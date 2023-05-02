@@ -1,0 +1,62 @@
+name: Release to NPM and Github
+on: 
+  push:
+    branches: 
+      - master
+      - next
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Initialize Git Config
+        run: |
+          git config user.name "${GITHUB_ACTOR}"
+          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+      - name: Cache node modules
+        id: cache-nodemodules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Install dependencies
+        if: steps.cache-nodemodules.outputs.cache-hit != 'true'
+        run: yarn install
+      - name: Initialize NPM config
+        run: |
+            npm config set registry=https://registry.npmjs.com/
+            npm config set //registry.npmjs.com/:_authToken=$NPM_TOKEN
+            npm config list
+        env: 
+          NPM_TOKEN: ${{ secrets.RN_SDK_NPM_WRITE_TOKEN }}
+      - name: Yarn Tests
+        run: yarn test
+      - name: Pre-Release package
+        if: github.ref == 'refs/heads/next'
+        run: npm run release -- --ci --preRelease=beta -VV
+        env: 
+          NPM_TOKEN: ${{ secrets.RN_SDK_NPM_WRITE_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Release package
+        if: github.ref == 'refs/heads/master'
+        run: npm run release -- --ci --dry-run --verbose
+        env: 
+          NPM_TOKEN: ${{ secrets.RN_SDK_NPM_WRITE_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+      - name: Create PR for package.json and changelogs
+        run: | 
+          VERSION=$(cat package.json | jq -r '.version')
+          gh pr create -B ${{ env.BRANCH_NAME }} -H docs-v${VERSION} --title 'Update post release docs into ${{ env.BRANCH_NAME }} ' --body 'Created by Github action'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 

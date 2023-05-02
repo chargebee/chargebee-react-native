@@ -1,4 +1,5 @@
-import { CheckoutCart } from './components/CheckoutCart';
-import { CBCheckoutProps, CBCheckoutParams } from './interfaces/cb-types';
+import Chargebee from './Chargebee';
+export default Chargebee;
 
-export { CheckoutCart, CBCheckoutProps, CBCheckoutParams };
+export * from './Purchases';
+export * from './ChargebeeError';

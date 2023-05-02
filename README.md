@@ -1,159 +1,159 @@
-# react-native-chargebee
+Chargebee React Native
+======================
 
-React Native wrapper for rendering a Chargebee hosted checkout page within a WebView component.
+This is the official Software Development Kit (SDK) for Chargebee React Native. This SDK makes it efficient and comfortable to build an impressive subscription experience in your React Native App.
 
-## Installation
+Requirements
+------------
 
-```sh
-yarn add @chargebee/react-native-chargebee
-```
+The following requirements must be set up prior to installing Chargebee's React Native SDK
 
-## Dependencies
+-   Recommended React Native version >= 0.71.0. Minimum supported React Native version 0.67
+-   Requirements for Android https://github.com/chargebee/chargebee-android#requirements
+-   Requirements for iOS https://github.com/chargebee/chargebee-ios#requirements
 
-To successfully use this package, you need react native webview with version >= 8.1.1
+Installation
+------------
 
-`yarn add "react-native-webview"`
-
-## Usage
-The package comes with type definition which you can use to see the list of allowed props.
-
-For `site`, use the Chargebee site name. For example, if the Chargebee domain is 'honey-comics.chargebee.com', then the site name is `honey-comics`.
-For `planId`, use the Chargebee plan ID. For example, if the plan name is 'Annual Comic Subscription', the plan ID might be something like `annual-comic-subs`.  
-
-```js
-import { CheckoutCart } from "@chargebee/react-native-chargebee";
-
-// ...
-
-<CheckoutCart
-  onSuccess={(hostedPageId: string) => successfulPurchase(hostedPageId)}
-  onEachStep={(stepName: string) => handleStep(stepName)}
-  site={site}
-  planId={planId}
-  couponIds={couponIds}
-  addons={addons}
-  customer={customer}
-  subscription={subscription}
-  billingAddress={billingAddress}
-  items={items} // Only for V2
-/>
-```
-
-## Example
-The base repository includes a sample application that shows the props accepted by the component.
-
-The [example app](/example/) showcases the various options that can be passed.
-
-To install the base dependencies, run `yarn bootstrap` in the root directory:
+If you are using yarn, you can add the SDK by using the below command.
 
 ```sh
-yarn bootstrap
+yarn add @chargebee/react-native-chargebee@beta
 ```
 
-To start the packager:
+For iOS, perform `pod install` after adding the SDK, to install the corresponding cocoapod package.
 
-```sh
-yarn example start
+
+Example project
+---------------
+
+This is an optional step that helps you to verify the SDK implementation using this example project. You can download or clone the example project via GitHub.
+
+To run the example project, follow these steps.
+
+-   Clone the repo - https://github.com/chargebee/chargebee-react-native.
+
+-   To install the base dependencies, run `yarn bootstrap` in the root directory
+
+-   To run the example app on Android, run `yarn example android`.
+
+-   To run the example app on iOS, run `yarn example ios`.
+
+
+## Configuring SDK
+
+**Prerequisites**
+Before configuring the Chargebee ReactNative SDK for syncing In-App Purchases, follow these steps.
+
+1.  **iOS**: [Integrate](https://www.chargebee.com/docs/2.0/mobile-app-store-connect.html "https://www.chargebee.com/docs/2.0/mobile-app-store-connect.html") the [Apple App Store account](https://appstoreconnect.apple.com/login "https://appstoreconnect.apple.com/login") with your [Chargebee site](https://app.chargebee.com/login "https://app.chargebee.com/login").   
+ **Android**: [Integrate](https://www.chargebee.com/docs/2.0/mobile-playstore-connect.html "https://www.chargebee.com/docs/2.0/mobile-playstore-connect.html") [Google Play Store account](https://play.google.com/console/about/ "https://play.google.com/console/about/") with your [Chargebee site](https://app.chargebee.com/login "https://app.chargebee.com/login").
+2.  **iOS**: On the**Sync Overview** pageof theweb app, click **View Keys** and use the value of generated [**App ID**](https://www.chargebee.com/docs/1.0/mobile-app-store-product-iap.html#app-id "https://www.chargebee.com/docs/1.0/mobile-app-store-product-iap.html#app-id") as the **SDK Key**.    
+**Android**: On the **Sync Overview** page of the web app, click **Set up notifications** and use the generated [**App ID**](https://www.chargebee.com/docs/1.0/mobile-playstore-notifications.html#app-id "https://www.chargebee.com/docs/1.0/mobile-playstore-notifications.html#app-id") value as the **SDK Key**.
+3.  On the Chargebee site, navigate to **Configure Chargebee** > [**API Keys**](https://www.chargebee.com/docs/2.0/api_keys.html#create-an-api-key "https://www.chargebee.com/docs/2.0/api_keys.html#create-an-api-key") to create a new **Publishable API Key** or use an existing [**Publishable API Key**](https://www.chargebee.com/docs/2.0/api_keys.html#types-of-api-keys_publishable-key "https://www.chargebee.com/docs/2.0/api_keys.html#types-of-api-keys_publishable-key").
+
+**Note:** During the publishable API key creation you must allow **read-only** access to plans/items otherwise this key will not work in the following snippet. Read [more](https://www.chargebee.com/docs/2.0/api_keys.html#types-of-api-keys_publishable-key "https://www.chargebee.com/docs/2.0/api_keys.html#types-of-api-keys_publishable-key").
+
+Initialize the Chargebee ReactNative SDK with your Chargebee site, Publishable API Key, and SDK Keys by including the following snippets in your app delegate during app startup.
+
+```ts
+import Chargebee from '@chargebee/react-native-chargebee';
+
+Chargebee.configure({
+      site: "SITE_NAME",
+      publishableApiKey: "API-KEY",
+      androidSdkKey: "Android SDK Key",
+      iOsSdkKey: "iOS SDK Key",
+    });
 ```
 
-To run the example app on Android:
+## Integrating In-App Purchases
 
-```sh
-yarn example android
+This section describes how to use the SDK to integrate In-App Purchase information. For details on In-App Purchase, read [more](https://www.chargebee.com/docs/2.0/mobile_subscriptions.html "https://www.chargebee.com/docs/2.0/mobile_subscriptions.html").
+
+#### Get all IAP Product Identifiers from Chargebee
+
+Every In-App Purchase subscription product that you configure in your account, can be configured in Chargebee as a Plan. Start by retrieving the IAP Product IDs from your Chargebee account using the following function.
+
+```ts
+import Chargebee from '@chargebee/react-native-chargebee';
+
+const queryParams = new Map<string, string>();
+queryParams.set('limit', '100');
+try {
+    const result: Array<string> = await Chargebee.retrieveProductIdentifiers(queryParams);
+    console.log(result);
+} catch (error) {
+    console.error(error);
+}
+```
+For example, query parameters can be passed as **"limit": "100"**.
+
+#### Get IAP Products
+
+Retrieve the IAP Product objects with Product IDs using the following function.
+
+```ts
+import Chargebee, { Product } from '@chargebee/react-native-chargebee';
+
+try {
+      const result: Array<Product> = await Chargebee.retrieveProducts(["Product ID from Google or Apple"]);
+      console.log(result);
+    } catch (error) {
+      console.error(error);
+    }
+```
+You can present any of the above products to your users for them to purchase.
+
+#### Buy or Subscribe Product
+
+Pass the product and customer to the following function when your customer chooses the product to purchase.
+
+`id` -  **Optional parameter**. Although this is an optional parameter, we recommend passing it if available, before user subscribes on your App. Passing this parameter ensures that customer id in your database matches with that in Chargebee.
+In case this parameter is not passed, then the **id** will be the same as the **SubscriptionId** created in Chargebee.
+
+`firstName` -  **Optional parameter**. Contains First name of customer.
+
+`lastName` -  **Optional parameter**. Contains Last name of customer.
+
+`email` -  **Optional parameter**. Contains email of customer.
+
+
+```ts
+import Chargebee, { Purchase, Customer } from '@chargebee/react-native-chargebee';
+const customer: Customer = {
+      id: 'id',
+      firstName: 'fname',
+      lastName: 'lname',
+      email: 'fname@domain.com',
+    };
+try {
+    const result: Purchase = await Chargebee.purchaseProduct("product-id", customer);
+    console.log(result);
+} catch (error) {
+    console.error(error);
+}
 ```
 
-To run the example app on iOS:
+The above function will handle the purchase against Apple App Store or Google Play Store and send the in-app purchase receipt for server-side receipt verification to your Chargebee account. Use the Subscription ID returned by the above function to check for Subscription status on Chargebee and confirm the access - granted or denied.
 
-```sh
-yarn example ios
+#### Get Subscription Status for Existing Subscribers using Query Parameters
+
+Use this method to check the subscription status of a subscriber who has already purchased the product.
+
+Use SubscriptionsRequest - Subscription ID, Customer ID, or Status for checking the Subscription status on Chargebee and confirm the access - granted or denied.
+
+```ts
+import Chargebee, { SubscriptionsRequest, Subscription } from '@chargebee/react-native-chargebee';
+
+try {
+    const queryParams: SubscriptionsRequest = {customer_id : 'customer_id', subscription_id : 'subscription_id', status: 'active'}
+    const subscriptions: Subscription[] = await Chargebee.retrieveSubscriptions(queryParams);
+    console.log(subscriptions);
+} catch (error) {
+    console.error(error);
+}
+    
 ```
-
-## Properties
-The properties that can be passed to the `CheckoutCart` component are:
-
-| Prop  | Required  | Type | Description |
-| :------------ |:---------------:| :---------------:| :-----|
-| site | Yes | String | Name of the chargebee hosted site |
-|planName | Yes | String | Deprecated since 1.0.7. Use planId instead ID of the plan user is purchasing |
-|planId | Yes | String | ID of the plan user is purchasing |
-| addons | No | [Addon[]](#addon) | Parameters for addons. Multiple addons can be passed. Fields are listed below. You can use the Chargebee List Addons API to retrieve all the addons for the site. Refer to [Addons](https://apidocs.chargebee.com/docs/api/addons?prod_cat_ver=1#list_addons) for sites on Product Catalog 1.0.|
-| items | Yes | [Item[]](#item) | Parameters of items , Plans and Addons are renamed as Items in V2. Array of Items can be passed and in such cases first item would be base and others addon items. Pass in the planPricePointId
-| couponIds | No | String[] | Identifier of the coupon as a List. Coupon Codes can also be passed|
-| customer | No | [Customer](#customer) | Details about the customer that needs to be prefilled in checkout. Fields are listed below |
-| subscription | No | [Subscription](#subscription) | Details about the subscription. Fields listed below |
-| billingAddress | No | [Address](#address) | Billing address of the customer. Fields listed below |
-| shippingAddress | No | [Address](#address) | Shipping address of the customer. Fields listed below |
-| onSuccess | Yes | [Success Callback](#successcallback) | Accepts a callback function which will be called upon successful completion of a purchase. You can use this to redirect the user out of the Chargebee Hosted webview and into a success screen controlled by the app.|
-| onEachStep | Yes | [Step Callback](#stepcallback) | Accepts a callback function which will be called upon successful completion of each step of the purchase. For example, the callback is called when a user moves from Cart page to Account Info page, from Account Info page to Billing address page, and so on. You can use this to log or track the current progress of the user within the Chargebee Hosted webview, upto a successful purchase action.|
-
-### Addon
-| Prop  | Required  | Type | Description |
-| :------------ |:---------------:| :---------------:| :-----|
-| id | Yes | string | Identifier of the addon |
-| quantity | No |  integer <br> default=1, min=1 | Addon quantity. Applicable only for the quantity based addons |
-
-### Item
-| Prop  | Required  | Type | Description |
-| :------------ |:---------------:| :---------------:| :-----|
-| planPricePointId | Yes | string | Identifier of the Item which is planPricePointId |
-| quantity | No |  integer <br> default=1, min=1 | Addon quantity. Applicable only for the quantity based addons |
-
-
-### Customer
-| Prop  | Required  | Type | Description |
-| :------------ |:---------------:| :---------------:| :-----|
-| email | No | string <br> max chars=70 |  Email of the customer. Configured email notifications will be sent to this email.|
-| firstName | No | string <br> max chars=150 |  First name of the customer. If not provided it will be got from contact information entered in the hosted page .|
-| lastName | No | string <br> max chars=150 |  Last name of the customer. If not provided it will be got from contact information entered in the hosted page .|
-| company | No | string <br> max chars=250 |  Company name of the customer.|
-| locale | No | String <br> max chars=50 | Determines which region-specific language Chargebee uses to communicate with the customer. In the absence of the locale attribute, Chargebee will use your site's default language for customer communication. |
-| phone | No | String <br> max chars=50 | Phone number of the customer. |
-| vat_number | No | String <br> max chars=20 | VAT/ Tax registration number of the customer. [Learn more](https://www.chargebee.com/docs/tax.html#capture-tax-registration-number). |
-
-### Subscription
-| Prop  | Required  | Type | Description |
-| :------------ |:---------------:| :---------------:| :-----|
-| planQuantity | No | integer <br> default=1, min=1| Plan quantity for this subscription.|
-| startDate | No | integer <br> timestamp(UTC) in seconds | Allows you to specify a future date or a past date on which the subscription starts.Past dates can be entered in case the subscription has already started. Any past date entered must be within the current billing cycle/plan term. The subscription will start immediately if this parameter is not passed. |
-
-### Address
-| Prop  | Required  | Type | Description |
-| :------------ |:---------------:| :---------------:| :-----|
-| firstName | No | String  <br> max chars=150 | First name. |
-| lastName | No | String  <br> max chars=150 | Last name. |
-| email | No | String  <br> max chars=70 | Email. |
-| company | No | String  <br> max chars=250 | Company name. |
-| phone | No | String  <br> max chars=50 | Phone number. |
-| line1 | No | String  <br> max chars=150 | Address line 1. |
-| line2 | No | String  <br> max chars=150 | Address line 2. |
-| line3 | No | String  <br> max chars=150 | Address line 3. |
-| city | No | String  <br> max chars=50 | City. |
-| stateCode | No | String  <br> max chars=50 | The ISO 3166-2 state/province code without the country prefix. Currently supported for USA, Canada and India. <br> For instance, for Arizona ( USA), set the stateCode as AZ (not US-AZ). or, for Tamil Nadu (India), set the stateCode as TN (not IN-TN). or, for British Columbia (Canada), set the stateCode as BC (not CA-BC). <br> Note: If the 'stateCode' is specified, the 'state' attribute should not be provided as Chargebee will set the value automatically (for US, Canada, India). |
-| state | No | String <br> max chars=50 | The state/province name. Use this to pass the state/province information for cases where 'stateCode' is not supported or cannot be passed. |
-| zip | No | String  <br> max chars=20| Zip or Postal code. |
-| country | No | String  <br> max chars=50| 2-letter ISO 3166 alpha-2 country code. |
-
-### SuccessCallback
-The success callback is a function of type:  ```(string) => void```. It takes in the `hostedPageId` from the Chargebee Hostedpage success screen.
-Example:
-```javascript
-    success = {(hostedPageId: String) => onSuccessNavigateToHomePage(hostedPageId)}
-    onSuccessNavigateToHomePage = (hostedPageId: string) => {
-        console.log('Successfully purchased', hostedPageId);
-        navigation.navigate('Home'); // Application's logic for handling redirection
-    }; 
-```
-
-### StepCallback
-The step callback is a function of type:  ```(string) => void```. It takes in the `stepName` for each of the Chargebee Hostedpage screens.
-Example:
-```javascript
-    step = {(stepName: String) => onEachStepTrackUser(stepName)}
-    onEachStepTrackUser = (stepName: string) => {
-        console.log('User is currently in the step ', stepName);
-        // Application's logic for logging/tracking user action
-    }; 
- ```
 
 ## Contributing
 
