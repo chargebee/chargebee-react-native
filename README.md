@@ -1,24 +1,33 @@
-Chargebee React Native
+Introduction
 ======================
 
-This is the official Software Development Kit (SDK) for Chargebee React Native. This SDK makes it efficient and comfortable to build an impressive subscription experience in your React Native App.
+This is Chargebee’s React Native Software Development Kit (SDK). This SDK makes it efficient and comfortable to build a seamless subscription experience in your React Native App.
+
+Post-installation, initialization, and authentication with the Chargebee site, this SDK will support the following process.
+
+ - **Sync In-App Subscriptions with Chargebee**: Integrate your App developed on React Native with Chargebee to process and track in-app subscriptions of the [Apple App Store](https://appstoreconnect.apple.com/login) and [Google Play Store](https://play.google.com/console/about/) on your Chargebee account. Thus you can create a single source of truth for subscriptions across Apple, Google, and Web stores. Use this if you are selling digital goods or services or are REQUIRED to use Apple's and Google's in-app purchases as per their app review guidelines ([Apple](https://developer.apple.com/app-store/review/guidelines/) and [Google](https://support.google.com/googleplay/android-developer/answer/9858738)). **For SDK methods to work, ensure that prerequisites (Apple and Google) are configured in Chargebee**.
+ 
+**_Note: If you are using the React native wrapper for performing web checkouts for physical goods, follow the set up for our 1.x SDK [here](https://github.com/chargebee/chargebee-react-native/tree/1.x)._**
+
 
 Requirements
 ------------
 
-The following requirements must be set up prior to installing Chargebee's React Native SDK
+The following requirements must be set up before installing Chargebee’s React Native SDK.
 
--   Recommended React Native version >= 0.71.0. Minimum supported React Native version 0.67
--   Requirements for Android https://github.com/chargebee/chargebee-android#requirements
--   Requirements for iOS https://github.com/chargebee/chargebee-ios#requirements
+-    Recommended React Native version 0.71.0 or higher. The minimum supported React Native version is 0.67. 
+-    Requirements for Android https://github.com/chargebee/chargebee-android#requirements
+-    Requirements for iOS https://github.com/chargebee/chargebee-ios#requirements
+ 
+
 
 Installation
 ------------
 
-If you are using yarn, you can add the SDK by using the below command.
+To use Chargebee SDK in your React Native app, follow the below step. 
 
 ```sh
-yarn add @chargebee/react-native-chargebee@beta
+yarn add @chargebee/react-native-chargebee
 ```
 
 For iOS, perform `pod install` after adding the SDK, to install the corresponding cocoapod package.
@@ -68,7 +77,7 @@ Chargebee.configure({
 
 ## Integrating In-App Purchases
 
-This section describes how to use the SDK to integrate In-App Purchase information. For details on In-App Purchase, read [more](https://www.chargebee.com/docs/2.0/mobile_subscriptions.html "https://www.chargebee.com/docs/2.0/mobile_subscriptions.html").
+This section describes how to use the SDK to integrate In-App Purchase information. For details on In-App Purchase, read [more](https://www.chargebee.com/docs/2.0/mobile_subscriptions.html).
 
 #### Get all IAP Product Identifiers from Chargebee
 
@@ -90,7 +99,7 @@ For example, query parameters can be passed as **"limit": "100"**.
 
 #### Get IAP Products
 
-Retrieve the IAP Product objects with Product IDs using the following function.
+Retrieve the IAP `Product` objects with Product IDs using the following function.
 
 ```ts
 import Chargebee, { Product } from '@chargebee/react-native-chargebee';
@@ -106,26 +115,29 @@ You can present any of the above products to your users for them to purchase.
 
 #### Buy or Subscribe Product
 
-Pass the product and customer to the following function when your customer chooses the product to purchase.
+Pass the product and customer to the following function when your customer chooses the product to purchase. 
 
-`id` -  **Optional parameter**. Although this is an optional parameter, we recommend passing it if available, before user subscribes on your App. Passing this parameter ensures that customer id in your database matches with that in Chargebee.
-In case this parameter is not passed, then the **id** will be the same as the **SubscriptionId** created in Chargebee.
+`id` - **Optional parameter**. Although this is an optional parameter, we recommend passing it if available, before the user subscribes to your App. Passing this parameter ensures that the customer id in your database matches that in Chargebee. In case this parameter is not passed, then the id will be the same as the SubscriptionId created in Chargebee. 
 
-`firstName` -  **Optional parameter**. Contains First name of customer.
+`firstName` - **Optional parameter**. Contains the first name of the customer. 
 
-`lastName` -  **Optional parameter**. Contains Last name of customer.
+`lastName` - **Optional parameter**. Contains the last name of the customer. 
 
-`email` -  **Optional parameter**. Contains email of customer.
+`email` - **Optional parameter**. Contains the email of the customer. 
+
 
 
 ```ts
-import Chargebee, { Purchase, Customer } from '@chargebee/react-native-chargebee';
+import Chargebee, {
+    Purchase,
+    Customer
+} from '@chargebee/react-native-chargebee';
 const customer: Customer = {
-      id: 'id',
-      firstName: 'fname',
-      lastName: 'lname',
-      email: 'fname@domain.com',
-    };
+    id: 'id',
+    firstName: 'fname',
+    lastName: 'lname',
+    email: 'fname@domain.com',
+};
 try {
     const result: Purchase = await Chargebee.purchaseProduct("product-id", customer);
     console.log(result);
@@ -134,13 +146,13 @@ try {
 }
 ```
 
-The above function will handle the purchase against Apple App Store or Google Play Store and send the in-app purchase receipt for server-side receipt verification to your Chargebee account. Use the Subscription ID returned by the above function to check for Subscription status on Chargebee and confirm the access - granted or denied.
+The above function will handle the purchase against Apple App Store or Google Play Store and send the in-app purchase receipt for server-side receipt verification to your Chargebee account. Use the Subscription ID returned by the above function to check for Subscription status on Chargebee and confirm the access - **_granted or denied_**.
 
 #### Get Subscription Status for Existing Subscribers using Query Parameters
 
-Use this method to check the subscription status of a subscriber who has already purchased the product.
+Use the method, `retrieveSubscriptions` to check the subscription status of a subscriber who has already purchased the product.
 
-Use SubscriptionsRequest - Subscription ID, Customer ID, or Status for checking the Subscription status on Chargebee and confirm the access - granted or denied.
+Use `SubscriptionsRequest` with query parameters- Subscription ID, Customer ID, or Status for checking the subscription status on Chargebee and confirming the access - **_granted or denied*_*.
 
 ```ts
 import Chargebee, { SubscriptionsRequest, Subscription } from '@chargebee/react-native-chargebee';
@@ -152,7 +164,7 @@ try {
 } catch (error) {
     console.error(error);
 }
-    
+   
 ```
 
 ## Contributing
