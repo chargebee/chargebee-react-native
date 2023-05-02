@@ -5,7 +5,7 @@ React Native wrapper for rendering a Chargebee hosted checkout page within a Web
 ## Installation
 
 ```sh
-yarn add @chargebee/react-native-chargebee
+npm i @chargebee/react-native-chargebee@1.2.0
 ```
 
 ## Dependencies
