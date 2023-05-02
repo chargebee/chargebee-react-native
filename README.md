@@ -1,3 +1,5 @@
+![Latest Release](https://github.com/chargebee/chargebee-react-native/actions/workflows/release.yml/badge.svg?branch=master)
+
 Introduction
 ======================
 
