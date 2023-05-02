@@ -1,5 +1,13 @@
 
 
+# [2.0.0-beta.6](https://github.com/chargebee/chargebee-react-native/compare/v2.0.0-beta.5...v2.0.0-beta.6) (2023-04-28)
+
+
+### Bug Fixes
+
+* change double to number to follow ts types ([62a0b84](https://github.com/chargebee/chargebee-react-native/commit/62a0b842feed40882e601abf2a45b9318d5aef27))
+* pass empty fields for customer object for android ([87fce9b](https://github.com/chargebee/chargebee-react-native/commit/87fce9ba93039878714eb45c71bb5df562c1f759))
+
 # [2.0.0-beta.5](https://github.com/chargebee/chargebee-react-native/compare/v2.0.0-beta.2...v2.0.0-beta.5) (2023-04-27)
 
 
