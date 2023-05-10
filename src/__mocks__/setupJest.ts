@@ -6,4 +6,5 @@ NativeModules.ChargebeeReactNative = {
   retrieveProducts: jest.fn(),
   purchaseProduct: jest.fn(),
   retrieveSubscriptions: jest.fn(),
+  restorePurchases: jest.fn(),
 };

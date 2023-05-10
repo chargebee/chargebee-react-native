@@ -1,7 +1,6 @@
 package com.chargebee.android.reactnative
 
 import com.chargebee.android.Chargebee
-import com.chargebee.android.reactnative.ChargebeeReactNativeSpec
 import com.chargebee.android.ErrorDetail
 import com.chargebee.android.billingservice.CBCallback
 import com.chargebee.android.billingservice.CBPurchase
@@ -9,9 +8,15 @@ import com.chargebee.android.billingservice.GPErrorCode
 import com.chargebee.android.exceptions.CBException
 import com.chargebee.android.exceptions.CBProductIDResult
 import com.chargebee.android.exceptions.ChargebeeResult
-import com.chargebee.android.models.*
+import com.chargebee.android.models.CBProduct
+import com.chargebee.android.models.CBRestoreSubscription
+import com.chargebee.android.models.CBSubscription
 import com.chargebee.android.network.ReceiptDetail
-import com.chargebee.android.reactnative.models.*
+import com.chargebee.android.reactnative.models.CBReactNativeError
+import com.chargebee.android.reactnative.models.PurchaseResult
+import com.chargebee.android.reactnative.models.errorCode
+import com.chargebee.android.reactnative.models.messageUserInfo
+import com.chargebee.android.reactnative.models.toMap
 import com.chargebee.android.reactnative.utils.convertArrayToWritableArray
 import com.chargebee.android.reactnative.utils.convertAuthenticationDetailToDictionary
 import com.chargebee.android.reactnative.utils.convertListToWritableArray
@@ -19,8 +24,13 @@ import com.chargebee.android.reactnative.utils.convertPurchaseResultToDictionary
 import com.chargebee.android.reactnative.utils.convertQueryParamsToArray
 import com.chargebee.android.reactnative.utils.convertReadableArray
 import com.chargebee.android.reactnative.utils.convertReadableMapToCustomer
+import com.chargebee.android.reactnative.utils.convertRestoredSubscriptionsToDictionary
 import com.chargebee.android.reactnative.utils.convertSubscriptionsToDictionary
-import com.facebook.react.bridge.*
+import com.facebook.react.bridge.Promise
+import com.facebook.react.bridge.ReactApplicationContext
+import com.facebook.react.bridge.ReactMethod
+import com.facebook.react.bridge.ReadableArray
+import com.facebook.react.bridge.ReadableMap
 
 class ChargebeeReactNativeModule internal constructor(context: ReactApplicationContext) :
   ChargebeeReactNativeSpec(context) {
@@ -156,6 +166,23 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
           )
         }
       }
+    }
+  }
+
+  @ReactMethod
+  override fun restorePurchases(includeInActiveProducts: Boolean, promise: Promise) {
+    val activity = currentActivity
+    activity?.let {
+      CBPurchase.restorePurchases(it, includeInActiveProducts, object :
+        CBCallback.RestorePurchaseCallback {
+        override fun onSuccess(result: List<CBRestoreSubscription>) {
+          promise.resolve(convertRestoredSubscriptionsToDictionary(result))
+        }
+        override fun onError(error: CBException) {
+          val messageUserInfo = error.messageUserInfo()
+          promise.reject("${CBReactNativeError.RESTORE_FAILED.code}", messageUserInfo.getString("message"), error, messageUserInfo)
+        }
+      })
     }
   }
 

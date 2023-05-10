@@ -28,6 +28,11 @@ enum class CBReactNativeError(val code: Int) {
   REQUEST_FAILED(2012),
   PRODUCT_PURCHASED_ALREADY(2013),
 
+  // Restore Error
+  NO_RECEIPT(2014),
+  REFRESH_RECEIPT_FAILED(2015),
+  RESTORE_FAILED(2016),
+
   // General Errors
   SYSTEM_ERROR(3000);
 

@@ -2,6 +2,7 @@ package com.chargebee.android.reactnative.utils
 
 import com.android.billingclient.api.SkuDetails
 import com.chargebee.android.models.CBProduct
+import com.chargebee.android.models.CBRestoreSubscription
 import com.chargebee.android.reactnative.models.PurchaseResult
 import com.chargebee.android.models.SubscriptionDetailsWrapper
 import com.chargebee.android.network.CBAuthResponse
@@ -99,5 +100,21 @@ internal fun convertAuthenticationDetailToDictionary(authResponseData: Any): Wri
     writableMap.putString("version", authResponseData?.in_app_detail?.product_catalog_version)
     writableMap.putString("status", authResponseData?.in_app_detail?.status)
   }
+  return writableMap
+}
+
+internal fun convertRestoredSubscriptionsToDictionary(restoredSubscriptions: List<CBRestoreSubscription>): WritableArray {
+  val writableArray: WritableArray = WritableNativeArray()
+  for (item in restoredSubscriptions) {
+    writableArray.pushMap(convertRestoredSubscriptionToDictionary(item))
+  }
+  return writableArray
+}
+
+internal fun convertRestoredSubscriptionToDictionary(restoredSubscription: CBRestoreSubscription): WritableMap {
+  val writableMap: WritableMap = WritableNativeMap()
+  writableMap.putString("subscriptionId", restoredSubscription.subscriptionId)
+  writableMap.putString("planId", restoredSubscription.planId)
+  writableMap.putString("storeStatus", restoredSubscription.storeStatus)
   return writableMap
 }

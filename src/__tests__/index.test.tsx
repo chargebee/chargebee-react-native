@@ -131,4 +131,12 @@ describe('Chargebee React Native', () => {
       NativeModules.ChargebeeReactNative.retrieveSubscriptions
     ).toHaveBeenCalledWith(queryParams);
   });
+
+  it('restore subscriptions', async () => {
+    const includeInActiveProducts = true;
+    await Chargebee.restorePurchases(includeInActiveProducts);
+    expect(NativeModules.ChargebeeReactNative.restorePurchases).toBeCalledTimes(
+      1
+    );
+  });
 });
