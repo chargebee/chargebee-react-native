@@ -1,3 +1,5 @@
+![Latest Release](https://github.com/chargebee/chargebee-react-native/actions/workflows/release.yml/badge.svg?branch=master)
+
 Introduction
 ======================
 
@@ -166,6 +168,77 @@ try {
 }
    
 ```
+
+#### Restore Purchases
+
+The `restorePurchases()` function helps to recover your app user's previous purchases without making them pay again. Sometimes, your app user may want to restore their previous purchases after switching to a new device or reinstalling your app. You can use the `restorePurchases()` function to allow your app user to easily restore their previous purchases.
+
+To retrieve **inactive** purchases along with the **active** purchases for your app user, you can call the `restorePurchases()` function with the includeInActivePurchases parameter set to true. If you only want to restore active subscriptions, set the parameter to false. Here is an example of how to use the restorePurchases() function in your code with the includeInActivePurchases parameter set to true.
+
+```ts
+import Chargebee, { RestoredSubscription } from '@chargebee/react-native-chargebee';
+
+try {
+    const restoredSubscriptions: RestoredSubscription[] = await Chargebee.restorePurchases(true);
+    console.log(restoredSubscriptions);
+} catch (error) {
+    console.error(error);
+}
+
+```
+
+##### Error Handling
+
+In the event of any errors/failures, the React native SDK will return an error object, which has the below format.
+`code` -  **number**. Chargebee Error code.
+`message` - **string**. Error description.
+`userInfo` - **(ChargebeeErrorDetail)** __Optional Object__. Contains additional error information.
+
+The `ChargebeeErrorDetail` object is the below format:
+`apiErrorCode` - **string** __Optional__. Error code from Chargebee backend.
+`httpStatusCode` - **number** __Optional__. Http status code from Chargebee backend.
+`message` - **string** __Optional__. Error description.
+
+###### Example
+```ts
+{
+    "code": "1000", 
+    "message": "Sorry, we couldn't find the site abc-test",
+    "userInfo": {
+        "apiErrorCode": "site_not_found",
+        "httpStatusCode": 404,
+        "message": "Sorry, we couldn't find the site abc-test"
+    }
+}
+```
+
+###### Error Codes
+
+These are the possible error codes and their descriptions:
+
+| Error Code    | Description                             |
+|---------------|-----------------------------------------|
+|	1000		|	INVALID_SDK_CONFIGURATION			  |
+|	1001		|	INVALID_CATALOG_VERSION				  |
+|	1002		|	CANNOT_MAKE_PAYMENTS				  |
+|	2001		|	INVALID_OFFER				          |
+|	2002		|	INVALID_PURCHASE				      |
+|	2003		|	INVALID_SANDBOX				          |
+|	2004		|	NETWORK_ERROR				          |
+|	2005		|	PAYMENT_FAILED				          |
+|	2006		|	PAYMENT_NOT_ALLOWED				      |
+|	2007		|	PRODUCT_NOT_AVAILABLE				  |
+|	2008		|	PURCHASE_NOT_ALLOWED				  |
+|	2009		|	PURCHASE_CANCELLED				      |
+|	2010		|	STORE_PROBLEM				          |
+|	2011		|	INVALID_RECEIPT				          |
+|	2012		|	REQUEST_FAILED				          |
+|	2013		|	PRODUCT_PURCHASED_ALREADY		      |
+|	3000		|	SYSTEM_ERROR				          |
+|	0			|	UNKNOWN				                  |
+
+
+
 
 ## Contributing
 
