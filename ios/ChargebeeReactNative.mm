@@ -53,12 +53,12 @@ RCT_REMAP_METHOD(retrieveSubscriptions,
 }
 
 RCT_REMAP_METHOD(restorePurchases,
-                 restorePurchasesWithIncludeInActiveProducts:(BOOL *)includeInActiveProducts
+                 restorePurchasesWithIncludeInactivePurchases:(BOOL *)includeInactivePurchases
                  withResolver:(RCTPromiseResolveBlock)resolve
                  withRejecter:(RCTPromiseRejectBlock)reject)
 {
     ChargebeeHelper* helper = [ChargebeeHelper shared];
-    [helper restorePurchasesWithIncludeInActiveProducts:includeInActiveProducts resolver:resolve rejecter:reject];
+    [helper restorePurchasesWithIncludeInactivePurchases:includeInactivePurchases resolver:resolve rejecter:reject];
 }
 
 // Don't compile this code when we build for the old architecture.

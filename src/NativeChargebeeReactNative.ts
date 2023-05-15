@@ -4,6 +4,7 @@ import type {
   AuthenticationDetail,
   Product,
   Purchase,
+  RestoredSubscription,
   Subscription,
 } from './Purchases';
 
@@ -17,6 +18,9 @@ export interface Spec extends TurboModule {
   retrieveProducts(productIds: Array<string>): Promise<Product>;
   purchaseProduct(productId: string, customer: Object): Promise<Purchase>;
   retrieveSubscriptions(queryParams: Object): Promise<Array<Subscription>>;
+  restorePurchases(
+    includeInactivePurchases: boolean
+  ): Promise<Array<RestoredSubscription>>;
 }
 
 export default TurboModuleRegistry.getEnforcing<Spec>('ChargebeeReactNative');

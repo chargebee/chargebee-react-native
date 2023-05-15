@@ -69,16 +69,16 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <>
-    <Layout style={styles.container}>
-      <Text style={styles.text} category="h1">
-        Welcome to CBeeHive
-      </Text>
-      <Text style={styles.text} category="s1">
-        Login to to start learning
-      </Text>
-      <LoginForm login={login} />
-    </Layout>
-    <RestoreSubscriptions />
+      <Layout style={styles.container}>
+        <Text style={styles.text} category="h1">
+          Welcome to CBeeHive
+        </Text>
+        <Text style={styles.text} category="s1">
+          Login to to start learning
+        </Text>
+        <LoginForm login={login} />
+      </Layout>
+      <RestoreSubscriptions />
     </>
   );
 };
@@ -96,5 +96,5 @@ const styles = StyleSheet.create({
   },
   restore: {
     justifyContent: 'center',
-  }
+  },
 });

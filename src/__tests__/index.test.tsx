@@ -133,8 +133,8 @@ describe('Chargebee React Native', () => {
   });
 
   it('restore subscriptions', async () => {
-    const includeInActiveProducts = true;
-    await Chargebee.restorePurchases(includeInActiveProducts);
+    const includeInactivePurchases = true;
+    await Chargebee.restorePurchases(includeInactivePurchases);
     expect(NativeModules.ChargebeeReactNative.restorePurchases).toBeCalledTimes(
       1
     );

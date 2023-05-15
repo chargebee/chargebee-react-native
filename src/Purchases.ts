@@ -62,7 +62,7 @@ export enum StoreStatus {
   ACTIVE,
   IN_TRIAL,
   CANCELLED,
-  PAUSED
+  PAUSED,
 }
 
 export interface RestoredSubscription {

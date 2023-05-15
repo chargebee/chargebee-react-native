@@ -170,10 +170,10 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
   }
 
   @ReactMethod
-  override fun restorePurchases(includeInActiveProducts: Boolean, promise: Promise) {
+  override fun restorePurchases(includeInactivePurchases: Boolean, promise: Promise) {
     val activity = currentActivity
     activity?.let {
-      CBPurchase.restorePurchases(it, includeInActiveProducts, object :
+      CBPurchase.restorePurchases(it, includeInactivePurchases, object :
         CBCallback.RestorePurchaseCallback {
         override fun onSuccess(result: List<CBRestoreSubscription>) {
           promise.resolve(convertRestoredSubscriptionsToDictionary(result))
