@@ -58,6 +58,19 @@ export interface Customer {
   email?: string;
 }
 
+export enum StoreStatus {
+  ACTIVE,
+  IN_TRIAL,
+  CANCELLED,
+  PAUSED,
+}
+
+export interface RestoredSubscription {
+  subscriptionId: string;
+  planId: string;
+  storeStatus: StoreStatus;
+}
+
 export function sdkKeyForPlatform(
   androidSdkKey: string,
   iOsSdkKey: string

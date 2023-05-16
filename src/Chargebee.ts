@@ -8,7 +8,8 @@ import {
   type Subscription,
   type AuthenticationDetail,
   type ProductIdentifiersRequest,
-  Customer,
+  type Customer,
+  type RestoredSubscription,
 } from './Purchases';
 
 const LINKING_ERROR =
@@ -109,5 +110,20 @@ export default class Chargebee {
     subscriptionRequest: SubscriptionsRequest
   ): Promise<Array<Subscription>> {
     return ChargebeeReactNative.retrieveSubscriptions(subscriptionRequest);
+  }
+
+  /**
+   * Restores the subscriptions for the user logged in the device.
+   *
+   * @param {Boolean} includeInactivePurchases When set to true, the inactive purchases are also synced to Chargebee.
+   * @returns {Promise<Array<RestoredSubscription>>} Array of subscriptions
+   */
+  public static async restorePurchases(
+    includeInactivePurchases: boolean
+  ): Promise<Array<RestoredSubscription>> {
+    const shouldIncludeInactivePurchases = Boolean(includeInactivePurchases);
+    return ChargebeeReactNative.restorePurchases(
+      shouldIncludeInactivePurchases
+    );
   }
 }

@@ -64,11 +64,11 @@ const ProductDetail = ({ navigation, route }) => {
 
   async function fetchProductDetails(productId: string) {
     try {
-      console.log("Fetching product details")
+      console.log('Fetching product details');
       const productsDetail: Array<Product> = await Chargebee.retrieveProducts([
         productId,
       ]);
-      console.log("Fetched product details:", productsDetail)
+      console.log('Fetched product details:', productsDetail);
       setSelectedProductDetail(productsDetail[0]);
     } catch (error) {
       console.error('Product Details fetch failed', error);

@@ -2,11 +2,12 @@ import Chargebee, {
   Subscription,
   SubscriptionsRequest,
 } from '@chargebee/react-native-chargebee';
-import { Text } from '@ui-kitten/components';
+import { Layout, Text } from '@ui-kitten/components';
 import React, { useEffect, useState } from 'react';
 import { Platform } from 'react-native';
 import { StyleSheet } from 'react-native';
 import LoginForm from '../components/LoginForm';
+import { RestoreSubscriptions } from '../components/RestoreSubscriptions';
 import type { LoginFunction } from '../types/CBee';
 
 const LoginScreen = ({ navigation }) => {
@@ -68,13 +69,16 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <>
-      <Text style={styles.text} category="h1">
-        Welcome to CBeeHive
-      </Text>
-      <Text style={styles.text} category="s1">
-        Login to to start learning
-      </Text>
-      <LoginForm login={login} />
+      <Layout style={styles.container}>
+        <Text style={styles.text} category="h1">
+          Welcome to CBeeHive
+        </Text>
+        <Text style={styles.text} category="s1">
+          Login to to start learning
+        </Text>
+        <LoginForm login={login} />
+      </Layout>
+      <RestoreSubscriptions />
     </>
   );
 };
@@ -84,10 +88,13 @@ export default LoginScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
   },
   text: {
     textAlign: 'center',
+  },
+  restore: {
+    justifyContent: 'center',
   },
 });

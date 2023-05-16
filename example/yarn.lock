@@ -1036,9 +1036,8 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
-"@chargebee/react-native-chargebee@link:..":
-  version "0.0.0"
-  uid ""
+"@chargebee/react-native-chargebee@../.":
+  version "2.0.0"
 
 "@egjs/hammerjs@^2.0.17":
   version "2.0.17"

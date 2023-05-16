@@ -116,11 +116,25 @@ public class ChargebeeHelper: NSObject {
             }
         }
     }
+    
+    @objc public func restorePurchases(includeInactivePurchases: Bool, resolver: @escaping RCTPromiseResolveBlock, rejecter: @escaping RCTPromiseRejectBlock) {
+        
+        CBPurchase.shared.restorePurchases(includeInActiveProducts: includeInactivePurchases) { result in
+            switch result {
+            case .success(let subscriptions):
+                let inAppSubscriptions = subscriptions.map { $0.asDictionary }
+                resolver(inAppSubscriptions)
+            case .failure(let error):
+                let restoreError = error.asNSError
+                rejecter("\(restoreError.code)", error.errorDescription, restoreError)
+            }
+        }
+    }
 
 }
 
 fileprivate func reject(withPurchaseError error: CBPurchaseError, using rejecter: RCTPromiseRejectBlock) {
-    let purchaseError = NSError.init(domain: "StoreError",
+    let purchaseError = NSError(domain: "StoreError",
                                 code: CBReactNativeError.errorCode(purchaseError: error).rawValue,
                                 userInfo: error.userInfo)
     rejecter("\(purchaseError.code)", error.localizedDescription, purchaseError)

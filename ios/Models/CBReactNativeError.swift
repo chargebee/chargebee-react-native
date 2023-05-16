@@ -32,7 +32,12 @@ enum CBReactNativeError: Int, Error {
     case invalidReceipt = 2011
     case requestFailed = 2012
     case productPurchasedAlready = 2013
-
+    
+    // MARK: Restore Error
+    case noReceipt = 2014
+    case refreshReceiptFailed = 2015
+    case restoreFailed = 2016
+    
     // MARK: General Errors
     case systemError = 3000
     
@@ -75,4 +80,6 @@ extension CBReactNativeError {
             return CBReactNativeError.invalidSandbox
         }
     }
+    
+
 }
