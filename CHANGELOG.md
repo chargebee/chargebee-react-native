@@ -1,5 +1,12 @@
 
 
+# [2.1.0](https://github.com/chargebee/chargebee-react-native/compare/v2.0.0...v2.1.0) (2023-05-16)
+
+
+### Features
+
+* adds restore purchases capability ([697a1fa](https://github.com/chargebee/chargebee-react-native/commit/697a1fa172140bb0e4c344cfe1ae0ca368c703cd))
+
 # [2.0.0](https://github.com/chargebee/chargebee-react-native/compare/v2.0.0-beta.6...v2.0.0) (2023-05-02)
 
 # [2.0.0-beta.6](https://github.com/chargebee/chargebee-react-native/compare/v2.0.0-beta.5...v2.0.0-beta.6) (2023-04-28)
