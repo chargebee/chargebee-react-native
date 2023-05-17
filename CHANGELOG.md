@@ -1,5 +1,7 @@
 
 
+## [2.1.1](https://github.com/chargebee/chargebee-react-native/compare/v2.1.0...v2.1.1) (2023-05-17)
+
 # [2.1.0](https://github.com/chargebee/chargebee-react-native/compare/v2.0.0...v2.1.0) (2023-05-16)
 
 
