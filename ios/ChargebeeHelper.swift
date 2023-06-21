@@ -130,7 +130,49 @@ public class ChargebeeHelper: NSObject {
             }
         }
     }
-
+    
+    @objc public func validateReceipt(productId: String, customer: Dictionary<String, String>, resolver: @escaping RCTPromiseResolveBlock, rejecter: @escaping RCTPromiseRejectBlock) {
+        CBPurchase.shared.retrieveProducts(withProductID: [productId]) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case let .success(products):
+                    let  product: CBProduct = products.self.first!;
+                    CBPurchase.shared.validateReceipt(product) { result in
+                        switch result {
+                        case .success(let result):
+                            do {
+                                let purchasedProduct = try CBPurchaseResult(fromTuple: result)
+                                resolver(purchasedProduct.asDictionary)
+                            } catch (let error) {
+                                if let error = error as? CBReactNativeError {
+                                    rejecter("\(error.rawValue)", error.localizedDescription, error)
+                                } else {
+                                    rejecter("\(CBReactNativeError.unknown.rawValue)", error.localizedDescription, error)
+                                }
+                            }
+                        case .failure(let error):
+                            switch error {
+                            case let error as CBError:
+                                switch error {
+                                case .invalidRequest:
+                                    rejecter("\(CBReactNativeError.invalidReceipt.rawValue)", error.errorDescription, error.asNSError)
+                                case .operationFailed:
+                                    rejecter("\(CBReactNativeError.systemError.rawValue)", error.errorDescription, error.asNSError)
+                                default:
+                                    rejecter("\(CBReactNativeError.unknown.rawValue)", error.localizedDescription, error)
+                                }
+                            default:
+                                rejecter("\(CBReactNativeError.unknown.rawValue)", error.localizedDescription, error)
+                            }
+                        
+                        }
+                    }
+                case let .failure(error):
+                    reject(withPurchaseError: error, using: rejecter)
+                }
+            }
+        }
+    }
 }
 
 fileprivate func reject(withPurchaseError error: CBPurchaseError, using rejecter: RCTPromiseRejectBlock) {

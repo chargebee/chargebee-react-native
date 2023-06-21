@@ -186,6 +186,45 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
     }
   }
 
+  override fun validateReceipt(productId: String, customer: ReadableMap, promise: Promise) {
+    val activity = currentActivity
+    activity?.let {
+      val productIds = arrayListOf(productId)
+      CBPurchase.retrieveProducts(it, productIds,
+        object : CBCallback.ListProductsCallback<ArrayList<CBProduct>> {
+          override fun onSuccess(productDetails: ArrayList<CBProduct>) {
+            if (productDetails.size > 0) {
+              CBPurchase.validateReceipt(context = activity,
+                product = productDetails.first(),
+                customer = convertReadableMapToCustomer(customer),
+                completionCallback = object : CBCallback.PurchaseCallback<String> {
+
+                  override fun onSuccess(receiptDetail: ReceiptDetail, status: Boolean) {
+                    val purchaseResult = PurchaseResult(receiptDetail, status)
+                    promise.resolve(convertPurchaseResultToDictionary(purchaseResult, status))
+                  }
+
+                  override fun onError(error: CBException) {
+                    val cbReactNativeError = error.httpStatusCode?.let { it -> CBReactNativeError.fromBillingCode(it) } ?: CBReactNativeError.UNKNOWN
+                    val messageUserInfo = error.messageUserInfo()
+                    promise.reject("${cbReactNativeError.code}", messageUserInfo.getString("message"), error, messageUserInfo)
+                  }
+                })
+            } else {
+              val productNotAvailableError = CBException(ErrorDetail(message = GPErrorCode.ProductUnavailable.errorMsg, httpStatusCode = CBReactNativeError.PRODUCT_NOT_AVAILABLE.code))
+              val messageUserInfo = productNotAvailableError.messageUserInfo()
+              promise.reject("${productNotAvailableError.httpStatusCode}", messageUserInfo.getString("message"), productNotAvailableError, productNotAvailableError.messageUserInfo())
+            }
+
+          }
+          override fun onError(error: CBException) {
+            val messageUserInfo = error.messageUserInfo()
+            promise.reject("${CBReactNativeError.SYSTEM_ERROR.code}", messageUserInfo.getString("message"), error, messageUserInfo)
+          }
+        })
+    }
+  }
+
   companion object {
     const val NAME = "ChargebeeReactNative"
   }
