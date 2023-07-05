@@ -132,12 +132,13 @@ public class ChargebeeHelper: NSObject {
     }
     
     @objc public func validateReceipt(productId: String, customer: Dictionary<String, String>, resolver: @escaping RCTPromiseResolveBlock, rejecter: @escaping RCTPromiseRejectBlock) {
+        let customer = CBCustomer.fromDictionary(customer: customer)
         CBPurchase.shared.retrieveProducts(withProductID: [productId]) { result in
             DispatchQueue.main.async {
                 switch result {
                 case let .success(products):
                     let  product: CBProduct = products.self.first!;
-                    CBPurchase.shared.validateReceipt(product) { result in
+                    CBPurchase.shared.validateReceipt(product, customer: customer) { result in
                         switch result {
                         case .success(let result):
                             do {
