@@ -38,7 +38,7 @@ const PurchasesScreen = ({ navigation, customerId }) => {
         '========================='
       );
       const errorModel = {
-        code: error.code, // RNErrorCode
+        code: error.code, // ChargebeeErrorCode
         message: error.message, // Message
         userInfo: {
           message: error.userInfo?.message, // Message

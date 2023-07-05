@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react';
 import { Platform } from 'react-native';
 import { ProductDetails } from '../components/ProductDetails';
 import { SuccessModal } from '../components/SuccessModal';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ProductDetail = ({ navigation, route }) => {
   const [selectedProductDetail, setSelectedProductDetail] = useState<Product>();
@@ -24,10 +25,14 @@ const ProductDetail = ({ navigation, route }) => {
     };
     console.log('Purchasing ', productId, customer);
     try {
+      // Store the Product/Customer to be purchased, in a local cache/storage
+      cacheData('productToPurchase', productId);
       const purchase = await Chargebee.purchaseProduct(productId, customer);
       setProductPurchased(purchase);
       console.log(purchase);
       setShowSuccess(true);
+      // Remove the cached Product/Customer after successful purchase
+      removeCachedData('productToPurchase');
     } catch (error) {
       console.log('Error when purchasing product identifiers', error);
       console.log(
@@ -36,7 +41,7 @@ const ProductDetail = ({ navigation, route }) => {
         '========================='
       );
       const errorModel = {
-        code: error.code, // RNErrorCode
+        code: error.code, // ChargebeeErrorCode
         message: error.message, // Message
         userInfo: {
           message: error.userInfo?.message, // Message
@@ -46,6 +51,22 @@ const ProductDetail = ({ navigation, route }) => {
       };
       console.error(errorModel);
       console.log('=========================');
+      // In case of network errors/system errors, retry on receiving appropriate error.
+      if (errorModel.code === '3000') {
+        console.log('Retrying Sync receipt to Chargebee');
+        const productToRetry = await getCachedData('productToPurchase');
+        try {
+          const purchase = await Chargebee.validateReceipt(
+            productToRetry,
+            customer
+          );
+          console.log(purchase);
+          // Remove the cached Product/Customer after successful retry
+          removeCachedData('productToPurchase');
+        } catch (error) {
+          console.log('error', Object.values(error));
+        }
+      }
     }
   };
 
@@ -56,6 +77,19 @@ const ProductDetail = ({ navigation, route }) => {
   const navigateToCourses = () => {
     setShowSuccess(false);
     navigation.navigate('Courses', { successfulPurchase: productPurchased });
+  };
+
+  const cacheData = async (key, value) => {
+    await AsyncStorage.setItem(key, value);
+  };
+
+  const getCachedData = async (key) => {
+    const value = await AsyncStorage.getItem(key);
+    return value;
+  };
+
+  const removeCachedData = async (key) => {
+    await AsyncStorage.removeItem(key);
   };
 
   useEffect(() => {
@@ -78,7 +112,7 @@ const ProductDetail = ({ navigation, route }) => {
         '========================='
       );
       const errorModel = {
-        code: error.code, // RNErrorCode
+        code: error.code, // ChargebeeErrorCode
         message: error.message, // Message
         userInfo: {
           message: error.userInfo?.message, // Message

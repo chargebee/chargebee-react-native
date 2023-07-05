@@ -61,6 +61,16 @@ RCT_REMAP_METHOD(restorePurchases,
     [helper restorePurchasesWithIncludeInactivePurchases:includeInactivePurchases resolver:resolve rejecter:reject];
 }
 
+RCT_REMAP_METHOD(validateReceipt,
+                 validateReceiptWithProduct:(NSString *)productId
+                 withCustomer:(NSDictionary *)customer
+                 withResolver:(RCTPromiseResolveBlock)resolve
+                 withRejecter:(RCTPromiseRejectBlock)reject)
+{
+    ChargebeeHelper* helper = [ChargebeeHelper shared];
+    [helper validateReceiptWithProductId:productId customer:customer resolver:resolve rejecter:reject];
+}
+
 // Don't compile this code when we build for the old architecture.
 #ifdef RCT_NEW_ARCH_ENABLED
 - (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:

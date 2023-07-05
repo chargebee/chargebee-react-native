@@ -12,6 +12,7 @@
   "dependencies": {
     "@chargebee/react-native-chargebee": "../.",
     "@eva-design/eva": "^2.1.1",
+    "@react-native-async-storage/async-storage": "^1.19.0",
     "@react-navigation/native": "^6.1.4",
     "@react-navigation/native-stack": "^6.9.10",
     "@ui-kitten/components": "^5.1.2",

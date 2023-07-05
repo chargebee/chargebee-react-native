@@ -126,4 +126,20 @@ export default class Chargebee {
       shouldIncludeInactivePurchases
     );
   }
+
+  /**
+   * Validates the receipt of the given Product ID and Customer.
+   * This method can be used to retry sync with Chargebee, when sync fails after a successful purchase.
+   *
+   * @param {string} productId Product identifier
+   * @param {Object} customer Optional. Customer object.
+   * If the `id` is not passed in the customer's details, then the value of customerId will be the same as the SubscriptionId created in Chargebee.
+   * @returns {Promise<Purchase>} Purchase result
+   */
+  public static async validateReceipt(
+    productId: string,
+    customer: Customer | null
+  ): Promise<Purchase> {
+    return ChargebeeReactNative.validateReceipt(productId, customer);
+  }
 }

@@ -238,7 +238,24 @@ These are the possible error codes and their descriptions:
 |	0			|	UNKNOWN				                  |
 
 
+#### Synchronization of Apple App Store/Google Play Store Purchases with Chargebee through Receipt Validation
+Receipt validation is crucial to ensure that the purchases made by your users are synced with Chargebee. In rare cases, when a purchase is made at the Apple App Store/Google Play Store, and the network connection goes off or the server was not responding, the purchase details may not be updated in Chargebee. In such cases, you can use a retry mechanism by following these steps:
 
+* Save the product identifier in the cache once the purchase is initiated and clear the cache once the purchase/retry validation is successful.
+* When the purchase is completed at Apple App Store/Google Play Store but not synced with Chargebee, retrieve the product from the cache and initiate validateReceipt() by passing `productId` and `Customer` as input. This will validate the receipt and sync the purchase in Chargebee as a subscription.
+
+Use the function available for the retry mechanism.
+##### Function for validating the receipt
+
+``` ts
+import Chargebee from '@chargebee/react-native-chargebee';
+
+try {
+    const purchase = await Chargebee.validateReceipt(productId, customer)
+} catch (error) {
+    console.log("error", error);
+}
+```
 
 ## Contributing
 
