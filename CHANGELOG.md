@@ -1,5 +1,13 @@
 
 
+# [2.2.0](https://github.com/chargebee/chargebee-react-native/compare/v2.1.0...v2.2.0) (2023-07-05)
+
+
+### Features
+
+* adds support for validating receipt for given product and customer ([9079b8d](https://github.com/chargebee/chargebee-react-native/commit/9079b8d7009d439abffa0d3b89e6fa1b129de083))
+* updates ios library method for validating ([2762e29](https://github.com/chargebee/chargebee-react-native/commit/2762e29b91d5540d2f9baff52b5cd63368752fb4))
+
 ## [2.1.1](https://github.com/chargebee/chargebee-react-native/compare/v2.1.0...v2.1.1) (2023-05-17)
 
 # [2.1.0](https://github.com/chargebee/chargebee-react-native/compare/v2.0.0...v2.1.0) (2023-05-16)
