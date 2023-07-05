@@ -128,7 +128,7 @@ export default class Chargebee {
   }
 
   /**
-   * Validates the last receipt of the given Product ID and Customer.
+   * Validates the receipt of the given Product ID and Customer.
    * This method can be used to retry sync with Chargebee, when sync fails after a successful purchase.
    *
    * @param {string} productId Product identifier
