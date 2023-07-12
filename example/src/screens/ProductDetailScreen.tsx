@@ -51,20 +51,22 @@ const ProductDetail = ({ navigation, route }) => {
       };
       console.error(errorModel);
       console.log('=========================');
-      // In case of network errors/system errors, retry on receiving appropriate error.
-      if (errorModel.code === '3000') {
-        console.log('Retrying Sync receipt to Chargebee');
+      // In case of network errors/system errors/already purchased erros, retry on receiving appropriate error.
+      if (errorModel.code === '2013') {
         const productToRetry = await getCachedData('productToPurchase');
-        try {
-          const purchase = await Chargebee.validateReceipt(
-            productToRetry,
-            customer
-          );
-          console.log(purchase);
-          // Remove the cached Product/Customer after successful retry
-          removeCachedData('productToPurchase');
-        } catch (error) {
-          console.log('error', Object.values(error));
+        if (productToRetry) {
+          try {
+            const purchase = await Chargebee.validateReceipt(
+              productToRetry,
+              customer
+            );
+            console.log(purchase);
+            // Remove the cached Product/Customer after successful retry
+            removeCachedData('productToPurchase');
+          } catch (error) {
+            console.log('error when validating', error);
+            console.log('error', Object.values(error));
+          }
         }
       }
     }

@@ -1036,8 +1036,10 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
-"@chargebee/react-native-chargebee@../.":
-  version "2.1.1"
+"@chargebee/react-native-chargebee@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.npmjs.org/@chargebee/react-native-chargebee/-/react-native-chargebee-2.2.0.tgz#0cdbb2d40c02dd1a4789d3c5e3e5c6168b63b2d3"
+  integrity sha512-R2vEytHiffOZR1tUOkKBDefCb7RyyjnLLrk4Z9zV0R6HZOOQhX1HU4bhsh4xjfwME0lThk6czUC80t1qM0/9TA==
 
 "@egjs/hammerjs@^2.0.17":
   version "2.0.17"
