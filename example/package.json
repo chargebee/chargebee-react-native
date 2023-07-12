@@ -10,7 +10,7 @@
     "bundle-android": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res"
   },
   "dependencies": {
-    "@chargebee/react-native-chargebee": "../.",
+    "@chargebee/react-native-chargebee": "^2.2.0",
     "@eva-design/eva": "^2.1.1",
     "@react-native-async-storage/async-storage": "^1.19.0",
     "@react-navigation/native": "^6.1.4",

@@ -186,6 +186,7 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
     }
   }
 
+  @ReactMethod
   override fun validateReceipt(productId: String, customer: ReadableMap, promise: Promise) {
     val activity = currentActivity
     activity?.let {
