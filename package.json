@@ -1,6 +1,6 @@
 {
   "name": "@chargebee/react-native-chargebee",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "Package for Chargebee In-App Purchases",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
