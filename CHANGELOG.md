@@ -1,5 +1,12 @@
 
 
+## [2.2.1](https://github.com/chargebee/chargebee-react-native/compare/v2.2.0...v2.2.1) (2023-07-12)
+
+
+### Bug Fixes
+
+* fixes retry validation method and example ([15f88d3](https://github.com/chargebee/chargebee-react-native/commit/15f88d3825de52242aa8b2a1ec0a3e18f0604e20))
+
 # [2.2.0](https://github.com/chargebee/chargebee-react-native/compare/v2.1.0...v2.2.0) (2023-07-05)
 
 
