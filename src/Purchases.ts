@@ -71,6 +71,11 @@ export interface RestoredSubscription {
   storeStatus: StoreStatus;
 }
 
+export interface Entitlement {
+  subscriptionId: string;
+  featureId: string;
+}
+
 export function sdkKeyForPlatform(
   androidSdkKey: string,
   iOsSdkKey: string

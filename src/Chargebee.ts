@@ -10,6 +10,7 @@ import {
   type ProductIdentifiersRequest,
   type Customer,
   type RestoredSubscription,
+  type Entitlement,
 } from './Purchases';
 
 const LINKING_ERROR =
@@ -141,5 +142,17 @@ export default class Chargebee {
     customer: Customer | null
   ): Promise<Purchase> {
     return ChargebeeReactNative.validateReceipt(productId, customer);
+  }
+
+  /**
+   * Retrieves the entitlements for a given subscription id
+   *
+   * @param {string} subscriptionId Subscription identifier
+   * @returns {Promise<Array<Entitlement>>} Array of Entitlments
+   */
+  public static async retrieveEntitlements(
+    subscriptionId: string
+  ): Promise<Array<Entitlement>> {
+    return ChargebeeReactNative.retrieveEntitlements(subscriptionId);
   }
 }

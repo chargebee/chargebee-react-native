@@ -2,6 +2,7 @@ import type { TurboModule } from 'react-native';
 import { TurboModuleRegistry } from 'react-native';
 import type {
   AuthenticationDetail,
+  Entitlement,
   Product,
   Purchase,
   RestoredSubscription,
@@ -22,6 +23,7 @@ export interface Spec extends TurboModule {
     includeInactivePurchases: boolean
   ): Promise<Array<RestoredSubscription>>;
   validateReceipt(productId: string, customer: Object): Promise<Purchase>;
+  retrieveEntitlements(subscriptionId: string): Promise<Entitlement>;
 }
 
 export default TurboModuleRegistry.getEnforcing<Spec>('ChargebeeReactNative');

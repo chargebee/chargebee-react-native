@@ -139,4 +139,31 @@ describe('Chargebee React Native', () => {
       1
     );
   });
+
+  it('validate receipt by Product ID, Customer', async () => {
+    const customer: Customer = { id: 'customer-id-1' };
+    const productId = 'product-id-1';
+
+    await Chargebee.validateReceipt(productId, customer);
+
+    expect(NativeModules.ChargebeeReactNative.validateReceipt).toBeCalledTimes(
+      1
+    );
+    expect(
+      NativeModules.ChargebeeReactNative.validateReceipt
+    ).toHaveBeenCalledWith(productId, customer);
+  });
+
+  it('retrieve entitlements receipt by Subscription ID', async () => {
+    const subscriptionId = 'subscription-id-1';
+
+    await Chargebee.retrieveEntitlements(subscriptionId);
+
+    expect(
+      NativeModules.ChargebeeReactNative.retrieveEntitlements
+    ).toBeCalledTimes(1);
+    expect(
+      NativeModules.ChargebeeReactNative.retrieveEntitlements
+    ).toHaveBeenCalledWith(subscriptionId);
+  });
 });
