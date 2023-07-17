@@ -8,6 +8,7 @@ import com.chargebee.android.billingservice.GPErrorCode
 import com.chargebee.android.exceptions.CBException
 import com.chargebee.android.exceptions.CBProductIDResult
 import com.chargebee.android.exceptions.ChargebeeResult
+import com.chargebee.android.models.CBEntitlements
 import com.chargebee.android.models.CBProduct
 import com.chargebee.android.models.CBRestoreSubscription
 import com.chargebee.android.models.CBSubscription
@@ -19,6 +20,7 @@ import com.chargebee.android.reactnative.models.messageUserInfo
 import com.chargebee.android.reactnative.models.toMap
 import com.chargebee.android.reactnative.utils.convertArrayToWritableArray
 import com.chargebee.android.reactnative.utils.convertAuthenticationDetailToDictionary
+import com.chargebee.android.reactnative.utils.convertEntitlementsToDictionary
 import com.chargebee.android.reactnative.utils.convertListToWritableArray
 import com.chargebee.android.reactnative.utils.convertPurchaseResultToDictionary
 import com.chargebee.android.reactnative.utils.convertQueryParamsToArray
@@ -31,6 +33,7 @@ import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactMethod
 import com.facebook.react.bridge.ReadableArray
 import com.facebook.react.bridge.ReadableMap
+import java.lang.RuntimeException
 
 class ChargebeeReactNativeModule internal constructor(context: ReactApplicationContext) :
   ChargebeeReactNativeSpec(context) {
@@ -53,6 +56,7 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
         is ChargebeeResult.Success -> {
           promise.resolve(convertAuthenticationDetailToDictionary(it.data))
         }
+
         is ChargebeeResult.Error -> {
           val messageUserInfo = it.exp.messageUserInfo()
           promise.reject(
@@ -75,9 +79,15 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
           val identifiers = it.IDs.toArray(arrayOf<String>())
           promise.resolve(convertArrayToWritableArray(identifiers))
         }
+
         is CBProductIDResult.Error -> {
           val messageUserInfo = it.exp.messageUserInfo()
-          promise.reject("${it.exp.errorCode().code}", messageUserInfo.getString("message"), it.exp, messageUserInfo)
+          promise.reject(
+            "${it.exp.errorCode().code}",
+            messageUserInfo.getString("message"),
+            it.exp,
+            messageUserInfo
+          )
         }
       }
     }
@@ -90,19 +100,36 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
       CBPurchase.retrieveProducts(it, convertReadableArray(productIds),
         object : CBCallback.ListProductsCallback<ArrayList<CBProduct>> {
           override fun onSuccess(productDetails: ArrayList<CBProduct>) {
-            if(productDetails.isEmpty()) {
-              val productNotAvailableError = CBException(ErrorDetail(message = GPErrorCode.ProductUnavailable.errorMsg, httpStatusCode = CBReactNativeError.PRODUCT_NOT_AVAILABLE.code))
+            if (productDetails.isEmpty()) {
+              val productNotAvailableError = CBException(
+                ErrorDetail(
+                  message = GPErrorCode.ProductUnavailable.errorMsg,
+                  httpStatusCode = CBReactNativeError.PRODUCT_NOT_AVAILABLE.code
+                )
+              )
               val messageUserInfo = productNotAvailableError.messageUserInfo()
-              promise.reject("${productNotAvailableError.httpStatusCode}", messageUserInfo.getString("message"), productNotAvailableError, productNotAvailableError.messageUserInfo())
+              promise.reject(
+                "${productNotAvailableError.httpStatusCode}",
+                messageUserInfo.getString("message"),
+                productNotAvailableError,
+                productNotAvailableError.messageUserInfo()
+              )
             } else {
               promise.resolve(convertListToWritableArray(productDetails))
             }
           }
 
           override fun onError(error: CBException) {
-            val cbReactNativeError = error.httpStatusCode?.let { it -> CBReactNativeError.fromBillingCode(it) } ?: CBReactNativeError.UNKNOWN
+            val cbReactNativeError =
+              error.httpStatusCode?.let { it -> CBReactNativeError.fromBillingCode(it) }
+                ?: CBReactNativeError.UNKNOWN
             val messageUserInfo = error.messageUserInfo()
-            promise.reject("${cbReactNativeError.code}", messageUserInfo.getString("message"), error, messageUserInfo)
+            promise.reject(
+              "${cbReactNativeError.code}",
+              messageUserInfo.getString("message"),
+              error,
+              messageUserInfo
+            )
           }
         })
     }
@@ -128,21 +155,44 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
                   }
 
                   override fun onError(error: CBException) {
-                    val cbReactNativeError = error.httpStatusCode?.let { it -> CBReactNativeError.fromBillingCode(it) } ?: CBReactNativeError.UNKNOWN
+                    val cbReactNativeError =
+                      error.httpStatusCode?.let { it -> CBReactNativeError.fromBillingCode(it) }
+                        ?: CBReactNativeError.UNKNOWN
                     val messageUserInfo = error.messageUserInfo()
-                    promise.reject("${cbReactNativeError.code}", messageUserInfo.getString("message"), error, messageUserInfo)
+                    promise.reject(
+                      "${cbReactNativeError.code}",
+                      messageUserInfo.getString("message"),
+                      error,
+                      messageUserInfo
+                    )
                   }
                 })
             } else {
-              val productNotAvailableError = CBException(ErrorDetail(message = GPErrorCode.ProductUnavailable.errorMsg, httpStatusCode = CBReactNativeError.PRODUCT_NOT_AVAILABLE.code))
+              val productNotAvailableError = CBException(
+                ErrorDetail(
+                  message = GPErrorCode.ProductUnavailable.errorMsg,
+                  httpStatusCode = CBReactNativeError.PRODUCT_NOT_AVAILABLE.code
+                )
+              )
               val messageUserInfo = productNotAvailableError.messageUserInfo()
-              promise.reject("${productNotAvailableError.httpStatusCode}", messageUserInfo.getString("message"), productNotAvailableError, productNotAvailableError.messageUserInfo())
+              promise.reject(
+                "${productNotAvailableError.httpStatusCode}",
+                messageUserInfo.getString("message"),
+                productNotAvailableError,
+                productNotAvailableError.messageUserInfo()
+              )
             }
 
           }
+
           override fun onError(error: CBException) {
             val messageUserInfo = error.messageUserInfo()
-            promise.reject("${CBReactNativeError.SYSTEM_ERROR.code}", messageUserInfo.getString("message"), error, messageUserInfo)
+            promise.reject(
+              "${CBReactNativeError.SYSTEM_ERROR.code}",
+              messageUserInfo.getString("message"),
+              error,
+              messageUserInfo
+            )
           }
         })
     }
@@ -156,6 +206,7 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
           val subscriptions = (it.data as CBSubscription).list
           promise.resolve(convertSubscriptionsToDictionary(subscriptions))
         }
+
         is ChargebeeResult.Error -> {
           val messageUserInfo = it.exp.messageUserInfo()
           promise.reject(
@@ -178,9 +229,15 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
         override fun onSuccess(result: List<CBRestoreSubscription>) {
           promise.resolve(convertRestoredSubscriptionsToDictionary(result))
         }
+
         override fun onError(error: CBException) {
           val messageUserInfo = error.messageUserInfo()
-          promise.reject("${CBReactNativeError.RESTORE_FAILED.code}", messageUserInfo.getString("message"), error, messageUserInfo)
+          promise.reject(
+            "${CBReactNativeError.RESTORE_FAILED.code}",
+            messageUserInfo.getString("message"),
+            error,
+            messageUserInfo
+          )
         }
       })
     }
@@ -206,23 +263,78 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
                   }
 
                   override fun onError(error: CBException) {
-                    val cbReactNativeError = error.httpStatusCode?.let { it -> CBReactNativeError.fromBillingCode(it) } ?: CBReactNativeError.UNKNOWN
+                    val cbReactNativeError =
+                      error.httpStatusCode?.let { it -> CBReactNativeError.fromBillingCode(it) }
+                        ?: CBReactNativeError.UNKNOWN
                     val messageUserInfo = error.messageUserInfo()
-                    promise.reject("${cbReactNativeError.code}", messageUserInfo.getString("message"), error, messageUserInfo)
+                    promise.reject(
+                      "${cbReactNativeError.code}",
+                      messageUserInfo.getString("message"),
+                      error,
+                      messageUserInfo
+                    )
                   }
                 })
             } else {
-              val productNotAvailableError = CBException(ErrorDetail(message = GPErrorCode.ProductUnavailable.errorMsg, httpStatusCode = CBReactNativeError.PRODUCT_NOT_AVAILABLE.code))
+              val productNotAvailableError = CBException(
+                ErrorDetail(
+                  message = GPErrorCode.ProductUnavailable.errorMsg,
+                  httpStatusCode = CBReactNativeError.PRODUCT_NOT_AVAILABLE.code
+                )
+              )
               val messageUserInfo = productNotAvailableError.messageUserInfo()
-              promise.reject("${productNotAvailableError.httpStatusCode}", messageUserInfo.getString("message"), productNotAvailableError, productNotAvailableError.messageUserInfo())
+              promise.reject(
+                "${productNotAvailableError.httpStatusCode}",
+                messageUserInfo.getString("message"),
+                productNotAvailableError,
+                productNotAvailableError.messageUserInfo()
+              )
             }
 
           }
+
           override fun onError(error: CBException) {
             val messageUserInfo = error.messageUserInfo()
-            promise.reject("${CBReactNativeError.SYSTEM_ERROR.code}", messageUserInfo.getString("message"), error, messageUserInfo)
+            promise.reject(
+              "${CBReactNativeError.SYSTEM_ERROR.code}",
+              messageUserInfo.getString("message"),
+              error,
+              messageUserInfo
+            )
           }
         })
+    }
+  }
+
+  @ReactMethod
+  override fun retrieveEntitlements(entitlementsRequest: ReadableMap, promise: Promise) {
+    val subscriptionId = entitlementsRequest.getString("subscriptionId") ?: run {
+      val runtimeException = RuntimeException("Subscription ID is invalid")
+      promise.reject(
+        "${CBReactNativeError.INVALID_RESOURCE.code}",
+        runtimeException.message,
+        runtimeException,
+        null
+      )
+      return
+    }
+    Chargebee.retrieveEntitlements(subscriptionId) {
+      when (it) {
+        is ChargebeeResult.Success -> {
+          val entitlements = (it.data as CBEntitlements).list
+          promise.resolve(convertEntitlementsToDictionary(entitlements))
+        }
+
+        is ChargebeeResult.Error -> {
+          val messageUserInfo = it.exp.messageUserInfo()
+          promise.reject(
+            "${CBReactNativeError.INVALID_SDK_CONFIGURATION.code}",
+            messageUserInfo.getString("message"),
+            it.exp,
+            messageUserInfo
+          )
+        }
+      }
     }
   }
 

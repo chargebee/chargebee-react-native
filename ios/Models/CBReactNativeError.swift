@@ -17,6 +17,7 @@ enum CBReactNativeError: Int, Error {
     case invalidCatalogVersion = 1001
     case cannotMakePayments = 1002
     case noProductToRestore = 1003
+    case invalidResource = 1004
     
     // MARK: Store Errors
     case invalidOffer = 2001

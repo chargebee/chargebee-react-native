@@ -11,6 +11,7 @@ import {
   type Customer,
   type RestoredSubscription,
   type Entitlement,
+  type EntitlementsRequest,
 } from './Purchases';
 
 const LINKING_ERROR =
@@ -151,8 +152,8 @@ export default class Chargebee {
    * @returns {Promise<Array<Entitlement>>} Array of Entitlments
    */
   public static async retrieveEntitlements(
-    subscriptionId: string
+    entitlementsRequest: EntitlementsRequest
   ): Promise<Array<Entitlement>> {
-    return ChargebeeReactNative.retrieveEntitlements(subscriptionId);
+    return ChargebeeReactNative.retrieveEntitlements(entitlementsRequest);
   }
 }

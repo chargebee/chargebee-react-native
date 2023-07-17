@@ -23,7 +23,9 @@ export interface Spec extends TurboModule {
     includeInactivePurchases: boolean
   ): Promise<Array<RestoredSubscription>>;
   validateReceipt(productId: string, customer: Object): Promise<Purchase>;
-  retrieveEntitlements(subscriptionId: string): Promise<Entitlement>;
+  retrieveEntitlements(
+    entitlementsRequest: Object
+  ): Promise<Array<Entitlement>>;
 }
 
 export default TurboModuleRegistry.getEnforcing<Spec>('ChargebeeReactNative');

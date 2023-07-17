@@ -71,6 +71,14 @@ RCT_REMAP_METHOD(validateReceipt,
     [helper validateReceiptWithProductId:productId customer:customer resolver:resolve rejecter:reject];
 }
 
+RCT_REMAP_METHOD(retrieveEntitlements,
+                retrieveEntitlementsWithEntitlementsRequest:(NSDictionary *)entitlementsRequest
+                    withResolver:(RCTPromiseResolveBlock)resolve
+                 withRejecter:(RCTPromiseRejectBlock)reject) {
+    ChargebeeHelper* helper = [ChargebeeHelper shared];
+    [helper retrieveEntitlementsWithEntitlementsRequest:entitlementsRequest resolver:resolve rejecter:reject];
+}
+
 // Don't compile this code when we build for the old architecture.
 #ifdef RCT_NEW_ARCH_ENABLED
 - (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:

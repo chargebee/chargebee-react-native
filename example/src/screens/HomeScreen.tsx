@@ -18,7 +18,7 @@ const HomeScreen = ({ route, navigation }) => {
   return (
     <>
       {subscriptions.length > 0 ? (
-        <CoursesScreen />
+        <CoursesScreen subscriptions={subscriptions} />
       ) : (
         <PurchasesScreen navigation={navigation} customerId={customerId} />
       )}
