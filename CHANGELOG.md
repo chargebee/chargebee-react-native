@@ -1,5 +1,18 @@
 
 
+# [2.3.0](https://github.com/chargebee/chargebee-react-native/compare/v2.2.1...v2.3.0) (2023-07-18)
+
+
+### Bug Fixes
+
+* fixes unit tests ([a3056ca](https://github.com/chargebee/chargebee-react-native/commit/a3056cae0896503a6ca5c8d5fe480245e1ea726b))
+
+
+### Features
+
+* adds retrieve entitlements api ([6498fcd](https://github.com/chargebee/chargebee-react-native/commit/6498fcd27b5f6e18423bd2e41ef260fc7cbec568))
+* adds retrieve entitlements api method ([26a525b](https://github.com/chargebee/chargebee-react-native/commit/26a525bc28aaf84bdf44abc4fd4bcda1958dc996))
+
 ## [2.2.1](https://github.com/chargebee/chargebee-react-native/compare/v2.2.0...v2.2.1) (2023-07-12)
 
 
