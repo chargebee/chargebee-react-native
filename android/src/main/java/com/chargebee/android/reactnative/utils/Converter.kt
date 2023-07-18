@@ -1,6 +1,7 @@
 package com.chargebee.android.reactnative.utils
 
 import com.android.billingclient.api.SkuDetails
+import com.chargebee.android.models.CBEntitlementsWrapper
 import com.chargebee.android.models.CBProduct
 import com.chargebee.android.models.CBRestoreSubscription
 import com.chargebee.android.reactnative.models.PurchaseResult
@@ -116,5 +117,28 @@ internal fun convertRestoredSubscriptionToDictionary(restoredSubscription: CBRes
   writableMap.putString("subscriptionId", restoredSubscription.subscriptionId)
   writableMap.putString("planId", restoredSubscription.planId)
   writableMap.putString("storeStatus", restoredSubscription.storeStatus)
+  return writableMap
+}
+
+internal fun convertEntitlementsToDictionary(entitlements: List<CBEntitlementsWrapper>): WritableArray {
+  val writableArray: WritableArray = WritableNativeArray()
+  for (item in entitlements) {
+    writableArray.pushMap(convertEntitlementToDictionary(item))
+  }
+  return writableArray
+}
+
+fun convertEntitlementToDictionary(entitlementWrapper: CBEntitlementsWrapper): ReadableMap {
+  val writableMap: WritableMap = WritableNativeMap()
+  val entitlement = entitlementWrapper.subscription_entitlement
+  writableMap.putString("subscriptionId", entitlement.subscription_id)
+  writableMap.putString("featureId", entitlement.feature_id)
+  writableMap.putString("featureName", entitlement.feature_name)
+  writableMap.putString("featureDescription", entitlement.feature_description)
+  writableMap.putString("featureType", entitlement.feature_type)
+  writableMap.putString("value", entitlement.value)
+  writableMap.putString("name", entitlement.name)
+  writableMap.putBoolean("isOverridden", entitlement.is_overridden)
+  writableMap.putBoolean("isEnabled", entitlement.is_enabled)
   return writableMap
 }

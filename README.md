@@ -169,6 +169,24 @@ try {
    
 ```
 
+#### Retrieve Entitlements of a Subscription
+
+Use the Subscription ID for fetching the list of [entitlements](https://www.chargebee.com/docs/2.0/entitlements.html) associated with the subscription. 
+
+```ts
+const request: EntitlementsRequest = {
+    subscriptionId: 'subscription-id',
+};
+try {
+    const entitlements: Array<Entitlement> = await Chargebee.retrieveEntitlements(request);
+} catch (error) {
+    console.log(error);
+}
+```
+
+**Note**: Entitlements feature is available only if your Chargebee site is on [Product Catalog 2.0](https://www.chargebee.com/docs/2.0/product-catalog.html).
+
+
 #### Restore Purchases
 
 The `restorePurchases()` function helps to recover your app user's previous purchases without making them pay again. Sometimes, your app user may want to restore their previous purchases after switching to a new device or reinstalling your app. You can use the `restorePurchases()` function to allow your app user to easily restore their previous purchases.
@@ -221,6 +239,8 @@ These are the possible error codes and their descriptions:
 |	1000		|	INVALID_SDK_CONFIGURATION			  |
 |	1001		|	INVALID_CATALOG_VERSION				  |
 |	1002		|	CANNOT_MAKE_PAYMENTS				  |
+|	1003		|	NO_PRODUCT_TO_RESTORE				  |
+|	1004		|	INVALID_RESOURCE			     	  |
 |	2001		|	INVALID_OFFER				          |
 |	2002		|	INVALID_PURCHASE				      |
 |	2003		|	INVALID_SANDBOX				          |

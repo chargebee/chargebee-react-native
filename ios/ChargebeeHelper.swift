@@ -174,6 +174,26 @@ public class ChargebeeHelper: NSObject {
             }
         }
     }
+    
+    @objc public func retrieveEntitlements(entitlementsRequest: Dictionary<String, String>, resolver: @escaping RCTPromiseResolveBlock, rejecter: @escaping RCTPromiseRejectBlock) {
+        guard let subscriptionId = entitlementsRequest["subscriptionId"] else {
+            let error = NSError(domain: "ChargebeeError",
+                                code: CBReactNativeError.invalidResource.rawValue,
+                                        userInfo: [:])
+            rejecter("\(error.code)", error.localizedDescription, error)
+            return
+        }
+        
+        Chargebee.shared.retrieveEntitlements(forSubscriptionID: subscriptionId) { result in
+            switch result {
+            case let .success(entitlements):
+                let data = entitlements.list.map { $0.entitlement.asDictionary }
+                resolver(data)
+            case let .error(error):
+                rejecter("\(CBReactNativeError.invalidSdkConfiguration.rawValue)", error.errorDescription, error.asNSError)
+            }
+        }
+    }
 }
 
 fileprivate func reject(withPurchaseError error: CBPurchaseError, using rejecter: RCTPromiseRejectBlock) {

@@ -46,6 +46,10 @@ export interface SubscriptionsRequest {
   status?: string;
 }
 
+export interface EntitlementsRequest {
+  subscriptionId: string;
+}
+
 export interface ProductIdentifiersRequest {
   limit?: string;
   offset?: string;
@@ -66,9 +70,21 @@ export enum StoreStatus {
 }
 
 export interface RestoredSubscription {
-  subscriptionId: string;
-  planId: string;
-  storeStatus: StoreStatus;
+  readonly subscriptionId: string;
+  readonly planId: string;
+  readonly storeStatus: StoreStatus;
+}
+
+export interface Entitlement {
+  readonly subscriptionId: string;
+  readonly featureId: string;
+  readonly featureName: string;
+  readonly featureDescription: string;
+  readonly featureType: string;
+  readonly value: string;
+  readonly name: string;
+  readonly isOverridden: boolean;
+  readonly isEnabled: boolean;
 }
 
 export function sdkKeyForPlatform(
