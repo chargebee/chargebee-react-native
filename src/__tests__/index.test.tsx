@@ -1,6 +1,7 @@
 import { NativeModules, Platform } from 'react-native';
 import Chargebee, {
   Customer,
+  EntitlementsRequest,
   ProductIdentifiersRequest,
   SubscriptionsRequest,
 } from '../index';
@@ -155,15 +156,16 @@ describe('Chargebee React Native', () => {
   });
 
   it('retrieve entitlements receipt by Subscription ID', async () => {
-    const subscriptionId = 'subscription-id-1';
-
-    await Chargebee.retrieveEntitlements(subscriptionId);
+    const request: EntitlementsRequest = {
+      subscriptionId: 'subscription-id-1',
+    };
+    await Chargebee.retrieveEntitlements(request);
 
     expect(
       NativeModules.ChargebeeReactNative.retrieveEntitlements
     ).toBeCalledTimes(1);
     expect(
       NativeModules.ChargebeeReactNative.retrieveEntitlements
-    ).toHaveBeenCalledWith(subscriptionId);
+    ).toHaveBeenCalledWith(request);
   });
 });
