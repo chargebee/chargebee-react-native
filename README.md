@@ -205,6 +205,11 @@ try {
 
 ```
 
+##### Return Subscriptions Object
+
+The `restorePurchases()` function returns an array of subscription objects and each object holds three attributes `subscriptionId`, `planId`, and `storeStatus`. The value of `storeStatus` can be used to verify subscription status.
+
+
 ##### Error Handling
 
 In the event of any errors/failures, the React native SDK will return an error object, which has the below format.
