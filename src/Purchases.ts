@@ -29,6 +29,19 @@ export interface Purchase {
   readonly status: string;
 }
 
+export interface OneTimePurchase {
+  readonly invoiceId: string;
+  readonly chargeId: string;
+  readonly customerId: string;
+}
+
+export enum ProductType {
+  UNKNOWN = 'unknown',
+  CONSUMABLE = 'consumable',
+  NON_CONSUMABLE = 'non_consumable',
+  NON_RENEWING_SUBSCRIPTION = 'non_renewing_subscription'
+}
+
 export interface Subscription {
   readonly id: string;
   readonly customerId: string;

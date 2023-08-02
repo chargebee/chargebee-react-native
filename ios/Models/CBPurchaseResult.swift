@@ -42,3 +42,13 @@ extension CBPurchaseResult {
     }
 }
 
+extension NonSubscription {
+    var asDictionary: [String:Any] {
+        var dictionary: [String: Any] = [:]
+        dictionary["invoice_id"] = self.invoiceID
+        dictionary["charge_id"] = self.chargeID
+        dictionary["customer_id"] = self.customerID
+        return dictionary
+    }
+}
+

@@ -1,6 +1,7 @@
 package com.chargebee.android.reactnative.utils
 
 import com.android.billingclient.api.SkuDetails
+import com.chargebee.android.billingservice.OneTimeProductType
 import com.chargebee.android.models.CBEntitlementsWrapper
 import com.chargebee.android.models.CBProduct
 import com.chargebee.android.models.CBRestoreSubscription
@@ -8,6 +9,7 @@ import com.chargebee.android.reactnative.models.PurchaseResult
 import com.chargebee.android.models.SubscriptionDetailsWrapper
 import com.chargebee.android.network.CBAuthResponse
 import com.chargebee.android.network.CBCustomer
+import com.chargebee.android.reactnative.models.OneTimePurchaseResult
 import com.facebook.react.bridge.*
 
 
@@ -55,6 +57,14 @@ internal fun convertPurchaseResultToDictionary(product: PurchaseResult, status: 
   writableMap.putString("subscription_id", product.subscriptionId)
   writableMap.putString("plan_id", product.planId)
   writableMap.putBoolean("status", status)
+  return writableMap
+}
+
+internal fun convertOneTimePurchaseResultToDictionary(product: OneTimePurchaseResult, status: Boolean): WritableMap {
+  val writableMap: WritableMap = WritableNativeMap()
+  writableMap.putString("invoice_id", product.invoiceId)
+  writableMap.putString("charge_id", product.chargeId)
+  writableMap.putString("customer_id", product.customerId)
   return writableMap
 }
 
@@ -141,4 +151,11 @@ fun convertEntitlementToDictionary(entitlementWrapper: CBEntitlementsWrapper): R
   writableMap.putBoolean("isOverridden", entitlement.is_overridden)
   writableMap.putBoolean("isEnabled", entitlement.is_enabled)
   return writableMap
+}
+
+internal fun convertProductTypeStringToEnum(productType: String): OneTimeProductType {
+  return if (productType == OneTimeProductType.CONSUMABLE.value)
+    OneTimeProductType.CONSUMABLE
+  else
+    OneTimeProductType.NON_CONSUMABLE
 }

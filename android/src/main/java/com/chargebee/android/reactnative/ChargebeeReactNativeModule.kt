@@ -8,15 +8,9 @@ import com.chargebee.android.billingservice.GPErrorCode
 import com.chargebee.android.exceptions.CBException
 import com.chargebee.android.exceptions.CBProductIDResult
 import com.chargebee.android.exceptions.ChargebeeResult
-import com.chargebee.android.models.CBEntitlements
-import com.chargebee.android.models.CBProduct
-import com.chargebee.android.models.CBRestoreSubscription
-import com.chargebee.android.models.CBSubscription
+import com.chargebee.android.models.*
 import com.chargebee.android.network.ReceiptDetail
-import com.chargebee.android.reactnative.models.CBReactNativeError
-import com.chargebee.android.reactnative.models.PurchaseResult
-import com.chargebee.android.reactnative.models.errorCode
-import com.chargebee.android.reactnative.models.messageUserInfo
+import com.chargebee.android.reactnative.models.*
 import com.chargebee.android.reactnative.models.toMap
 import com.chargebee.android.reactnative.utils.convertArrayToWritableArray
 import com.chargebee.android.reactnative.utils.convertAuthenticationDetailToDictionary
@@ -199,6 +193,68 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
   }
 
   @ReactMethod
+  override fun purchaseNonSubscriptionProduct(productId: String, productType: String, customer: ReadableMap, promise: Promise) {
+    val activity = currentActivity
+    activity?.let {
+      val productIds = arrayListOf(productId)
+      CBPurchase.retrieveProducts(it, productIds,
+        object : CBCallback.ListProductsCallback<ArrayList<CBProduct>> {
+          override fun onSuccess(productIDs: ArrayList<CBProduct>) {
+            if (productIDs.size > 0) {
+              CBPurchase.purchaseNonSubscriptionProduct(
+                productIDs.first(),
+                convertReadableMapToCustomer(customer),
+                convertProductTypeStringToEnum(productType),
+                object : CBCallback.OneTimePurchaseCallback {
+                  override fun onSuccess(result: NonSubscription, status: Boolean) {
+                    val purchaseResult = OneTimePurchaseResult(result, status)
+                    promise.resolve(convertOneTimePurchaseResultToDictionary(purchaseResult, status))
+                  }
+
+                  override fun onError(error: CBException) {
+                    val cbReactNativeError =
+                      error.httpStatusCode?.let { it -> CBReactNativeError.fromBillingCode(it) }
+                        ?: CBReactNativeError.UNKNOWN
+                    val messageUserInfo = error.messageUserInfo()
+                    promise.reject(
+                      "${cbReactNativeError.code}",
+                      messageUserInfo.getString("message"),
+                      error,
+                      messageUserInfo
+                    )
+                  }
+                })
+            } else {
+              val productNotAvailableError = CBException(
+                ErrorDetail(
+                  message = GPErrorCode.ProductUnavailable.errorMsg,
+                  httpStatusCode = CBReactNativeError.PRODUCT_NOT_AVAILABLE.code
+                )
+              )
+              val messageUserInfo = productNotAvailableError.messageUserInfo()
+              promise.reject(
+                "${productNotAvailableError.httpStatusCode}",
+                messageUserInfo.getString("message"),
+                productNotAvailableError,
+                productNotAvailableError.messageUserInfo()
+              )
+            }
+          }
+
+          override fun onError(error: CBException) {
+            val messageUserInfo = error.messageUserInfo()
+            promise.reject(
+              "${CBReactNativeError.SYSTEM_ERROR.code}",
+              messageUserInfo.getString("message"),
+              error,
+              messageUserInfo
+            )
+          }
+        })
+    }
+  }
+
+  @ReactMethod
   override fun retrieveSubscriptions(queryParams: ReadableMap, promise: Promise) {
     Chargebee.retrieveSubscriptions(queryParams.toMap()) {
       when (it) {
@@ -260,6 +316,69 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
                   override fun onSuccess(receiptDetail: ReceiptDetail, status: Boolean) {
                     val purchaseResult = PurchaseResult(receiptDetail, status)
                     promise.resolve(convertPurchaseResultToDictionary(purchaseResult, status))
+                  }
+
+                  override fun onError(error: CBException) {
+                    val cbReactNativeError =
+                      error.httpStatusCode?.let { it -> CBReactNativeError.fromBillingCode(it) }
+                        ?: CBReactNativeError.UNKNOWN
+                    val messageUserInfo = error.messageUserInfo()
+                    promise.reject(
+                      "${cbReactNativeError.code}",
+                      messageUserInfo.getString("message"),
+                      error,
+                      messageUserInfo
+                    )
+                  }
+                })
+            } else {
+              val productNotAvailableError = CBException(
+                ErrorDetail(
+                  message = GPErrorCode.ProductUnavailable.errorMsg,
+                  httpStatusCode = CBReactNativeError.PRODUCT_NOT_AVAILABLE.code
+                )
+              )
+              val messageUserInfo = productNotAvailableError.messageUserInfo()
+              promise.reject(
+                "${productNotAvailableError.httpStatusCode}",
+                messageUserInfo.getString("message"),
+                productNotAvailableError,
+                productNotAvailableError.messageUserInfo()
+              )
+            }
+
+          }
+
+          override fun onError(error: CBException) {
+            val messageUserInfo = error.messageUserInfo()
+            promise.reject(
+              "${CBReactNativeError.SYSTEM_ERROR.code}",
+              messageUserInfo.getString("message"),
+              error,
+              messageUserInfo
+            )
+          }
+        })
+    }
+  }
+
+  @ReactMethod
+  override fun validateReceiptForNonSubscriptions(productId: String, productType: String, customer: ReadableMap, promise: Promise) {
+    val activity = currentActivity
+    activity?.let {
+      val productIds = arrayListOf(productId)
+      CBPurchase.retrieveProducts(it, productIds,
+        object : CBCallback.ListProductsCallback<ArrayList<CBProduct>> {
+          override fun onSuccess(productDetails: ArrayList<CBProduct>) {
+            if (productDetails.size > 0) {
+              CBPurchase.validateReceiptForNonSubscriptions(context = activity,
+                product = productDetails.first(),
+                productType = convertProductTypeStringToEnum(productType),
+                customer = convertReadableMapToCustomer(customer),
+                completionCallback = object : CBCallback.OneTimePurchaseCallback {
+                  override fun onSuccess(result: NonSubscription, status: Boolean) {
+                    val purchaseResult = OneTimePurchaseResult(result, status)
+                    promise.resolve(convertOneTimePurchaseResultToDictionary(purchaseResult, status))
                   }
 
                   override fun onError(error: CBException) {
