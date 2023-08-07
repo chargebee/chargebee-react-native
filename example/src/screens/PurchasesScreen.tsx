@@ -9,12 +9,21 @@ import { Products } from '../components/Product';
 const PurchasesScreen = ({ navigation, customerId }) => {
   const [products, setProducts] = useState<Array<string>>([]);
 
+  // selectProduct being used to buy subscriptions
   const selectProduct = (productId) => {
     navigation.navigate('ProductDetail', {
       productId: productId,
       customerId: customerId,
     });
   };
+
+  // selectOTPProduct being used to buy one time product
+  const selectOTPProduct = (productId) => {
+      navigation.navigate('OTPProductDetail', {
+        productId: productId,
+        customerId: customerId,
+      });
+    };
 
   useEffect(() => {
     fetchProductIdentifiers();

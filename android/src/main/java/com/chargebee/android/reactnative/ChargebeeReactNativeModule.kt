@@ -12,6 +12,7 @@ import com.chargebee.android.models.*
 import com.chargebee.android.network.ReceiptDetail
 import com.chargebee.android.reactnative.models.*
 import com.chargebee.android.reactnative.models.toMap
+import com.chargebee.android.reactnative.utils.*
 import com.chargebee.android.reactnative.utils.convertArrayToWritableArray
 import com.chargebee.android.reactnative.utils.convertAuthenticationDetailToDictionary
 import com.chargebee.android.reactnative.utils.convertEntitlementsToDictionary

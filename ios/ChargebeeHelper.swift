@@ -111,8 +111,7 @@ public class ChargebeeHelper: NSObject {
                         switch result {
                         case .success(let result):
                             do {
-                               let purchasedProduct = ["invoiceId": "\(result.invoiceID)", "chargeId": "\(result.chargeID)", "customerId": "\(result.customerID)"]
-                                resolver(purchasedProduct)
+                                resolver(result.asDictionary)
                             } catch (let error) {
                                 if let error = error as? CBPurchaseError {
                                     reject(withPurchaseError: error, using: rejecter)
@@ -234,8 +233,7 @@ public class ChargebeeHelper: NSObject {
                         switch result {
                         case .success(let result):
                             do {
-                               let purchasedProduct = ["invoiceId": "\(result.invoiceID)", "chargeId": "\(result.chargeID)", "customerId": "\(result.customerID)"]
-                                resolver(purchasedProduct)
+                                resolver(result.asDictionary)
                             } catch (let error) {
                                 if let error = error as? CBPurchaseError {
                                     reject(withPurchaseError: error, using: rejecter)
@@ -291,7 +289,7 @@ public class ChargebeeHelper: NSObject {
 }
 
 private func convertStringToProductType(productTypeString: String)-> ProductType{
-    var productType: ProductType!
+    let productType: ProductType!
     if productTypeString == ProductType.Consumable.rawValue{
         productType = .Consumable
     }else if productTypeString == ProductType.NonConsumable.rawValue{
