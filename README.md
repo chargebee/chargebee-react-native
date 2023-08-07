@@ -155,7 +155,7 @@ The `purchaseNonSubscriptionProduct` function handles the one-time purchase agai
 
 ```ts
 import Chargebee, {
-    Purchase,
+    OneTimePurchase,
     Customer
 } from '@chargebee/react-native-chargebee';
 const customer: Customer = {
@@ -166,7 +166,7 @@ const customer: Customer = {
 };
 const productType = ProductType.non_consumable
 try {
-    const result: Purchase = await Chargebee.purchaseNonSubscriptionProduct("product-id", productType, customer);
+    const result: OneTimePurchase = await Chargebee.purchaseNonSubscriptionProduct("product-id", productType, customer);
     console.log(result);
 } catch (error) {
     console.error(error);
@@ -177,7 +177,7 @@ The given code defines a function named `purchaseNonSubscriptionProduct` in the 
 
 - `product`: An instance of `Product` class, representing the product to be purchased from the Apple App Store or Google Play Store.
 - `customer`: Optional. An instance of `CBCustomer` class, initialized with the customer's details such as `customerId`, `firstName`, `lastName`, and `email`.
-- `productType`: An enum instance of `productType` type, indicating the type of product to be purchased. It can be either .`consumable`, or `non_consumable`, or `non_renewing_subscription`. Currently `non_renewing_subscription` product type supports only in Apple App Store.
+- `productType`: An enum instance of `productType` type, indicating the type of product to be purchased. It can be either .`consumable`, or `non_consumable`, or `non_renewing_subscription`. Note that `non_renewing_subscription` is supported only in Apple App Store.
 
 The function is called asynchronously, and it returns a `Result` object with a `success` or `failure` case, as mentioned are below.
 - If the purchase is successful, it returns `OneTimePurchase` object. which includes the `invoiceId`, `chargeId`, and `customerId` associated with the purchase.
@@ -314,7 +314,10 @@ try {
 ##### Function for validating the One-Time Purchases receipt
 
 ``` ts
-import Chargebee from '@chargebee/react-native-chargebee';
+import Chargebee, {
+    OneTimePurchase,
+    Customer
+} from '@chargebee/react-native-chargebee';
 const customer: Customer = {
     id: 'id',
     firstName: 'fname',
@@ -323,7 +326,7 @@ const customer: Customer = {
 };
 const productType = ProductType.non_consumable
 try {
-    const purchase = await Chargebee.validateReceiptForNonSubscriptions(productId, productType, customer)
+    const result: OneTimePurchase = await Chargebee.validateReceiptForNonSubscriptions(productId, productType, customer)
 } catch (error) {
     console.log("error", error);
 }
