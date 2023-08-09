@@ -82,7 +82,7 @@ const OTPProductDetail = ({ navigation, route }) => {
 
   const navigateToCourses = () => {
     setShowSuccess(false);
-    navigation.navigate('Courses', { successfulPurchase: productPurchased });
+    navigation.navigate('Courses', { successfulPurchase: oneTimeProductPurchased });
   };
 
   const cacheData = async (key, value) => {
