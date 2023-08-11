@@ -3,6 +3,7 @@ import Chargebee, {
   Customer,
   EntitlementsRequest,
   ProductIdentifiersRequest,
+  ProductType,
   SubscriptionsRequest,
 } from '../index';
 
@@ -168,4 +169,44 @@ describe('Chargebee React Native', () => {
       NativeModules.ChargebeeReactNative.retrieveEntitlements
     ).toHaveBeenCalledWith(request);
   });
+
+  it('Purchase one time product', async () => {
+    const productId = 'product-id-1';
+    const productType = ProductType.NON_CONSUMABLE;
+    const customer: Customer = {
+      id: 'rn-test',
+      firstName: 'Bruce',
+      lastName: 'Wayne',
+      email: 'bruce@wayne.com',
+    };
+    await Chargebee.purchaseNonSubscriptionProduct(productId, productType, customer);
+
+    expect(
+      NativeModules.ChargebeeReactNative.purchaseNonSubscriptionProduct
+    ).toBeCalledTimes(1);
+    expect(
+      NativeModules.ChargebeeReactNative.purchaseNonSubscriptionProduct
+    ).toHaveBeenCalledWith(productId, productType, customer);
+  });
+
+  it('validate non subscription receipt by Product ID, Product Type and Customer', async () => {
+    const productId = 'product-id-1';
+    const productType = ProductType.NON_CONSUMABLE;
+    const customer: Customer = {
+      id: 'rn-test',
+      firstName: 'Bruce',
+      lastName: 'Wayne',
+      email: 'bruce@wayne.com',
+    };
+
+    await Chargebee.validateReceiptForNonSubscriptions(productId, productType, customer);
+
+    expect(NativeModules.ChargebeeReactNative.validateReceiptForNonSubscriptions).toBeCalledTimes(
+      1
+    );
+    expect(
+      NativeModules.ChargebeeReactNative.validateReceiptForNonSubscriptions
+    ).toHaveBeenCalledWith(productId, productType, customer);
+  });
+
 });

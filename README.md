@@ -8,7 +8,7 @@ This is Chargebee’s React Native Software Development Kit (SDK). This SDK make
 Post-installation, initialization, and authentication with the Chargebee site, this SDK will support the following process.
 
  - **Sync In-App Subscriptions with Chargebee**: Integrate your App developed on React Native with Chargebee to process and track in-app subscriptions of the [Apple App Store](https://appstoreconnect.apple.com/login) and [Google Play Store](https://play.google.com/console/about/) on your Chargebee account. Thus you can create a single source of truth for subscriptions across Apple, Google, and Web stores. Use this if you are selling digital goods or services or are REQUIRED to use Apple's and Google's in-app purchases as per their app review guidelines ([Apple](https://developer.apple.com/app-store/review/guidelines/) and [Google](https://support.google.com/googleplay/android-developer/answer/9858738)). **For SDK methods to work, ensure that prerequisites (Apple and Google) are configured in Chargebee**.
- 
+
 **_Note: If you are using the React native wrapper for performing web checkouts for physical goods, follow the set up for our 1.x SDK [here](https://github.com/chargebee/chargebee-react-native/tree/1.x)._**
 
 
@@ -17,16 +17,16 @@ Requirements
 
 The following requirements must be set up before installing Chargebee’s React Native SDK.
 
--    Recommended React Native version 0.71.0 or higher. The minimum supported React Native version is 0.67. 
+-    Recommended React Native version 0.71.0 or higher. The minimum supported React Native version is 0.67.
 -    Requirements for Android https://github.com/chargebee/chargebee-android#requirements
 -    Requirements for iOS https://github.com/chargebee/chargebee-ios#requirements
- 
+
 
 
 Installation
 ------------
 
-To use Chargebee SDK in your React Native app, follow the below step. 
+To use Chargebee SDK in your React Native app, follow the below step.
 
 ```sh
 yarn add @chargebee/react-native-chargebee
@@ -56,9 +56,9 @@ To run the example project, follow these steps.
 **Prerequisites**
 Before configuring the Chargebee ReactNative SDK for syncing In-App Purchases, follow these steps.
 
-1.  **iOS**: [Integrate](https://www.chargebee.com/docs/2.0/mobile-app-store-connect.html "https://www.chargebee.com/docs/2.0/mobile-app-store-connect.html") the [Apple App Store account](https://appstoreconnect.apple.com/login "https://appstoreconnect.apple.com/login") with your [Chargebee site](https://app.chargebee.com/login "https://app.chargebee.com/login").   
+1.  **iOS**: [Integrate](https://www.chargebee.com/docs/2.0/mobile-app-store-connect.html "https://www.chargebee.com/docs/2.0/mobile-app-store-connect.html") the [Apple App Store account](https://appstoreconnect.apple.com/login "https://appstoreconnect.apple.com/login") with your [Chargebee site](https://app.chargebee.com/login "https://app.chargebee.com/login").
  **Android**: [Integrate](https://www.chargebee.com/docs/2.0/mobile-playstore-connect.html "https://www.chargebee.com/docs/2.0/mobile-playstore-connect.html") [Google Play Store account](https://play.google.com/console/about/ "https://play.google.com/console/about/") with your [Chargebee site](https://app.chargebee.com/login "https://app.chargebee.com/login").
-2.  **iOS**: On the**Sync Overview** pageof theweb app, click **View Keys** and use the value of generated [**App ID**](https://www.chargebee.com/docs/1.0/mobile-app-store-product-iap.html#app-id "https://www.chargebee.com/docs/1.0/mobile-app-store-product-iap.html#app-id") as the **SDK Key**.    
+2.  **iOS**: On the**Sync Overview** pageof theweb app, click **View Keys** and use the value of generated [**App ID**](https://www.chargebee.com/docs/1.0/mobile-app-store-product-iap.html#app-id "https://www.chargebee.com/docs/1.0/mobile-app-store-product-iap.html#app-id") as the **SDK Key**.
 **Android**: On the **Sync Overview** page of the web app, click **Set up notifications** and use the generated [**App ID**](https://www.chargebee.com/docs/1.0/mobile-playstore-notifications.html#app-id "https://www.chargebee.com/docs/1.0/mobile-playstore-notifications.html#app-id") value as the **SDK Key**.
 3.  On the Chargebee site, navigate to **Configure Chargebee** > [**API Keys**](https://www.chargebee.com/docs/2.0/api_keys.html#create-an-api-key "https://www.chargebee.com/docs/2.0/api_keys.html#create-an-api-key") to create a new **Publishable API Key** or use an existing [**Publishable API Key**](https://www.chargebee.com/docs/2.0/api_keys.html#types-of-api-keys_publishable-key "https://www.chargebee.com/docs/2.0/api_keys.html#types-of-api-keys_publishable-key").
 
@@ -117,15 +117,15 @@ You can present any of the above products to your users for them to purchase.
 
 #### Buy or Subscribe Product
 
-Pass the product and customer to the following function when your customer chooses the product to purchase. 
+Pass the product and customer to the following function when your customer chooses the product to purchase.
 
-`id` - **Optional parameter**. Although this is an optional parameter, we recommend passing it if available, before the user subscribes to your App. Passing this parameter ensures that the customer id in your database matches that in Chargebee. In case this parameter is not passed, then the id will be the same as the SubscriptionId created in Chargebee. 
+`id` - **Optional parameter**. Although this is an optional parameter, we recommend passing it if available, before the user subscribes to your App. Passing this parameter ensures that the customer id in your database matches that in Chargebee. In case this parameter is not passed, then the id will be the same as the SubscriptionId created in Chargebee.
 
-`firstName` - **Optional parameter**. Contains the first name of the customer. 
+`firstName` - **Optional parameter**. Contains the first name of the customer.
 
-`lastName` - **Optional parameter**. Contains the last name of the customer. 
+`lastName` - **Optional parameter**. Contains the last name of the customer.
 
-`email` - **Optional parameter**. Contains the email of the customer. 
+`email` - **Optional parameter**. Contains the email of the customer.
 
 
 
@@ -150,6 +150,40 @@ try {
 
 The above function will handle the purchase against Apple App Store or Google Play Store and send the in-app purchase receipt for server-side receipt verification to your Chargebee account. Use the Subscription ID returned by the above function to check for Subscription status on Chargebee and confirm the access - **_granted or denied_**.
 
+### One-Time Purchases
+The `purchaseNonSubscriptionProduct` function handles the one-time purchase against Apple App Store and Google Play Store and then sends the IAP receipt for server-side receipt verification to your Chargebee account. Post verification a Charge corresponding to this one-time purchase will be created in Chargebee. The Apple App Store supports three types of one-time purchases `consumable`, `non_consumable` and `non_renewing_subscription`. The Google Play Store supports two types of one-time purchases `consumable` and `non_consumable`.
+
+```ts
+import Chargebee, {
+    OneTimePurchase,
+    Customer
+} from '@chargebee/react-native-chargebee';
+const customer: Customer = {
+    id: 'id',
+    firstName: 'fname',
+    lastName: 'lname',
+    email: 'fname@domain.com',
+};
+const productType = ProductType.NON_CONSUMABLE
+try {
+    const result: OneTimePurchase = await Chargebee.purchaseNonSubscriptionProduct("product-id", productType, customer);
+    console.log(result);
+} catch (error) {
+    console.error(error);
+}
+```
+
+The given code defines a function named `purchaseNonSubscriptionProduct` in the Chargebee class, which takes three input parameters:
+
+- `product`: An instance of `Product` class, representing the product to be purchased from the Apple App Store or Google Play Store.
+- `customer`: Optional. An instance of `CBCustomer` class, initialized with the customer's details such as `customerId`, `firstName`, `lastName`, and `email`.
+- `productType`: An enum instance of `productType` type, indicating the type of product to be purchased. It can be either `consumable`, or `non_consumable`, or `non_renewing_subscription`. Note that `non_renewing_subscription` is supported only in Apple App Store.
+
+The function is called asynchronously, and it returns a `Result` object with a `success` or `failure` case, as mentioned are below.
+- If the purchase is successful, it returns `OneTimePurchase` object. which includes the `invoiceId`, `chargeId`, and `customerId` associated with the purchase.
+- If there is any failure during the purchase, it returns error object that can be used to handle the error.
+
+
 #### Get Subscription Status for Existing Subscribers using Query Parameters
 
 Use the method, `retrieveSubscriptions` to check the subscription status of a subscriber who has already purchased the product.
@@ -166,12 +200,12 @@ try {
 } catch (error) {
     console.error(error);
 }
-   
+
 ```
 
 #### Retrieve Entitlements of a Subscription
 
-Use the Subscription ID for fetching the list of [entitlements](https://www.chargebee.com/docs/2.0/entitlements.html) associated with the subscription. 
+Use the Subscription ID for fetching the list of [entitlements](https://www.chargebee.com/docs/2.0/entitlements.html) associated with the subscription.
 
 ```ts
 const request: EntitlementsRequest = {
@@ -225,7 +259,7 @@ The `ChargebeeErrorDetail` object is the below format:
 ###### Example
 ```ts
 {
-    "code": "1000", 
+    "code": "1000",
     "message": "Sorry, we couldn't find the site abc-test",
     "userInfo": {
         "apiErrorCode": "site_not_found",
@@ -270,13 +304,34 @@ Receipt validation is crucial to ensure that the purchases made by your users ar
 * When the purchase is completed at Apple App Store/Google Play Store but not synced with Chargebee, retrieve the product from the cache and initiate validateReceipt() by passing `productId` and `Customer` as input. This will validate the receipt and sync the purchase in Chargebee as a subscription.
 
 Use the function available for the retry mechanism.
-##### Function for validating the receipt
+##### Function for validating the Subscriptions receipt
 
 ``` ts
 import Chargebee from '@chargebee/react-native-chargebee';
 
 try {
     const purchase = await Chargebee.validateReceipt(productId, customer)
+} catch (error) {
+    console.log("error", error);
+}
+```
+
+##### Function for validating the One-Time Purchases receipt
+
+``` ts
+import Chargebee, {
+    OneTimePurchase,
+    Customer
+} from '@chargebee/react-native-chargebee';
+const customer: Customer = {
+    id: 'id',
+    firstName: 'fname',
+    lastName: 'lname',
+    email: 'fname@domain.com',
+};
+const productType = ProductType.NON_CONSUMABLE
+try {
+    const result: OneTimePurchase = await Chargebee.validateReceiptForNonSubscriptions(productId, productType, customer)
 } catch (error) {
     console.log("error", error);
 }

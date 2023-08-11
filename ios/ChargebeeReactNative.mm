@@ -43,6 +43,17 @@ RCT_REMAP_METHOD(purchaseProduct,
     [helper purchaseProductWithProductId:productId customer:customer resolver:resolve rejecter:reject];
 }
 
+RCT_REMAP_METHOD(purchaseNonSubscriptionProduct,
+                 purchaseProductWithProduct:(NSString *)productId
+                 withProductType:(NSString *)productType
+                 withCustomer:(NSDictionary *)customer
+                 withResolver:(RCTPromiseResolveBlock)resolve
+                 withRejecter:(RCTPromiseRejectBlock)reject)
+{
+    ChargebeeHelper* helper = [ChargebeeHelper shared];
+    [helper purchaseNonSubscriptionProductWithProductId:productId productType:productType customer:customer resolver:resolve rejecter:reject];
+}
+
 RCT_REMAP_METHOD(retrieveSubscriptions,
                  retrieveSubscriptionsWithQueryParams:(NSDictionary *)queryParams
                  withResolver:(RCTPromiseResolveBlock)resolve
@@ -69,6 +80,17 @@ RCT_REMAP_METHOD(validateReceipt,
 {
     ChargebeeHelper* helper = [ChargebeeHelper shared];
     [helper validateReceiptWithProductId:productId customer:customer resolver:resolve rejecter:reject];
+}
+
+RCT_REMAP_METHOD(validateReceiptForNonSubscriptions,
+                 validateReceiptWithProduct:(NSString *)productId
+                 withProductType:(NSString *)productType
+                 withCustomer:(NSDictionary *)customer
+                 withResolver:(RCTPromiseResolveBlock)resolve
+                 withRejecter:(RCTPromiseRejectBlock)reject)
+{
+    ChargebeeHelper* helper = [ChargebeeHelper shared];
+    [helper validateReceiptForNonSubscriptionsWithProductId:productId productType:productType customer:customer resolver:resolve rejecter:reject];
 }
 
 RCT_REMAP_METHOD(retrieveEntitlements,
