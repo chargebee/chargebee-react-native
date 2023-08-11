@@ -1,5 +1,21 @@
 
 
+# [2.4.0](https://github.com/chargebee/chargebee-react-native/compare/v2.3.0...v2.4.0) (2023-08-11)
+
+
+### Bug Fixes
+
+* remove offset in Chargebee.retrieveProductIdentifiers example ([f60a45b](https://github.com/chargebee/chargebee-react-native/commit/f60a45b870412265382e499366eadcf68208f410))
+
+
+### Features
+
+* addressed comments ([56b5e7b](https://github.com/chargebee/chargebee-react-native/commit/56b5e7b79a31523c04b37f5769e701d71dec7989))
+* adds one time purchase api method ([10ac2b6](https://github.com/chargebee/chargebee-react-native/commit/10ac2b6daa948a49388d0c325e557760da1c9ee2))
+* adds one time purchase flow ui in example app ([29421e7](https://github.com/chargebee/chargebee-react-native/commit/29421e72ed0553ba5e6600201d43157410cda375))
+* one time purchase tests ([e76b732](https://github.com/chargebee/chargebee-react-native/commit/e76b73243e1d6925b400bada5788456ab5981164))
+* updates example app ([1f2c3fa](https://github.com/chargebee/chargebee-react-native/commit/1f2c3fadde94167dc1f43261163b32b85e19a6bb))
+
 # [2.3.0](https://github.com/chargebee/chargebee-react-native/compare/v2.2.1...v2.3.0) (2023-07-18)
 
 
