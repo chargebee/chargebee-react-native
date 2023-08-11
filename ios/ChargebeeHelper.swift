@@ -289,7 +289,7 @@ public class ChargebeeHelper: NSObject {
 }
 
 private func convertStringToProductType(productTypeString: String)-> ProductType{
-    let productType: ProductType!
+    let productType: ProductType
     if productTypeString == ProductType.Consumable.rawValue{
         productType = .Consumable
     }else if productTypeString == ProductType.NonConsumable.rawValue{
