@@ -177,7 +177,7 @@ The given code defines a function named `purchaseNonSubscriptionProduct` in the 
 
 - `product`: An instance of `Product` class, representing the product to be purchased from the Apple App Store or Google Play Store.
 - `customer`: Optional. An instance of `CBCustomer` class, initialized with the customer's details such as `customerId`, `firstName`, `lastName`, and `email`.
-- `productType`: An enum instance of `productType` type, indicating the type of product to be purchased. It can be either .`consumable`, or `non_consumable`, or `non_renewing_subscription` Note that `non_renewing_subscription` is supported only in Apple App Store.
+- `productType`: An enum instance of `productType` type, indicating the type of product to be purchased. It can be either `consumable`, or `non_consumable`, or `non_renewing_subscription`. Note that `non_renewing_subscription` is supported only in Apple App Store.
 
 The function is called asynchronously, and it returns a `Result` object with a `success` or `failure` case, as mentioned are below.
 - If the purchase is successful, it returns `OneTimePurchase` object. which includes the `invoiceId`, `chargeId`, and `customerId` associated with the purchase.
