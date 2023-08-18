@@ -39,7 +39,7 @@ export enum ProductType {
   UNKNOWN = 'unknown',
   CONSUMABLE = 'consumable',
   NON_CONSUMABLE = 'non_consumable',
-  NON_RENEWING_SUBSCRIPTION = 'non_renewing_subscription'
+  NON_RENEWING_SUBSCRIPTION = 'non_renewing_subscription',
 }
 
 export interface Subscription {

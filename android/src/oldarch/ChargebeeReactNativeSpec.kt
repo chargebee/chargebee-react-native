@@ -10,7 +10,7 @@ abstract class ChargebeeReactNativeSpec internal constructor(context: ReactAppli
   abstract fun purchaseProduct(productId: String, customer: ReadableMap, promise: Promise)
   abstract fun purchaseNonSubscriptionProduct(productId: String, productType: String, customer: ReadableMap, promise: Promise)
   abstract fun retrieveSubscriptions(queryParams: ReadableMap, promise: Promise)
-  abstract fun restorePurchases(includeInactivePurchases: Boolean, promise: Promise)
+  abstract fun restorePurchases(includeInactivePurchases: Boolean, customer: ReadableMap, promise: Promise)
   abstract fun validateReceipt(productId: String, customer: ReadableMap, promise: Promise)
   abstract fun validateReceiptForNonSubscriptions(productId: String, productType: String, customer: ReadableMap, promise: Promise)
   abstract fun retrieveEntitlements(entitlementsRequest: ReadableMap, promise: Promise)

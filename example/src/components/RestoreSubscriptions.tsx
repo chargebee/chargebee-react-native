@@ -1,18 +1,27 @@
 import React from 'react';
 import { Platform, StyleSheet } from 'react-native';
 import { Text, Card, Button, Modal } from '@ui-kitten/components';
-import Chargebee from '@chargebee/react-native-chargebee';
+import Chargebee, { Customer } from '@chargebee/react-native-chargebee';
 
-export const RestoreSubscriptions = () => {
+export const RestoreSubscriptions = ({ customerId }) => {
   const [visible, setVisible] = React.useState(false);
   const [restoreDisabled, setRestoreDisabled] = React.useState(false);
   const [restoreData, setRestoreData] = React.useState('');
 
   const restorePurchases = async () => {
-    console.log('Restoring purchases');
     setRestoreDisabled(true);
+    const customer: Customer = {
+      id: customerId,
+      firstName: 'Bruce',
+      lastName: 'Wayne',
+      email: 'bruce@wayne.com',
+    };
+    console.log('Restoring purchases for ', customer);
     try {
-      const restoredSubscriptions = await Chargebee.restorePurchases();
+      const restoredSubscriptions = await Chargebee.restorePurchases(
+        true,
+        customer
+      );
       console.log('Restored purchases', restoredSubscriptions);
       setRestoreData(JSON.stringify(restoredSubscriptions));
       console.log(

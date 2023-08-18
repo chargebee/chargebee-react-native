@@ -163,9 +163,9 @@ public class ChargebeeHelper: NSObject {
         }
     }
 
-    @objc public func restorePurchases(includeInactivePurchases: Bool, resolver: @escaping RCTPromiseResolveBlock, rejecter: @escaping RCTPromiseRejectBlock) {
-
-        CBPurchase.shared.restorePurchases(includeInActiveProducts: includeInactivePurchases) { result in
+    @objc public func restorePurchases(includeInactivePurchases: Bool, customer: Dictionary<String, String>, resolver: @escaping RCTPromiseResolveBlock, rejecter: @escaping RCTPromiseRejectBlock) {
+        let customer = CBCustomer.fromDictionary(customer: customer)
+        CBPurchase.shared.restorePurchases(includeInActiveProducts: includeInactivePurchases, customer: customer) { result in
             switch result {
             case .success(let subscriptions):
                 let inAppSubscriptions = subscriptions.map { $0.asDictionary }

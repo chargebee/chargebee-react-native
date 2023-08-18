@@ -11,15 +11,17 @@ import { OneTimeSuccessModel } from '../components/OneTimeSuccessModel';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const OTPProductDetail = ({ navigation, route }) => {
-  const [selectedOTPProductDetail, setSelectedOTPProductDetail] = useState<Product>();
+  const [selectedOTPProductDetail, setSelectedOTPProductDetail] =
+    useState<Product>();
 
-  const [oneTimeProductPurchased, setOneTimeProductPurchased] = useState<OneTimePurchase>();
+  const [oneTimeProductPurchased, setOneTimeProductPurchased] =
+    useState<OneTimePurchase>();
   const [showSuccess, setShowSuccess] = useState<Boolean>(false);
   const customerId = route.params.customerId;
 
   const purchaseNonSubscriptionProduct = async (product: Product) => {
     const productId = product.id;
-    const productType = ProductType.NON_CONSUMABLE
+    const productType = ProductType.NON_CONSUMABLE;
     const customer: Customer = {
       id: customerId,
       firstName: 'Bruce',
@@ -30,7 +32,11 @@ const OTPProductDetail = ({ navigation, route }) => {
     try {
       // Store the Product/Customer to be purchased, in a local cache/storage
       cacheData('productToPurchase', productId);
-      const purchase = await Chargebee.purchaseNonSubscriptionProduct(productId, productType, customer);
+      const purchase = await Chargebee.purchaseNonSubscriptionProduct(
+        productId,
+        productType,
+        customer
+      );
       setOneTimeProductPurchased(purchase);
       console.log(purchase);
       setShowSuccess(true);
@@ -82,7 +88,9 @@ const OTPProductDetail = ({ navigation, route }) => {
 
   const navigateToCourses = () => {
     setShowSuccess(false);
-    navigation.navigate('Courses', { successfulPurchase: oneTimeProductPurchased });
+    navigation.navigate('Courses', {
+      successfulPurchase: oneTimeProductPurchased,
+    });
   };
 
   const cacheData = async (key, value) => {

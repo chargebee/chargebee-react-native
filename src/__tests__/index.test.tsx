@@ -136,10 +136,20 @@ describe('Chargebee React Native', () => {
 
   it('restore subscriptions', async () => {
     const includeInactivePurchases = true;
-    await Chargebee.restorePurchases(includeInactivePurchases);
+    const customerId = 'customer-id-1';
+    const customer: Customer = {
+      id: customerId,
+      firstName: 'Bruce',
+      lastName: 'Wayne',
+      email: 'bruce@wayne.com',
+    };
+    await Chargebee.restorePurchases(includeInactivePurchases, customer);
     expect(NativeModules.ChargebeeReactNative.restorePurchases).toBeCalledTimes(
       1
     );
+    expect(
+      NativeModules.ChargebeeReactNative.restorePurchases
+    ).toHaveBeenCalledWith(includeInactivePurchases, customer);
   });
 
   it('validate receipt by Product ID, Customer', async () => {
@@ -179,7 +189,11 @@ describe('Chargebee React Native', () => {
       lastName: 'Wayne',
       email: 'bruce@wayne.com',
     };
-    await Chargebee.purchaseNonSubscriptionProduct(productId, productType, customer);
+    await Chargebee.purchaseNonSubscriptionProduct(
+      productId,
+      productType,
+      customer
+    );
 
     expect(
       NativeModules.ChargebeeReactNative.purchaseNonSubscriptionProduct
@@ -199,14 +213,17 @@ describe('Chargebee React Native', () => {
       email: 'bruce@wayne.com',
     };
 
-    await Chargebee.validateReceiptForNonSubscriptions(productId, productType, customer);
-
-    expect(NativeModules.ChargebeeReactNative.validateReceiptForNonSubscriptions).toBeCalledTimes(
-      1
+    await Chargebee.validateReceiptForNonSubscriptions(
+      productId,
+      productType,
+      customer
     );
+
+    expect(
+      NativeModules.ChargebeeReactNative.validateReceiptForNonSubscriptions
+    ).toBeCalledTimes(1);
     expect(
       NativeModules.ChargebeeReactNative.validateReceiptForNonSubscriptions
     ).toHaveBeenCalledWith(productId, productType, customer);
   });
-
 });
