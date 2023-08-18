@@ -1,5 +1,12 @@
 
 
+## [2.4.1](https://github.com/chargebee/chargebee-react-native/compare/v2.4.0...v2.4.1) (2023-08-18)
+
+
+### Bug Fixes
+
+* fixes restore purchase to use customer object ([72351b3](https://github.com/chargebee/chargebee-react-native/commit/72351b375f9c64f6d45767c3a1cfa95a1320130a))
+
 # [2.4.0](https://github.com/chargebee/chargebee-react-native/compare/v2.3.0...v2.4.0) (2023-08-11)
 
 
