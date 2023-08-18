@@ -225,13 +225,19 @@ try {
 
 The `restorePurchases()` function helps to recover your app user's previous purchases without making them pay again. Sometimes, your app user may want to restore their previous purchases after switching to a new device or reinstalling your app. You can use the `restorePurchases()` function to allow your app user to easily restore their previous purchases.
 
-To retrieve **inactive** purchases along with the **active** purchases for your app user, you can call the `restorePurchases()` function with the `includeInactivePurchases` parameter set to true. If you only want to restore active subscriptions, set the parameter to false. Here is an example of how to use the restorePurchases() function in your code with the `includeInactivePurchases` parameter set to true.
+To retrieve **inactive** purchases along with the **active** purchases for your app user, you can call the `restorePurchases()` function with the `includeInactivePurchases` parameter set to true. If you only want to restore active subscriptions, set the parameter to false. To associate the restored purchases to an existing **customer**, it is recommended to pass the necessary customer details, such as **customerId**, **firstName**, **lastName**, and **email**. This ensures that the customer details in your database match the customer details in Chargebee. If the customerId is not passed in the customer’s details, then the value of customerId will be the same as the SubscriptionId created in Chargebee. 
+Here is an example of how to use the restorePurchases() function in your code with the `includeInactivePurchases` parameter set to true.
 
 ```ts
 import Chargebee, { RestoredSubscription } from '@chargebee/react-native-chargebee';
-
+const customer: Customer = {
+    id: 'id',
+    firstName: 'fname',
+    lastName: 'lname',
+    email: 'fname@domain.com',
+};
 try {
-    const restoredSubscriptions: RestoredSubscription[] = await Chargebee.restorePurchases(true);
+    const restoredSubscriptions: RestoredSubscription[] = await Chargebee.restorePurchases(true, customer);
     console.log(restoredSubscriptions);
 } catch (error) {
     console.error(error);
