@@ -19,11 +19,11 @@ const PurchasesScreen = ({ navigation, customerId }) => {
 
   // selectOTPProduct being used to buy one time product
   const selectOTPProduct = (productId) => {
-      navigation.navigate('OTPProductDetail', {
-        productId: productId,
-        customerId: customerId,
-      });
-    };
+    navigation.navigate('OTPProductDetail', {
+      productId: productId,
+      customerId: customerId,
+    });
+  };
 
   useEffect(() => {
     fetchProductIdentifiers();
@@ -62,7 +62,11 @@ const PurchasesScreen = ({ navigation, customerId }) => {
   return (
     <>
       <Text category="h4">Showing available products</Text>
-      <Products products={products} selectProduct={selectProduct} />
+      <Products
+        products={products}
+        selectProduct={selectProduct}
+        selectOTPProduct={selectOTPProduct}
+      />
     </>
   );
 };

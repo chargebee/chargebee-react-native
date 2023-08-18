@@ -2,7 +2,11 @@ import { Text } from '@ui-kitten/components';
 import React from 'react';
 import { Modal, Pressable, StyleSheet, View } from 'react-native';
 
-export const OneTimeSuccessModel = ({ show, purchasedOneTimeProduct, onDismiss }) => {
+export const OneTimeSuccessModel = ({
+  show,
+  purchasedOneTimeProduct,
+  onDismiss,
+}) => {
   return (
     <Modal animationType="slide" visible={show}>
       <View style={styles.centeredView}>

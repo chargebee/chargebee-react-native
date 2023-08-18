@@ -7,7 +7,6 @@ import React, { useEffect, useState } from 'react';
 import { Platform } from 'react-native';
 import { StyleSheet } from 'react-native';
 import LoginForm from '../components/LoginForm';
-import { RestoreSubscriptions } from '../components/RestoreSubscriptions';
 import type { LoginFunction } from '../types/CBee';
 
 const LoginScreen = ({ navigation }) => {
@@ -78,7 +77,6 @@ const LoginScreen = ({ navigation }) => {
         </Text>
         <LoginForm login={login} />
       </Layout>
-      <RestoreSubscriptions />
     </>
   );
 };

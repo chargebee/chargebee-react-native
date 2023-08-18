@@ -32,13 +32,13 @@ const ChargebeeReactNativeModule = isTurboModuleEnabled
 const ChargebeeReactNative = ChargebeeReactNativeModule
   ? ChargebeeReactNativeModule
   : new Proxy(
-    {},
-    {
-      get() {
-        throw new Error(LINKING_ERROR);
-      },
-    }
-  );
+      {},
+      {
+        get() {
+          throw new Error(LINKING_ERROR);
+        },
+      }
+    );
 
 export default class Chargebee {
   /**
@@ -104,20 +104,24 @@ export default class Chargebee {
   }
 
   /**
-  * Purchase one time product for the customer.
-  *
-  * @param {string} productId Product identifier
-  * @param {Object} productType One Time Product Type.
-  * @param {Object} customer Optional. Customer object.
-  * If the `id` is not passed in the customer's details, then the value of customerId will be the same as the SubscriptionId created in Chargebee.
-  * @returns {Promise<OneTimePurchase>} Purchase result
-  */
+   * Purchase one time product for the customer.
+   *
+   * @param {string} productId Product identifier
+   * @param {Object} productType One Time Product Type.
+   * @param {Object} customer Optional. Customer object.
+   * If the `id` is not passed in the customer's details, then the value of customerId will be the same as the SubscriptionId created in Chargebee.
+   * @returns {Promise<OneTimePurchase>} Purchase result
+   */
   public static async purchaseNonSubscriptionProduct(
     productId: string,
     productType: ProductType,
     customer: Customer | null
   ): Promise<OneTimePurchase> {
-    return ChargebeeReactNative.purchaseNonSubscriptionProduct(productId, productType, customer);
+    return ChargebeeReactNative.purchaseNonSubscriptionProduct(
+      productId,
+      productType,
+      customer
+    );
   }
 
   /**
@@ -137,14 +141,18 @@ export default class Chargebee {
    * Restores the subscriptions for the user logged in the device.
    *
    * @param {Boolean} includeInactivePurchases When set to true, the inactive purchases are also synced to Chargebee.
+   * @param {Object} customer Optional. Customer object.
+   * Please use the same customer id which was used during the initial purchase
    * @returns {Promise<Array<RestoredSubscription>>} Array of subscriptions
    */
   public static async restorePurchases(
-    includeInactivePurchases: boolean
+    includeInactivePurchases: boolean,
+    customer: Customer | null
   ): Promise<Array<RestoredSubscription>> {
     const shouldIncludeInactivePurchases = Boolean(includeInactivePurchases);
     return ChargebeeReactNative.restorePurchases(
-      shouldIncludeInactivePurchases
+      shouldIncludeInactivePurchases,
+      customer
     );
   }
 
@@ -165,21 +173,25 @@ export default class Chargebee {
   }
 
   /**
-  * This method will be used to validate the receipt of One Time Purchase with Chargebee,
-  * when syncing with Chargebee fails after the successful purchase.
-  *
-  * @param {string} productId Product identifier.
-  * @param {Object} productType One Time Product Type.
-  * @param {Object} customer Optional. Customer object.
-  * If the `id` is not passed in the customer's details, then the value of customerId will be the same as the SubscriptionId created in Chargebee.
-  * @returns {Promise<OneTimePurchase>} Purchase result
-  */
+   * This method will be used to validate the receipt of One Time Purchase with Chargebee,
+   * when syncing with Chargebee fails after the successful purchase.
+   *
+   * @param {string} productId Product identifier.
+   * @param {Object} productType One Time Product Type.
+   * @param {Object} customer Optional. Customer object.
+   * If the `id` is not passed in the customer's details, then the value of customerId will be the same as the SubscriptionId created in Chargebee.
+   * @returns {Promise<OneTimePurchase>} Purchase result
+   */
   public static async validateReceiptForNonSubscriptions(
     productId: string,
     productType: ProductType,
     customer: Customer | null
   ): Promise<OneTimePurchase> {
-    return ChargebeeReactNative.validateReceiptForNonSubscriptions(productId, productType, customer);
+    return ChargebeeReactNative.validateReceiptForNonSubscriptions(
+      productId,
+      productType,
+      customer
+    );
   }
 
   /**

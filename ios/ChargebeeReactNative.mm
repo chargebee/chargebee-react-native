@@ -65,11 +65,12 @@ RCT_REMAP_METHOD(retrieveSubscriptions,
 
 RCT_REMAP_METHOD(restorePurchases,
                  restorePurchasesWithIncludeInactivePurchases:(BOOL *)includeInactivePurchases
+                 withCustomer:(NSDictionary *)customer
                  withResolver:(RCTPromiseResolveBlock)resolve
                  withRejecter:(RCTPromiseRejectBlock)reject)
 {
     ChargebeeHelper* helper = [ChargebeeHelper shared];
-    [helper restorePurchasesWithIncludeInactivePurchases:includeInactivePurchases resolver:resolve rejecter:reject];
+    [helper restorePurchasesWithIncludeInactivePurchases:includeInactivePurchases customer:customer resolver:resolve rejecter:reject];
 }
 
 RCT_REMAP_METHOD(validateReceipt,
