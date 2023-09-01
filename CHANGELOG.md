@@ -1,5 +1,12 @@
 
 
+## [2.4.2](https://github.com/chargebee/chargebee-react-native/compare/v2.4.1...v2.4.2) (2023-09-01)
+
+
+### Bug Fixes
+
+* fixes validate receipt method ([eb42f4a](https://github.com/chargebee/chargebee-react-native/commit/eb42f4a27aa3f417d218186314cf32e6fca12df0))
+
 ## [2.4.1](https://github.com/chargebee/chargebee-react-native/compare/v2.4.0...v2.4.1) (2023-08-18)
 
 
