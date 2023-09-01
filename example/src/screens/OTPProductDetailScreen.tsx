@@ -64,21 +64,33 @@ const OTPProductDetail = ({ navigation, route }) => {
       if (errorModel.code === '2013') {
         const productToRetry = await getCachedData('productToPurchase');
         if (productToRetry) {
-          try {
-            const purchase = await Chargebee.validateReceiptForNonSubscriptions(
-              productToRetry,
-              ProductType.NON_CONSUMABLE,
-              customer
-            );
-            console.log(purchase);
-            // Remove the cached Product/Customer after successful retry
-            removeCachedData('productToPurchase');
-          } catch (error) {
-            console.log('error when validating', error);
-            console.log('error', Object.values(error));
-          }
+          validateReceiptForNonSubscriptions(
+            productToRetry,
+            ProductType.NON_CONSUMABLE,
+            customer
+          );
+          // Remove the cached Product/Customer after successful retry
+          removeCachedData('productToPurchase');
         }
       }
+    }
+  };
+
+  const validateReceiptForNonSubscriptions = async (
+    productId: string,
+    productType: ProductType,
+    customer: Customer
+  ) => {
+    try {
+      const purchase = await Chargebee.validateReceiptForNonSubscriptions(
+        productId,
+        productType,
+        customer
+      );
+      console.log(purchase);
+    } catch (error) {
+      console.log('error when validating', error);
+      console.log('error', Object.values(error));
     }
   };
 
