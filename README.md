@@ -35,6 +35,21 @@ yarn add @chargebee/react-native-chargebee
 For iOS, perform `pod install` after adding the SDK, to install the corresponding cocoapod package.
 
 
+
+Permissions
+------------
+
+1. For Android include the BILLING permission in your AndroidManifest.xml file.
+
+```sh
+<uses-permission android:name="com.android.vending.BILLING" />
+```
+
+2. For iOS enable In-App Purchase capability in Xcode by going to `Signing & Capabilities` and adding the `In-App Purchase` capability.
+
+
+
+
 Example project
 ---------------
 
