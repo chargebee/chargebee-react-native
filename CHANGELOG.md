@@ -1,5 +1,17 @@
 
 
+# [3.0.0-beta.0](https://github.com/chargebee/chargebee-react-native/compare/v2.4.4...v3.0.0-beta.0) (2023-12-05)
+
+
+### Features
+
+* handles android base plan and offers for android ([fc8ef79](https://github.com/chargebee/chargebee-react-native/commit/fc8ef79542090db174a43d67561d50194b7e61a4))
+
+
+### BREAKING CHANGES
+
+* Handles changes for Android Billing Library 5
+
 ## [2.4.4](https://github.com/chargebee/chargebee-react-native/compare/v2.4.3...v2.4.4) (2023-11-10)
 
 ## [2.4.3](https://github.com/chargebee/chargebee-react-native/compare/v2.4.2...v2.4.3) (2023-10-09)
