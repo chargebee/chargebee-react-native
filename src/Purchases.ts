@@ -18,9 +18,20 @@ export interface AuthenticationDetail {
 
 export interface Product {
   readonly id: string;
+  // For Android, returns the Base plan ID
+  readonly baseProductId: string | null;
+  // For Android, returns the Offer Details if present
+  readonly offer: Offer | null;
+  // For Android, returns the Offer Token
+  readonly offerToken: string | null;
   readonly title: string;
   readonly price: number;
   readonly currencyCode: string;
+}
+
+export interface Offer {
+  readonly id: string;
+  readonly price: number;
 }
 
 export interface Purchase {

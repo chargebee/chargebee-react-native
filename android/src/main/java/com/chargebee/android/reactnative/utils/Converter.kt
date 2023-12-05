@@ -1,12 +1,13 @@
 package com.chargebee.android.reactnative.utils
 
-import com.android.billingclient.api.SkuDetails
 import com.chargebee.android.billingservice.OneTimeProductType
 import com.chargebee.android.models.CBEntitlementsWrapper
 import com.chargebee.android.models.CBProduct
 import com.chargebee.android.models.CBRestoreSubscription
+import com.chargebee.android.models.PricingPhase
 import com.chargebee.android.reactnative.models.PurchaseResult
 import com.chargebee.android.models.SubscriptionDetailsWrapper
+import com.chargebee.android.models.SubscriptionOffer
 import com.chargebee.android.network.CBAuthResponse
 import com.chargebee.android.network.CBCustomer
 import com.chargebee.android.reactnative.models.OneTimePurchaseResult
@@ -34,22 +35,56 @@ internal fun convertReadableArray(readableArray: ReadableArray): ArrayList<Strin
 internal fun convertListToWritableArray(array: List<CBProduct>): WritableArray {
   val writableArray: WritableArray = WritableNativeArray()
   for (item in array) {
-    writableArray.pushMap(convertProductToDictionary(item))
+    val productMaps = item.toDictionary()
+    productMaps.forEach{ writableArray.pushMap(it) }
   }
   return writableArray
 }
 
-internal fun convertProductToDictionary(product: CBProduct): WritableMap {
+internal fun CBProduct.toDictionary(): List<WritableMap> {
+  val maps: ArrayList<WritableMap> = ArrayList()
+  subscriptionOffers?.forEach{
+    maps.add(it.toMap(this))
+  }
+  oneTimePurchaseOffer?.let { maps.add(it.toMap(this)) }
+  return maps
+}
+
+fun SubscriptionOffer.toMap(product: CBProduct): WritableMap {
+  val pricingPhase = pricingPhases.last()
   val writableMap: WritableMap = WritableNativeMap()
-  writableMap.putString("id", product.productId)
-  writableMap.putString("title", product.productTitle)
-  writableMap.putDouble("price", convertPriceAmountInMicros(product.skuDetails))
-  writableMap.putString("currencyCode", product.skuDetails.priceCurrencyCode)
+  writableMap.putString("id", product.id)
+  writableMap.putString("type", product.type.value)
+  writableMap.putString("baseProductId", basePlanId)
+  writableMap.putString("offerToken", offerToken)
+  writableMap.putString("title", product.title)
+  writableMap.putDouble("price", pricingPhase.convertPriceAmountInMicros())
+  writableMap.putString("currencyCode", pricingPhase.currencyCode)
+  offerId?.let {
+    writableMap.putMap("offer", offer())
+  }
   return writableMap
 }
 
-fun convertPriceAmountInMicros(skuDetails: SkuDetails): Double {
-  return skuDetails.priceAmountMicros / 1_000_000.0
+private fun SubscriptionOffer.offer(): WritableMap {
+  val pricingPhase = pricingPhases.first()
+  val writableMap: WritableMap = WritableNativeMap()
+  writableMap.putString("id", offerId.orEmpty())
+  writableMap.putDouble("price", pricingPhase.convertPriceAmountInMicros())
+  return writableMap
+}
+
+fun PricingPhase.convertPriceAmountInMicros(): Double {
+  return amountInMicros / 1_000_000.0
+}
+
+private fun PricingPhase.toMap(product: CBProduct): WritableMap {
+  val writableMap: WritableMap = WritableNativeMap()
+  writableMap.putString("id", product.id)
+  writableMap.putString("title", product.title)
+  writableMap.putDouble("price", convertPriceAmountInMicros())
+  writableMap.putString("currencyCode", currencyCode)
+  return writableMap
 }
 
 internal fun convertPurchaseResultToDictionary(product: PurchaseResult, status: Boolean): WritableMap {

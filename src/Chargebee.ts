@@ -87,38 +87,41 @@ export default class Chargebee {
     return ChargebeeReactNative.retrieveProducts(productIds);
   }
 
-  // TODO: Refactor to pass Product object
   /**
    * Purchase product for the customer.
    *
-   * @param {string} productId Product identifier
+   * @param {Product} product Product
    * @param {Object} customer Optional. Customer object.
    * If the `id` is not passed in the customer's details, then the value of customerId will be the same as the SubscriptionId created in Chargebee.
    * @returns {Promise<Purchase>} Purchase result
    */
   public static async purchaseProduct(
-    productId: string,
+    product: Product,
     customer: Customer | null
   ): Promise<Purchase> {
-    return ChargebeeReactNative.purchaseProduct(productId, customer);
+    return ChargebeeReactNative.purchaseProduct(
+      product.id,
+      product.offerToken,
+      customer
+    );
   }
 
   /**
    * Purchase one time product for the customer.
    *
-   * @param {string} productId Product identifier
+   * @param {Product} product Product
    * @param {Object} productType One Time Product Type.
    * @param {Object} customer Optional. Customer object.
    * If the `id` is not passed in the customer's details, then the value of customerId will be the same as the SubscriptionId created in Chargebee.
    * @returns {Promise<OneTimePurchase>} Purchase result
    */
   public static async purchaseNonSubscriptionProduct(
-    productId: string,
+    product: Product,
     productType: ProductType,
     customer: Customer | null
   ): Promise<OneTimePurchase> {
     return ChargebeeReactNative.purchaseNonSubscriptionProduct(
-      productId,
+      product.id,
       productType,
       customer
     );

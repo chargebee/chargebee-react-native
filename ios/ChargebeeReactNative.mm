@@ -35,6 +35,7 @@ RCT_REMAP_METHOD(retrieveProducts,
 
 RCT_REMAP_METHOD(purchaseProduct,
                  purchaseProductWithProduct:(NSString *)productId
+                 withOfferToken:(NSString *)offerToken
                  withCustomer:(NSDictionary *)customer
                  withResolver:(RCTPromiseResolveBlock)resolve
                  withRejecter:(RCTPromiseRejectBlock)reject)

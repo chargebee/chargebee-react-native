@@ -33,7 +33,7 @@ const OTPProductDetail = ({ navigation, route }) => {
       // Store the Product/Customer to be purchased, in a local cache/storage
       cacheData('productToPurchase', productId);
       const purchase = await Chargebee.purchaseNonSubscriptionProduct(
-        productId,
+        product,
         productType,
         customer
       );
@@ -124,7 +124,7 @@ const OTPProductDetail = ({ navigation, route }) => {
 
   async function fetchProductDetails(productId: string) {
     try {
-      console.log('Fetching product details');
+      console.log('Fetching OTP details:', productId);
       const productsDetail: Array<Product> = await Chargebee.retrieveProducts([
         productId,
       ]);
