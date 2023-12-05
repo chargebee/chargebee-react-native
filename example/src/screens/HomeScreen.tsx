@@ -1,5 +1,6 @@
 import type { Subscription } from '@chargebee/react-native-chargebee';
 import React, { useEffect, useState } from 'react';
+import { RestoreSubscriptions } from '../components/RestoreSubscriptions';
 import CoursesScreen from './CoursesScreen';
 import PurchasesScreen from './PurchasesScreen';
 
@@ -18,10 +19,11 @@ const HomeScreen = ({ route, navigation }) => {
   return (
     <>
       {subscriptions.length > 0 ? (
-        <CoursesScreen />
+        <CoursesScreen subscriptions={subscriptions} />
       ) : (
         <PurchasesScreen navigation={navigation} customerId={customerId} />
       )}
+      <RestoreSubscriptions customerId={customerId} />
     </>
   );
 };

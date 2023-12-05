@@ -2,17 +2,15 @@ import { Button, Card, Layout, Text } from '@ui-kitten/components';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-export const ProductDetails = ({
+export const OTPProductDetails = ({
   product,
-  purchaseProduct,
+  purchaseNonSubscriptionProduct,
   cancelPurchase,
 }) => {
   const Header = (props) => (
     <View {...props}>
       <Text category="h6">{product?.title}</Text>
-      <Text category="s1">
-        {product?.id} {product?.baseProductId}
-      </Text>
+      <Text category="s1">{product?.id}</Text>
     </View>
   );
 
@@ -29,9 +27,9 @@ export const ProductDetails = ({
       <Button
         style={styles.footerControl}
         size="small"
-        onPressOut={() => purchaseProduct(product)}
+        onPressOut={() => purchaseNonSubscriptionProduct(product)}
       >
-        PURCHASE
+        OTP PURCHASE
       </Button>
     </View>
   );
@@ -39,14 +37,10 @@ export const ProductDetails = ({
   return product ? (
     <Layout style={styles.topContainer} level="1">
       <Card style={styles.card} header={Header} footer={Footer}>
-        {product.offer ? (
-          <Text>Offer Price: {product?.offer?.price}</Text>
-        ) : (
-          <Text>
-            Price: {product?.price}
-            Currency: {product?.currencyCode}
-          </Text>
-        )}
+        <Text>
+          Price: {product?.price}
+          Currency: {product?.currencyCode}
+        </Text>
       </Card>
     </Layout>
   ) : (

@@ -1,11 +1,16 @@
 package com.chargebee.android.reactnative.utils
 
-import com.android.billingclient.api.SkuDetails
+import com.chargebee.android.billingservice.OneTimeProductType
+import com.chargebee.android.models.CBEntitlementsWrapper
 import com.chargebee.android.models.CBProduct
+import com.chargebee.android.models.CBRestoreSubscription
+import com.chargebee.android.models.PricingPhase
 import com.chargebee.android.reactnative.models.PurchaseResult
 import com.chargebee.android.models.SubscriptionDetailsWrapper
+import com.chargebee.android.models.SubscriptionOffer
 import com.chargebee.android.network.CBAuthResponse
 import com.chargebee.android.network.CBCustomer
+import com.chargebee.android.reactnative.models.OneTimePurchaseResult
 import com.facebook.react.bridge.*
 
 
@@ -30,22 +35,55 @@ internal fun convertReadableArray(readableArray: ReadableArray): ArrayList<Strin
 internal fun convertListToWritableArray(array: List<CBProduct>): WritableArray {
   val writableArray: WritableArray = WritableNativeArray()
   for (item in array) {
-    writableArray.pushMap(convertProductToDictionary(item))
+    val productMaps = item.toDictionary()
+    productMaps.forEach{ writableArray.pushMap(it) }
   }
   return writableArray
 }
 
-internal fun convertProductToDictionary(product: CBProduct): WritableMap {
-  val writableMap: WritableMap = WritableNativeMap()
-  writableMap.putString("id", product.productId)
-  writableMap.putString("title", product.productTitle)
-  writableMap.putDouble("price", convertPriceAmountInMicros(product.skuDetails))
-  writableMap.putString("currencyCode", product.skuDetails.priceCurrencyCode)
+internal fun CBProduct.toDictionary(): List<WritableMap> {
+  val maps: ArrayList<WritableMap> = ArrayList()
+  subscriptionOffers?.forEach{
+    maps.add(it.toMap(this))
+  }
+  oneTimePurchaseOffer?.let { maps.add(it.toMap(this)) }
+  return maps
+}
+
+fun SubscriptionOffer.toMap(product: CBProduct): WritableMap {
+  val pricingPhase = pricingPhases.last()
+  val writableMap: WritableMap = WritableNativeMap().apply {
+    putString("id", product.id)
+    putString("type", product.type.value)
+    putString("baseProductId", basePlanId)
+    putString("offerToken", offerToken)
+    putString("title", product.title)
+    putDouble("price", pricingPhase.convertPriceAmountInMicros())
+    putString("currencyCode", pricingPhase.currencyCode)
+    offerId?.let { putMap("offer", offer()) }
+  }
   return writableMap
 }
 
-fun convertPriceAmountInMicros(skuDetails: SkuDetails): Double {
-  return skuDetails.priceAmountMicros / 1_000_000.0
+private fun SubscriptionOffer.offer(): WritableMap {
+  val pricingPhase = pricingPhases.first()
+  val writableMap: WritableMap = WritableNativeMap()
+  writableMap.putString("id", offerId.orEmpty())
+  writableMap.putDouble("price", pricingPhase.convertPriceAmountInMicros())
+  return writableMap
+}
+
+fun PricingPhase.convertPriceAmountInMicros(): Double {
+  return amountInMicros / 1_000_000.0
+}
+
+private fun PricingPhase.toMap(product: CBProduct): WritableMap {
+  val writableMap: WritableMap = WritableNativeMap()
+  writableMap.putString("id", product.id)
+  writableMap.putString("title", product.title)
+  writableMap.putDouble("price", convertPriceAmountInMicros())
+  writableMap.putString("currencyCode", currencyCode)
+  return writableMap
 }
 
 internal fun convertPurchaseResultToDictionary(product: PurchaseResult, status: Boolean): WritableMap {
@@ -53,6 +91,14 @@ internal fun convertPurchaseResultToDictionary(product: PurchaseResult, status: 
   writableMap.putString("subscription_id", product.subscriptionId)
   writableMap.putString("plan_id", product.planId)
   writableMap.putBoolean("status", status)
+  return writableMap
+}
+
+internal fun convertOneTimePurchaseResultToDictionary(product: OneTimePurchaseResult, status: Boolean): WritableMap {
+  val writableMap: WritableMap = WritableNativeMap()
+  writableMap.putString("invoice_id", product.invoiceId)
+  writableMap.putString("charge_id", product.chargeId)
+  writableMap.putString("customer_id", product.customerId)
   return writableMap
 }
 
@@ -100,4 +146,50 @@ internal fun convertAuthenticationDetailToDictionary(authResponseData: Any): Wri
     writableMap.putString("status", authResponseData?.in_app_detail?.status)
   }
   return writableMap
+}
+
+internal fun convertRestoredSubscriptionsToDictionary(restoredSubscriptions: List<CBRestoreSubscription>): WritableArray {
+  val writableArray: WritableArray = WritableNativeArray()
+  for (item in restoredSubscriptions) {
+    writableArray.pushMap(convertRestoredSubscriptionToDictionary(item))
+  }
+  return writableArray
+}
+
+internal fun convertRestoredSubscriptionToDictionary(restoredSubscription: CBRestoreSubscription): WritableMap {
+  val writableMap: WritableMap = WritableNativeMap()
+  writableMap.putString("subscriptionId", restoredSubscription.subscriptionId)
+  writableMap.putString("planId", restoredSubscription.planId)
+  writableMap.putString("storeStatus", restoredSubscription.storeStatus)
+  return writableMap
+}
+
+internal fun convertEntitlementsToDictionary(entitlements: List<CBEntitlementsWrapper>): WritableArray {
+  val writableArray: WritableArray = WritableNativeArray()
+  for (item in entitlements) {
+    writableArray.pushMap(convertEntitlementToDictionary(item))
+  }
+  return writableArray
+}
+
+fun convertEntitlementToDictionary(entitlementWrapper: CBEntitlementsWrapper): ReadableMap {
+  val writableMap: WritableMap = WritableNativeMap()
+  val entitlement = entitlementWrapper.subscription_entitlement
+  writableMap.putString("subscriptionId", entitlement.subscription_id)
+  writableMap.putString("featureId", entitlement.feature_id)
+  writableMap.putString("featureName", entitlement.feature_name)
+  writableMap.putString("featureDescription", entitlement.feature_description)
+  writableMap.putString("featureType", entitlement.feature_type)
+  writableMap.putString("value", entitlement.value)
+  writableMap.putString("name", entitlement.name)
+  writableMap.putBoolean("isOverridden", entitlement.is_overridden)
+  writableMap.putBoolean("isEnabled", entitlement.is_enabled)
+  return writableMap
+}
+
+internal fun convertProductTypeStringToEnum(productType: String): OneTimeProductType {
+  return if (productType == OneTimeProductType.CONSUMABLE.value)
+    OneTimeProductType.CONSUMABLE
+  else
+    OneTimeProductType.NON_CONSUMABLE
 }

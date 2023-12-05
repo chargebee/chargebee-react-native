@@ -35,12 +35,24 @@ RCT_REMAP_METHOD(retrieveProducts,
 
 RCT_REMAP_METHOD(purchaseProduct,
                  purchaseProductWithProduct:(NSString *)productId
+                 withOfferToken:(NSString *)offerToken
                  withCustomer:(NSDictionary *)customer
                  withResolver:(RCTPromiseResolveBlock)resolve
                  withRejecter:(RCTPromiseRejectBlock)reject)
 {
     ChargebeeHelper* helper = [ChargebeeHelper shared];
     [helper purchaseProductWithProductId:productId customer:customer resolver:resolve rejecter:reject];
+}
+
+RCT_REMAP_METHOD(purchaseNonSubscriptionProduct,
+                 purchaseProductWithProduct:(NSString *)productId
+                 withProductType:(NSString *)productType
+                 withCustomer:(NSDictionary *)customer
+                 withResolver:(RCTPromiseResolveBlock)resolve
+                 withRejecter:(RCTPromiseRejectBlock)reject)
+{
+    ChargebeeHelper* helper = [ChargebeeHelper shared];
+    [helper purchaseNonSubscriptionProductWithProductId:productId productType:productType customer:customer resolver:resolve rejecter:reject];
 }
 
 RCT_REMAP_METHOD(retrieveSubscriptions,
@@ -50,6 +62,45 @@ RCT_REMAP_METHOD(retrieveSubscriptions,
 {
     ChargebeeHelper* helper = [ChargebeeHelper shared];
     [helper retrieveSubscriptionsWithQueryParams:queryParams resolver:resolve rejecter:reject];
+}
+
+RCT_REMAP_METHOD(restorePurchases,
+                 restorePurchasesWithIncludeInactivePurchases:(BOOL *)includeInactivePurchases
+                 withCustomer:(NSDictionary *)customer
+                 withResolver:(RCTPromiseResolveBlock)resolve
+                 withRejecter:(RCTPromiseRejectBlock)reject)
+{
+    ChargebeeHelper* helper = [ChargebeeHelper shared];
+    [helper restorePurchasesWithIncludeInactivePurchases:includeInactivePurchases customer:customer resolver:resolve rejecter:reject];
+}
+
+RCT_REMAP_METHOD(validateReceipt,
+                 validateReceiptWithProduct:(NSString *)productId
+                 withCustomer:(NSDictionary *)customer
+                 withResolver:(RCTPromiseResolveBlock)resolve
+                 withRejecter:(RCTPromiseRejectBlock)reject)
+{
+    ChargebeeHelper* helper = [ChargebeeHelper shared];
+    [helper validateReceiptWithProductId:productId customer:customer resolver:resolve rejecter:reject];
+}
+
+RCT_REMAP_METHOD(validateReceiptForNonSubscriptions,
+                 validateReceiptWithProduct:(NSString *)productId
+                 withProductType:(NSString *)productType
+                 withCustomer:(NSDictionary *)customer
+                 withResolver:(RCTPromiseResolveBlock)resolve
+                 withRejecter:(RCTPromiseRejectBlock)reject)
+{
+    ChargebeeHelper* helper = [ChargebeeHelper shared];
+    [helper validateReceiptForNonSubscriptionsWithProductId:productId productType:productType customer:customer resolver:resolve rejecter:reject];
+}
+
+RCT_REMAP_METHOD(retrieveEntitlements,
+                retrieveEntitlementsWithEntitlementsRequest:(NSDictionary *)entitlementsRequest
+                    withResolver:(RCTPromiseResolveBlock)resolve
+                 withRejecter:(RCTPromiseRejectBlock)reject) {
+    ChargebeeHelper* helper = [ChargebeeHelper shared];
+    [helper retrieveEntitlementsWithEntitlementsRequest:entitlementsRequest resolver:resolve rejecter:reject];
 }
 
 // Don't compile this code when we build for the old architecture.

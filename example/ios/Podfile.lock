@@ -1,8 +1,8 @@
 PODS:
   - boost (1.76.0)
-  - Chargebee (1.0.18)
-  - ChargebeeReactNative (2.0.0-beta.2):
-    - Chargebee (= 1.0.18)
+  - Chargebee (1.0.28)
+  - ChargebeeReactNative (2.4.4):
+    - Chargebee (= 1.0.28)
     - React-Core
   - CocoaAsyncSocket (7.6.5)
   - DoubleConversion (1.1.6)
@@ -388,6 +388,8 @@ PODS:
     - React-jsi (= 0.71.0)
     - React-logger (= 0.71.0)
     - React-perflogger (= 0.71.0)
+  - RNCAsyncStorage (1.19.0):
+    - React-Core
   - RNGestureHandler (2.9.0):
     - React-Core
   - RNScreens (3.20.0):
@@ -395,7 +397,7 @@ PODS:
     - React-RCTImage
   - RNSVG (13.8.0):
     - React-Core
-  - SocketRocket (0.6.0)
+  - SocketRocket (0.6.1)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -461,6 +463,7 @@ DEPENDENCIES:
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
@@ -556,6 +559,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/runtimeexecutor"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  RNCAsyncStorage:
+    :path: "../node_modules/@react-native-async-storage/async-storage"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNScreens:
@@ -567,8 +572,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   boost: 57d2868c099736d80fcd648bf211b4431e51a558
-  Chargebee: 58a74fe76996f9c21d94c2f6ee0d4938a47aaac2
-  ChargebeeReactNative: fc463f848d76b82b2fab304288789886500a3cf3
+  Chargebee: eec8b44710e64d4f39849230999c105bd49a210c
+  ChargebeeReactNative: 4f5a69a2c7d3c3cbf9e4570d38b9dfab39467da9
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   FBLazyVector: 61839cba7a48c570b7ac3e1cd8a4d0948382202f
@@ -615,13 +620,14 @@ SPEC CHECKSUMS:
   React-RCTVibration: 55c91eccdbd435d7634efbe847086944389475b0
   React-runtimeexecutor: ac80782d9d76ba2b0f709f4de0c427fe33c352dc
   ReactCommon: 20e38a9be5fe1341b5e422220877cc94034776ba
+  RNCAsyncStorage: 4b98ac3c64efa4e35c1197cb0c5ca5e9f5d4c666
   RNGestureHandler: 071d7a9ad81e8b83fe7663b303d132406a7d8f39
   RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
   RNSVG: c1e76b81c76cdcd34b4e1188852892dc280eb902
-  SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
+  SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: c618b544ff8bd8865cdca602f00cbcdb92fd6d31
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
 PODFILE CHECKSUM: 99e71378aa6bb48fa324887bcbaf774a53919ab6
 
-COCOAPODS: 1.12.0
+COCOAPODS: 1.12.1

@@ -12,6 +12,7 @@ import Chargebee, {
 import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen';
 import ProductDetail from './screens/ProductDetailScreen';
+import OTPProductDetail from './screens/OTPProductDetailScreen';
 import CoursesScreen from './screens/CoursesScreen';
 import { Platform } from 'react-native';
 
@@ -46,6 +47,11 @@ export default function App() {
             name="ProductDetail"
             component={ProductDetail}
             options={{ title: 'Product Detail' }}
+          />
+          <Stack.Screen
+            name="OTPProductDetail"
+            component={OTPProductDetail}
+            options={{ title: 'OTP Product Detail' }}
           />
           <Stack.Screen
             name="Courses"

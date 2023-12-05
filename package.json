@@ -1,6 +1,6 @@
 {
   "name": "@chargebee/react-native-chargebee",
-  "version": "2.0.0-beta.6",
+  "version": "2.4.4",
   "description": "Package for Chargebee In-App Purchases",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -85,7 +85,7 @@
   "engines": {
     "node": ">= 16.0.0"
   },
-  "packageManager": "^yarn@1.22.15",
+  "packageManager": "yarn@1.22.19",
   "jest": {
     "preset": "react-native",
     "modulePathIgnorePatterns": [

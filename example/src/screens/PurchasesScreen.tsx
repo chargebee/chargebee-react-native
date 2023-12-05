@@ -9,8 +9,17 @@ import { Products } from '../components/Product';
 const PurchasesScreen = ({ navigation, customerId }) => {
   const [products, setProducts] = useState<Array<string>>([]);
 
+  // selectProduct being used to buy subscriptions
   const selectProduct = (productId) => {
     navigation.navigate('ProductDetail', {
+      productId: productId,
+      customerId: customerId,
+    });
+  };
+
+  // selectOTPProduct being used to buy one time product
+  const selectOTPProduct = (productId) => {
+    navigation.navigate('OTPProductDetail', {
       productId: productId,
       customerId: customerId,
     });
@@ -23,7 +32,7 @@ const PurchasesScreen = ({ navigation, customerId }) => {
   async function fetchProductIdentifiers() {
     const queryParams: ProductIdentifiersRequest = {
       limit: '10',
-      offset: '1',
+      offset: '0',
     };
     try {
       console.log('Fetching products');
@@ -38,7 +47,7 @@ const PurchasesScreen = ({ navigation, customerId }) => {
         '========================='
       );
       const errorModel = {
-        code: error.code, // RNErrorCode
+        code: error.code, // ChargebeeErrorCode
         message: error.message, // Message
         userInfo: {
           message: error.userInfo?.message, // Message
@@ -54,7 +63,11 @@ const PurchasesScreen = ({ navigation, customerId }) => {
   return (
     <>
       <Text category="h4">Showing available products</Text>
-      <Products products={products} selectProduct={selectProduct} />
+      <Products
+        products={products}
+        selectProduct={selectProduct}
+        selectOTPProduct={selectOTPProduct}
+      />
     </>
   );
 };

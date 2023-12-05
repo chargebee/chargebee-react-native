@@ -8,7 +8,12 @@ import {
   type Subscription,
   type AuthenticationDetail,
   type ProductIdentifiersRequest,
-  Customer,
+  type Customer,
+  type RestoredSubscription,
+  type Entitlement,
+  type EntitlementsRequest,
+  ProductType,
+  type OneTimePurchase,
 } from './Purchases';
 
 const LINKING_ERROR =
@@ -82,20 +87,44 @@ export default class Chargebee {
     return ChargebeeReactNative.retrieveProducts(productIds);
   }
 
-  // TODO: Refactor to pass Product object
   /**
    * Purchase product for the customer.
    *
-   * @param {string} productId Product identifier
+   * @param {Product} product Product
    * @param {Object} customer Optional. Customer object.
    * If the `id` is not passed in the customer's details, then the value of customerId will be the same as the SubscriptionId created in Chargebee.
    * @returns {Promise<Purchase>} Purchase result
    */
   public static async purchaseProduct(
-    productId: string,
+    product: Product,
     customer: Customer | null
   ): Promise<Purchase> {
-    return ChargebeeReactNative.purchaseProduct(productId, customer);
+    return ChargebeeReactNative.purchaseProduct(
+      product.id,
+      product.offerToken,
+      customer
+    );
+  }
+
+  /**
+   * Purchase one time product for the customer.
+   *
+   * @param {Product} product Product
+   * @param {Object} productType One Time Product Type.
+   * @param {Object} customer Optional. Customer object.
+   * If the `id` is not passed in the customer's details, then the value of customerId will be the same as the SubscriptionId created in Chargebee.
+   * @returns {Promise<OneTimePurchase>} Purchase result
+   */
+  public static async purchaseNonSubscriptionProduct(
+    product: Product,
+    productType: ProductType,
+    customer: Customer | null
+  ): Promise<OneTimePurchase> {
+    return ChargebeeReactNative.purchaseNonSubscriptionProduct(
+      product.id,
+      productType,
+      customer
+    );
   }
 
   /**
@@ -109,5 +138,74 @@ export default class Chargebee {
     subscriptionRequest: SubscriptionsRequest
   ): Promise<Array<Subscription>> {
     return ChargebeeReactNative.retrieveSubscriptions(subscriptionRequest);
+  }
+
+  /**
+   * Restores the subscriptions for the user logged in the device.
+   *
+   * @param {Boolean} includeInactivePurchases When set to true, the inactive purchases are also synced to Chargebee.
+   * @param {Object} customer Optional. Customer object.
+   * Please use the same customer id which was used during the initial purchase
+   * @returns {Promise<Array<RestoredSubscription>>} Array of subscriptions
+   */
+  public static async restorePurchases(
+    includeInactivePurchases: boolean,
+    customer: Customer | null
+  ): Promise<Array<RestoredSubscription>> {
+    const shouldIncludeInactivePurchases = Boolean(includeInactivePurchases);
+    return ChargebeeReactNative.restorePurchases(
+      shouldIncludeInactivePurchases,
+      customer
+    );
+  }
+
+  /**
+   * Validates the receipt of the given Product ID and Customer.
+   * This method can be used to retry sync with Chargebee, when sync fails after a successful purchase.
+   *
+   * @param {string} productId Product identifier
+   * @param {Object} customer Optional. Customer object.
+   * If the `id` is not passed in the customer's details, then the value of customerId will be the same as the SubscriptionId created in Chargebee.
+   * @returns {Promise<Purchase>} Purchase result
+   */
+  public static async validateReceipt(
+    productId: string,
+    customer: Customer | null
+  ): Promise<Purchase> {
+    return ChargebeeReactNative.validateReceipt(productId, customer);
+  }
+
+  /**
+   * This method will be used to validate the receipt of One Time Purchase with Chargebee,
+   * when syncing with Chargebee fails after the successful purchase.
+   *
+   * @param {string} productId Product identifier.
+   * @param {Object} productType One Time Product Type.
+   * @param {Object} customer Optional. Customer object.
+   * If the `id` is not passed in the customer's details, then the value of customerId will be the same as the SubscriptionId created in Chargebee.
+   * @returns {Promise<OneTimePurchase>} Purchase result
+   */
+  public static async validateReceiptForNonSubscriptions(
+    productId: string,
+    productType: ProductType,
+    customer: Customer | null
+  ): Promise<OneTimePurchase> {
+    return ChargebeeReactNative.validateReceiptForNonSubscriptions(
+      productId,
+      productType,
+      customer
+    );
+  }
+
+  /**
+   * Retrieves the entitlements for a given subscription id
+   *
+   * @param {string} subscriptionId Subscription identifier
+   * @returns {Promise<Array<Entitlement>>} Array of Entitlments
+   */
+  public static async retrieveEntitlements(
+    entitlementsRequest: EntitlementsRequest
+  ): Promise<Array<Entitlement>> {
+    return ChargebeeReactNative.retrieveEntitlements(entitlementsRequest);
   }
 }

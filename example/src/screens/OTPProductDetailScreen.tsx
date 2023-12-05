@@ -1,39 +1,43 @@
 import Chargebee, {
   Product,
-  Purchase,
+  OneTimePurchase,
   Customer,
+  ProductType,
 } from '@chargebee/react-native-chargebee';
 import React, { useEffect, useState } from 'react';
 import { Platform } from 'react-native';
-import { ProductDetails } from '../components/ProductDetails';
-import { SuccessModal } from '../components/SuccessModal';
+import { OTPProductDetails } from '../components/OTPProductDetails';
+import { OneTimeSuccessModel } from '../components/OneTimeSuccessModel';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { List } from '@ui-kitten/components';
-import { StyleSheet } from 'react-native';
 
-const ProductDetail = ({ navigation, route }) => {
-  const [selectedProductsDetail, setSelectedProductsDetail] =
-    useState<Array<Product>>();
-  // const [selectedProductsDetail, setSelectedProductsDetail] = useState<Product>();
-  const [productPurchased, setProductPurchased] = useState<Purchase>();
+const OTPProductDetail = ({ navigation, route }) => {
+  const [selectedOTPProductDetail, setSelectedOTPProductDetail] =
+    useState<Product>();
+
+  const [oneTimeProductPurchased, setOneTimeProductPurchased] =
+    useState<OneTimePurchase>();
   const [showSuccess, setShowSuccess] = useState<Boolean>(false);
   const customerId = route.params.customerId;
 
-  const purchaseProduct = async (product: Product) => {
+  const purchaseNonSubscriptionProduct = async (product: Product) => {
     const productId = product.id;
-    const offerToken = product.offerToken;
+    const productType = ProductType.NON_CONSUMABLE;
     const customer: Customer = {
       id: customerId,
       firstName: 'Bruce',
       lastName: 'Wayne',
       email: 'bruce@wayne.com',
     };
-    console.log('Purchasing ', productId, offerToken, customer);
+    console.log('Purchasing ', productId, customer);
     try {
       // Store the Product/Customer to be purchased, in a local cache/storage
       cacheData('productToPurchase', productId);
-      const purchase = await Chargebee.purchaseProduct(product, customer);
-      setProductPurchased(purchase);
+      const purchase = await Chargebee.purchaseNonSubscriptionProduct(
+        product,
+        productType,
+        customer
+      );
+      setOneTimeProductPurchased(purchase);
       console.log(purchase);
       setShowSuccess(true);
       // Remove the cached Product/Customer after successful purchase
@@ -60,7 +64,11 @@ const ProductDetail = ({ navigation, route }) => {
       if (errorModel.code === '2013') {
         const productToRetry = await getCachedData('productToPurchase');
         if (productToRetry) {
-          validateReceipt(productToRetry, customer);
+          validateReceiptForNonSubscriptions(
+            productToRetry,
+            ProductType.NON_CONSUMABLE,
+            customer
+          );
           // Remove the cached Product/Customer after successful retry
           removeCachedData('productToPurchase');
         }
@@ -68,9 +76,17 @@ const ProductDetail = ({ navigation, route }) => {
     }
   };
 
-  const validateReceipt = async (productId: string, customer: Customer) => {
+  const validateReceiptForNonSubscriptions = async (
+    productId: string,
+    productType: ProductType,
+    customer: Customer
+  ) => {
     try {
-      const purchase = await Chargebee.validateReceipt(productId, customer);
+      const purchase = await Chargebee.validateReceiptForNonSubscriptions(
+        productId,
+        productType,
+        customer
+      );
       console.log(purchase);
     } catch (error) {
       console.log('error when validating', error);
@@ -84,7 +100,9 @@ const ProductDetail = ({ navigation, route }) => {
 
   const navigateToCourses = () => {
     setShowSuccess(false);
-    navigation.navigate('Courses', { successfulPurchase: productPurchased });
+    navigation.navigate('Courses', {
+      successfulPurchase: oneTimeProductPurchased,
+    });
   };
 
   const cacheData = async (key, value) => {
@@ -106,12 +124,12 @@ const ProductDetail = ({ navigation, route }) => {
 
   async function fetchProductDetails(productId: string) {
     try {
-      console.log('Fetching product details');
+      console.log('Fetching OTP details:', productId);
       const productsDetail: Array<Product> = await Chargebee.retrieveProducts([
         productId,
       ]);
       console.log('Fetched product details:', productsDetail);
-      setSelectedProductsDetail(productsDetail);
+      setSelectedOTPProductDetail(productsDetail[0]);
     } catch (error) {
       console.error('Product Details fetch failed', error);
       console.log(
@@ -132,52 +150,23 @@ const ProductDetail = ({ navigation, route }) => {
       console.log('=========================');
     }
   }
-  const renderItem = (selectedProductDetail) => {
-    return (
-      <ProductDetails
-        product={selectedProductDetail.item}
-        purchaseProduct={purchaseProduct}
-        cancelPurchase={cancelPurchase}
-      />
-    );
-  };
 
   return (
     <>
-      <List
-        style={styles.container}
-        contentContainerStyle={styles.contentContainer}
-        data={selectedProductsDetail}
-        renderItem={renderItem}
+      <OTPProductDetails
+        product={selectedOTPProductDetail}
+        purchaseNonSubscriptionProduct={purchaseNonSubscriptionProduct}
+        cancelPurchase={cancelPurchase}
       />
       {showSuccess && (
-        <SuccessModal
+        <OneTimeSuccessModel
           show={showSuccess}
           onDismiss={navigateToCourses}
-          purchasedSubscription={productPurchased}
+          purchasedOneTimeProduct={oneTimeProductPurchased}
         />
       )}
     </>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-  },
-  layout: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  contentContainer: {
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-  },
-  item: {
-    marginVertical: 4,
-  },
-});
-
-export default ProductDetail;
+export default OTPProductDetail;

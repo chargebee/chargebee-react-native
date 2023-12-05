@@ -1,5 +1,78 @@
 
 
+## [2.4.4](https://github.com/chargebee/chargebee-react-native/compare/v2.4.3...v2.4.4) (2023-11-10)
+
+## [2.4.3](https://github.com/chargebee/chargebee-react-native/compare/v2.4.2...v2.4.3) (2023-10-09)
+
+## [2.4.2](https://github.com/chargebee/chargebee-react-native/compare/v2.4.1...v2.4.2) (2023-09-01)
+
+
+### Bug Fixes
+
+* fixes validate receipt method ([eb42f4a](https://github.com/chargebee/chargebee-react-native/commit/eb42f4a27aa3f417d218186314cf32e6fca12df0))
+
+## [2.4.1](https://github.com/chargebee/chargebee-react-native/compare/v2.4.0...v2.4.1) (2023-08-18)
+
+
+### Bug Fixes
+
+* fixes restore purchase to use customer object ([72351b3](https://github.com/chargebee/chargebee-react-native/commit/72351b375f9c64f6d45767c3a1cfa95a1320130a))
+
+# [2.4.0](https://github.com/chargebee/chargebee-react-native/compare/v2.3.0...v2.4.0) (2023-08-11)
+
+
+### Bug Fixes
+
+* remove offset in Chargebee.retrieveProductIdentifiers example ([f60a45b](https://github.com/chargebee/chargebee-react-native/commit/f60a45b870412265382e499366eadcf68208f410))
+
+
+### Features
+
+* addressed comments ([56b5e7b](https://github.com/chargebee/chargebee-react-native/commit/56b5e7b79a31523c04b37f5769e701d71dec7989))
+* adds one time purchase api method ([10ac2b6](https://github.com/chargebee/chargebee-react-native/commit/10ac2b6daa948a49388d0c325e557760da1c9ee2))
+* adds one time purchase flow ui in example app ([29421e7](https://github.com/chargebee/chargebee-react-native/commit/29421e72ed0553ba5e6600201d43157410cda375))
+* one time purchase tests ([e76b732](https://github.com/chargebee/chargebee-react-native/commit/e76b73243e1d6925b400bada5788456ab5981164))
+* updates example app ([1f2c3fa](https://github.com/chargebee/chargebee-react-native/commit/1f2c3fadde94167dc1f43261163b32b85e19a6bb))
+
+# [2.3.0](https://github.com/chargebee/chargebee-react-native/compare/v2.2.1...v2.3.0) (2023-07-18)
+
+
+### Bug Fixes
+
+* fixes unit tests ([a3056ca](https://github.com/chargebee/chargebee-react-native/commit/a3056cae0896503a6ca5c8d5fe480245e1ea726b))
+
+
+### Features
+
+* adds retrieve entitlements api ([6498fcd](https://github.com/chargebee/chargebee-react-native/commit/6498fcd27b5f6e18423bd2e41ef260fc7cbec568))
+* adds retrieve entitlements api method ([26a525b](https://github.com/chargebee/chargebee-react-native/commit/26a525bc28aaf84bdf44abc4fd4bcda1958dc996))
+
+## [2.2.1](https://github.com/chargebee/chargebee-react-native/compare/v2.2.0...v2.2.1) (2023-07-12)
+
+
+### Bug Fixes
+
+* fixes retry validation method and example ([15f88d3](https://github.com/chargebee/chargebee-react-native/commit/15f88d3825de52242aa8b2a1ec0a3e18f0604e20))
+
+# [2.2.0](https://github.com/chargebee/chargebee-react-native/compare/v2.1.0...v2.2.0) (2023-07-05)
+
+
+### Features
+
+* adds support for validating receipt for given product and customer ([9079b8d](https://github.com/chargebee/chargebee-react-native/commit/9079b8d7009d439abffa0d3b89e6fa1b129de083))
+* updates ios library method for validating ([2762e29](https://github.com/chargebee/chargebee-react-native/commit/2762e29b91d5540d2f9baff52b5cd63368752fb4))
+
+## [2.1.1](https://github.com/chargebee/chargebee-react-native/compare/v2.1.0...v2.1.1) (2023-05-17)
+
+# [2.1.0](https://github.com/chargebee/chargebee-react-native/compare/v2.0.0...v2.1.0) (2023-05-16)
+
+
+### Features
+
+* adds restore purchases capability ([697a1fa](https://github.com/chargebee/chargebee-react-native/commit/697a1fa172140bb0e4c344cfe1ae0ca368c703cd))
+
+# [2.0.0](https://github.com/chargebee/chargebee-react-native/compare/v2.0.0-beta.6...v2.0.0) (2023-05-02)
+
 # [2.0.0-beta.6](https://github.com/chargebee/chargebee-react-native/compare/v2.0.0-beta.5...v2.0.0-beta.6) (2023-04-28)
 
 
