@@ -52,16 +52,15 @@ internal fun CBProduct.toDictionary(): List<WritableMap> {
 
 fun SubscriptionOffer.toMap(product: CBProduct): WritableMap {
   val pricingPhase = pricingPhases.last()
-  val writableMap: WritableMap = WritableNativeMap()
-  writableMap.putString("id", product.id)
-  writableMap.putString("type", product.type.value)
-  writableMap.putString("baseProductId", basePlanId)
-  writableMap.putString("offerToken", offerToken)
-  writableMap.putString("title", product.title)
-  writableMap.putDouble("price", pricingPhase.convertPriceAmountInMicros())
-  writableMap.putString("currencyCode", pricingPhase.currencyCode)
-  offerId?.let {
-    writableMap.putMap("offer", offer())
+  val writableMap: WritableMap = WritableNativeMap().apply {
+    putString("id", product.id)
+    putString("type", product.type.value)
+    putString("baseProductId", basePlanId)
+    putString("offerToken", offerToken)
+    putString("title", product.title)
+    putDouble("price", pricingPhase.convertPriceAmountInMicros())
+    putString("currencyCode", pricingPhase.currencyCode)
+    offerId?.let { putMap("offer", offer()) }
   }
   return writableMap
 }
