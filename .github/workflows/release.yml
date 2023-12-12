@@ -4,6 +4,10 @@ on:
     branches: 
       - master
       - next
+    paths-ignore:
+      - 'CHANGELOG.md'
+      - 'package-lock.json'
+      - 'package.json'
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -49,7 +53,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Release package
         if: github.ref == 'refs/heads/master'
-        run: npm run release -- --ci -VV
+        run: npm run release -- --ci --dry-run -VV 
         env: 
           NPM_TOKEN: ${{ secrets.RN_SDK_NPM_WRITE_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
