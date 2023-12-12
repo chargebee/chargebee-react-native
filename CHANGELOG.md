@@ -1,5 +1,12 @@
 
 
+## [2.4.5](https://github.com/chargebee/chargebee-react-native/compare/v2.4.4...v2.4.5) (2023-12-12)
+
+
+### Bug Fixes
+
+* multiple callback issue ([#172](https://github.com/chargebee/chargebee-react-native/issues/172)) ([0059f15](https://github.com/chargebee/chargebee-react-native/commit/0059f158f5a0f14df777b79844a3f2b2f65fcc65))
+
 ## [2.4.4](https://github.com/chargebee/chargebee-react-native/compare/v2.4.3...v2.4.4) (2023-11-10)
 
 ## [2.4.3](https://github.com/chargebee/chargebee-react-native/compare/v2.4.2...v2.4.3) (2023-10-09)
