@@ -13,8 +13,6 @@ extension Entitlement {
         var entitlement: [String: Any] = [:]
         entitlement["subscriptionId"] = self.subscriptionID
         entitlement["featureId"] = self.featureID
-        entitlement["subscriptionId"] = self.subscriptionID
-        entitlement["featureId"] = self.featureID
         entitlement["featureName"] = self.featureName
         entitlement["featureDescription"] = self.featureDescription
         entitlement["featureType"] = self.featureType
