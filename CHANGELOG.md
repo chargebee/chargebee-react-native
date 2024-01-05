@@ -1,5 +1,12 @@
 
 
+## [2.4.6](https://github.com/chargebee/chargebee-react-native/compare/v2.4.5...v2.4.6) (2024-01-05)
+
+
+### Reverts
+
+* Revert "chore: update pkg version" ([3bc705c](https://github.com/chargebee/chargebee-react-native/commit/3bc705c4665d47cc4de3d43252e196fd8ac182f5))
+
 ## [2.4.5](https://github.com/chargebee/chargebee-react-native/compare/v2.4.4...v2.4.5) (2023-12-12)
 
 
