@@ -11,4 +11,5 @@ NativeModules.ChargebeeReactNative = {
   retrieveEntitlements: jest.fn(),
   purchaseNonSubscriptionProduct: jest.fn(),
   validateReceiptForNonSubscriptions: jest.fn(),
+  showManageSubscriptionsSettings: jest.fn(),
 };

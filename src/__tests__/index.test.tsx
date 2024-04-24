@@ -226,4 +226,12 @@ describe('Chargebee React Native', () => {
       NativeModules.ChargebeeReactNative.validateReceiptForNonSubscriptions
     ).toHaveBeenCalledWith(productId, productType, customer);
   });
+
+  it('show Manage Subscriptions Settings', () => {
+    Chargebee.showManageSubscriptionsSettings();
+
+    expect(
+      NativeModules.ChargebeeReactNative.showManageSubscriptionsSettings
+    ).toBeCalledTimes(1);
+  });
 });

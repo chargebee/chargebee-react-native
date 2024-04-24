@@ -205,4 +205,11 @@ export default class Chargebee {
   ): Promise<Array<Entitlement>> {
     return ChargebeeReactNative.retrieveEntitlements(entitlementsRequest);
   }
+
+  /**
+   * Opens modal modal to manage subscriptions.
+   */
+  public static showManageSubscriptionsSettings() {
+    ChargebeeReactNative.showManageSubscriptionsSettings();
+  }
 }

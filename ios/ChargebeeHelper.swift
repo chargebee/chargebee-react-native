@@ -286,6 +286,10 @@ public class ChargebeeHelper: NSObject {
             }
         }
     }
+
+    @objc public func showManageSubscriptionsSettings() {
+        Chargebee.shared.showManageSubscriptionsSettings()
+    }
 }
 
 private func convertStringToProductType(productTypeString: String)-> ProductType{
