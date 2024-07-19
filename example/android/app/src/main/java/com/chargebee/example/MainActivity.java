@@ -1,4 +1,4 @@
-package com.chargebee.example;
+package com.chargebee.palaniproton;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
