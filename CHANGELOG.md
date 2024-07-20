@@ -1,5 +1,19 @@
 
 
+# [2.5.0](https://github.com/chargebee/chargebee-react-native/compare/v2.4.5...v2.5.0) (2024-07-20)
+
+
+### Features
+
+* discard package changes ([19d6f4c](https://github.com/chargebee/chargebee-react-native/commit/19d6f4c17bd6fcf9f25116a1d6a2c5681d2fe338))
+* update secret name ([762c988](https://github.com/chargebee/chargebee-react-native/commit/762c988da9093c621987e2e14df64fd8e4c72658))
+* updating billing client from 5 to 6 ([411b066](https://github.com/chargebee/chargebee-react-native/commit/411b066a904f675047b9a0a2a3b761eb824f93c2))
+
+
+### Reverts
+
+* Revert "chore: update pkg version" ([3bc705c](https://github.com/chargebee/chargebee-react-native/commit/3bc705c4665d47cc4de3d43252e196fd8ac182f5))
+
 ## [2.4.6](https://github.com/chargebee/chargebee-react-native/compare/v2.4.5...v2.4.6) (2024-01-05)
 
 
