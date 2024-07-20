@@ -1,5 +1,14 @@
 
 
+# [3.0.0-beta.1](https://github.com/chargebee/chargebee-react-native/compare/v3.0.0-beta.0...v3.0.0-beta.1) (2024-07-20)
+
+
+### Features
+
+* revert unnecessary change ([d5e36d4](https://github.com/chargebee/chargebee-react-native/commit/d5e36d4872e64f7460c78858dc7d4bc62a442f8f))
+* update google client from 5 to 6 ([3cd55ec](https://github.com/chargebee/chargebee-react-native/commit/3cd55ec81d9fc41d0c4cc29f5c3f82fbc593c055))
+* update secret name ([cb4cf83](https://github.com/chargebee/chargebee-react-native/commit/cb4cf835bc3e157f74e4990ccf8fbe3892e117ed))
+
 # [3.0.0-beta.0](https://github.com/chargebee/chargebee-react-native/compare/v2.4.4...v3.0.0-beta.0) (2023-12-05)
 
 
