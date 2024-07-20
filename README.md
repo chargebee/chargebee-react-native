@@ -1,9 +1,9 @@
 ![Latest Release](https://github.com/chargebee/chargebee-react-native/actions/workflows/release.yml/badge.svg?branch=master)
 
 > [!NOTE]  
-> #### Updates for Billing Library 5
-> - SDK Version 3.0: This version uses Google Billing Library 5.2.1 APIs to fetch product information from the Google Play Console and make purchases. If you’re integrating Chargebee’s SDK for the first time, then use this version, and if you’re migrating from the older version of SDK to this version, follow the migration steps in this [document](https://www.chargebee.com/docs/2.0/mobile-playstore-billing-library-5.html).
-> - SDK Version 2.4.4: This [version](https://github.com/chargebee/chargebee-react-native/tree/master) includes Billing Library 5.2.1 but still uses Billing Library 4.0 APIs to fetch product information from the Google Play Console and make purchases. This will enable you to list or update your Android app on the store without any warnings from Google and give you enough time to migrate to version 2.0.
+> #### Updates for Billing Library 6
+> - SDK Version 3.0: This version includes Google Billing Library 6.2.1 but uses Google Billing Library 5.2.1 APIs to fetch product information from the Google Play Console and make purchases. If you’re integrating Chargebee’s SDK for the first time, then use this version, and if you’re migrating from the older version of SDK to this version, follow the migration steps in this [document](https://www.chargebee.com/docs/2.0/mobile-playstore-billing-library-5.html).
+> - SDK Version 2.4.4: This [version](https://github.com/chargebee/chargebee-react-native/tree/master) includes Billing Library 6.2.1 but still uses Billing Library 4.0 APIs to fetch product information from the Google Play Console and make purchases. This will enable you to list or update your Android app on the store without any warnings from Google and give you enough time to migrate to version 2.0.
 
 
 Introduction
