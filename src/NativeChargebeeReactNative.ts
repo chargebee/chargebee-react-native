@@ -38,6 +38,7 @@ export interface Spec extends TurboModule {
   retrieveEntitlements(
     entitlementsRequest: Object
   ): Promise<Array<Entitlement>>;
+  showManageSubscriptionsSettings(): void;
 }
 
 export default TurboModuleRegistry.getEnforcing<Spec>('ChargebeeReactNative');
