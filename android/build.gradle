@@ -84,8 +84,8 @@ dependencies {
   //noinspection GradleDynamicVersion
   implementation "com.facebook.react:react-native"
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-  implementation 'com.chargebee:chargebee-android:1.2.2'
-  implementation 'com.android.billingclient:billing-ktx:6.2.1'
+  implementation 'com.chargebee:chargebee-android:1.2.4'
+  implementation 'com.android.billingclient:billing-ktx:7.1.1'
   implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
 }
 
