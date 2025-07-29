@@ -44,20 +44,20 @@ jobs:
             npm config set //registry.npmjs.com/:_authToken=$NPM_TOKEN
             npm config list
         env: 
-          NPM_TOKEN: ${{ secrets.RN_SDK_NPM_WRITE_TOKEN_1 }}
+          NPM_TOKEN: ${{ secrets.RN_SDK_NPM_WRITE_TOKEN_2 }}
       - name: Yarn Tests
         run: yarn test
       - name: Pre-Release package
         if: github.ref == 'refs/heads/next'
         run: npm run release -- --ci --preRelease=beta -VV
         env: 
-          NPM_TOKEN: ${{ secrets.RN_SDK_NPM_WRITE_TOKEN_1 }}
+          NPM_TOKEN: ${{ secrets.RN_SDK_NPM_WRITE_TOKEN_2 }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Release package
         if: github.ref == 'refs/heads/master'
         run: npm run release -- --ci -VV 
         env: 
-          NPM_TOKEN: ${{ secrets.RN_SDK_NPM_WRITE_TOKEN_1 }}
+          NPM_TOKEN: ${{ secrets.RN_SDK_NPM_WRITE_TOKEN_2 }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
       - name: Create PR for package.json and changelogs
         run: | 
