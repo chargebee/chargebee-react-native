@@ -4,6 +4,10 @@ on:
     branches: 
       - master
       - next
+    paths-ignore:
+      - 'CHANGELOG.md'
+      - 'package-lock.json'
+      - 'package.json'
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -26,14 +30,14 @@ jobs:
           cache-name: cache-node-modules
         with:
           path: node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
       - name: Install dependencies
         if: steps.cache-nodemodules.outputs.cache-hit != 'true'
-        run: yarn install
+        run: yarn install --frozen-lockfile
       - name: Initialize NPM config
         run: |
             npm config set registry=https://registry.npmjs.com/
@@ -51,7 +55,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Release package
         if: github.ref == 'refs/heads/master'
-        run: npm run release -- --ci -VV
+        run: npm run release -- --ci -VV 
         env: 
           NPM_TOKEN: ${{ secrets.RN_SDK_NPM_WRITE_TOKEN_2 }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
