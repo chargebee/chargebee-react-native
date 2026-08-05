@@ -10,7 +10,9 @@ export const ProductDetails = ({
   const Header = (props) => (
     <View {...props}>
       <Text category="h6">{product?.title}</Text>
-      <Text category="s1">{product?.id}</Text>
+      <Text category="s1">
+        {product?.id} {product?.baseProductId}
+      </Text>
     </View>
   );
 
@@ -37,10 +39,14 @@ export const ProductDetails = ({
   return product ? (
     <Layout style={styles.topContainer} level="1">
       <Card style={styles.card} header={Header} footer={Footer}>
-        <Text>
-          Price: {product?.price}
-          Currency: {product?.currencyCode}
-        </Text>
+        {product.offer ? (
+          <Text>Offer Price: {product?.offer?.price}</Text>
+        ) : (
+          <Text>
+            Price: {product?.price}
+            Currency: {product?.currencyCode}
+          </Text>
+        )}
       </Card>
     </Layout>
   ) : (

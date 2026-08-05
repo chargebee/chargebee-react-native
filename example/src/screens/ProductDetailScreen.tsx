@@ -8,26 +8,31 @@ import { Platform } from 'react-native';
 import { ProductDetails } from '../components/ProductDetails';
 import { SuccessModal } from '../components/SuccessModal';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { List } from '@ui-kitten/components';
+import { StyleSheet } from 'react-native';
 
 const ProductDetail = ({ navigation, route }) => {
-  const [selectedProductDetail, setSelectedProductDetail] = useState<Product>();
+  const [selectedProductsDetail, setSelectedProductsDetail] =
+    useState<Array<Product>>();
+  // const [selectedProductsDetail, setSelectedProductsDetail] = useState<Product>();
   const [productPurchased, setProductPurchased] = useState<Purchase>();
   const [showSuccess, setShowSuccess] = useState<Boolean>(false);
   const customerId = route.params.customerId;
 
   const purchaseProduct = async (product: Product) => {
     const productId = product.id;
+    const offerToken = product.offerToken;
     const customer: Customer = {
       id: customerId,
       firstName: 'Bruce',
       lastName: 'Wayne',
       email: 'bruce@wayne.com',
     };
-    console.log('Purchasing ', productId, customer);
+    console.log('Purchasing ', productId, offerToken, customer);
     try {
       // Store the Product/Customer to be purchased, in a local cache/storage
       cacheData('productToPurchase', productId);
-      const purchase = await Chargebee.purchaseProduct(productId, customer);
+      const purchase = await Chargebee.purchaseProduct(product, customer);
       setProductPurchased(purchase);
       console.log(purchase);
       setShowSuccess(true);
@@ -106,7 +111,7 @@ const ProductDetail = ({ navigation, route }) => {
         productId,
       ]);
       console.log('Fetched product details:', productsDetail);
-      setSelectedProductDetail(productsDetail[0]);
+      setSelectedProductsDetail(productsDetail);
     } catch (error) {
       console.error('Product Details fetch failed', error);
       console.log(
@@ -127,13 +132,23 @@ const ProductDetail = ({ navigation, route }) => {
       console.log('=========================');
     }
   }
+  const renderItem = (selectedProductDetail) => {
+    return (
+      <ProductDetails
+        product={selectedProductDetail.item}
+        purchaseProduct={purchaseProduct}
+        cancelPurchase={cancelPurchase}
+      />
+    );
+  };
 
   return (
     <>
-      <ProductDetails
-        product={selectedProductDetail}
-        purchaseProduct={purchaseProduct}
-        cancelPurchase={cancelPurchase}
+      <List
+        style={styles.container}
+        contentContainerStyle={styles.contentContainer}
+        data={selectedProductsDetail}
+        renderItem={renderItem}
       />
       {showSuccess && (
         <SuccessModal
@@ -145,5 +160,24 @@ const ProductDetail = ({ navigation, route }) => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+  },
+  layout: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  contentContainer: {
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+  },
+  item: {
+    marginVertical: 4,
+  },
+});
 
 export default ProductDetail;

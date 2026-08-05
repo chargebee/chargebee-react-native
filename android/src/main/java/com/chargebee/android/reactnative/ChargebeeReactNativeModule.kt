@@ -68,7 +68,7 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
   @ReactMethod
   override fun retrieveProductIdentifiers(queryParams: ReadableMap, promise: Promise) {
     val formattedQueryParams = convertQueryParamsToArray(queryParams)
-    CBPurchase.retrieveProductIdentifers(formattedQueryParams) {
+    CBPurchase.retrieveProductIdentifiers(formattedQueryParams) {
       when (it) {
         is CBProductIDResult.ProductIds -> {
           val identifiers = it.IDs.toArray(arrayOf<String>())
@@ -131,7 +131,7 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
   }
 
   @ReactMethod
-  override fun purchaseProduct(productId: String, customer: ReadableMap, promise: Promise) {
+  override fun purchaseProduct(productId: String, offerToken: String, customer: ReadableMap, promise: Promise) {
     val activity = currentActivity
     activity?.let {
       val productIds = arrayListOf(productId)
@@ -139,8 +139,9 @@ class ChargebeeReactNativeModule internal constructor(context: ReactApplicationC
         object : CBCallback.ListProductsCallback<ArrayList<CBProduct>> {
           override fun onSuccess(productDetails: ArrayList<CBProduct>) {
             if (productDetails.size > 0) {
+              val purchaseProductParams = PurchaseProductParams(productDetails.first(), offerToken)
               CBPurchase.purchaseProduct(
-                productDetails.first(),
+                purchaseProductParams,
                 convertReadableMapToCustomer(customer),
                 object : CBCallback.PurchaseCallback<String> {
 

@@ -32,6 +32,7 @@ const PurchasesScreen = ({ navigation, customerId }) => {
   async function fetchProductIdentifiers() {
     const queryParams: ProductIdentifiersRequest = {
       limit: '10',
+      offset: '0',
     };
     try {
       console.log('Fetching products');

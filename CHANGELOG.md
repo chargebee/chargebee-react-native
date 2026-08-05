@@ -1,34 +1,34 @@
 
 
-## [2.5.1](https://github.com/chargebee/chargebee-react-native/compare/v2.5.0...v2.5.1) (2025-07-22)
-
-# [2.5.0](https://github.com/chargebee/chargebee-react-native/compare/v2.4.5...v2.5.0) (2024-07-20)
+# [3.0.0-beta.2](https://github.com/chargebee/chargebee-react-native/compare/v3.0.0-beta.0...v3.0.0-beta.2) (2025-07-22)
 
 
 ### Features
 
-* discard package changes ([19d6f4c](https://github.com/chargebee/chargebee-react-native/commit/19d6f4c17bd6fcf9f25116a1d6a2c5681d2fe338))
-* update secret name ([762c988](https://github.com/chargebee/chargebee-react-native/commit/762c988da9093c621987e2e14df64fd8e4c72658))
-* updating billing client from 5 to 6 ([411b066](https://github.com/chargebee/chargebee-react-native/commit/411b066a904f675047b9a0a2a3b761eb824f93c2))
+* revert unnecessary change ([d5e36d4](https://github.com/chargebee/chargebee-react-native/commit/d5e36d4872e64f7460c78858dc7d4bc62a442f8f))
+* update google client from 5 to 6 ([3cd55ec](https://github.com/chargebee/chargebee-react-native/commit/3cd55ec81d9fc41d0c4cc29f5c3f82fbc593c055))
+* update secret name ([cb4cf83](https://github.com/chargebee/chargebee-react-native/commit/cb4cf835bc3e157f74e4990ccf8fbe3892e117ed))
+
+# [3.0.0-beta.1](https://github.com/chargebee/chargebee-react-native/compare/v3.0.0-beta.0...v3.0.0-beta.1) (2024-07-20)
 
 
-### Reverts
+### Features
 
-* Revert "chore: update pkg version" ([3bc705c](https://github.com/chargebee/chargebee-react-native/commit/3bc705c4665d47cc4de3d43252e196fd8ac182f5))
+* revert unnecessary change ([d5e36d4](https://github.com/chargebee/chargebee-react-native/commit/d5e36d4872e64f7460c78858dc7d4bc62a442f8f))
+* update google client from 5 to 6 ([3cd55ec](https://github.com/chargebee/chargebee-react-native/commit/3cd55ec81d9fc41d0c4cc29f5c3f82fbc593c055))
+* update secret name ([cb4cf83](https://github.com/chargebee/chargebee-react-native/commit/cb4cf835bc3e157f74e4990ccf8fbe3892e117ed))
 
-## [2.4.6](https://github.com/chargebee/chargebee-react-native/compare/v2.4.5...v2.4.6) (2024-01-05)
-
-
-### Reverts
-
-* Revert "chore: update pkg version" ([3bc705c](https://github.com/chargebee/chargebee-react-native/commit/3bc705c4665d47cc4de3d43252e196fd8ac182f5))
-
-## [2.4.5](https://github.com/chargebee/chargebee-react-native/compare/v2.4.4...v2.4.5) (2023-12-12)
+# [3.0.0-beta.0](https://github.com/chargebee/chargebee-react-native/compare/v2.4.4...v3.0.0-beta.0) (2023-12-05)
 
 
-### Bug Fixes
+### Features
 
-* multiple callback issue ([#172](https://github.com/chargebee/chargebee-react-native/issues/172)) ([0059f15](https://github.com/chargebee/chargebee-react-native/commit/0059f158f5a0f14df777b79844a3f2b2f65fcc65))
+* handles android base plan and offers for android ([fc8ef79](https://github.com/chargebee/chargebee-react-native/commit/fc8ef79542090db174a43d67561d50194b7e61a4))
+
+
+### BREAKING CHANGES
+
+* Handles changes for Android Billing Library 5
 
 ## [2.4.4](https://github.com/chargebee/chargebee-react-native/compare/v2.4.3...v2.4.4) (2023-11-10)
 
