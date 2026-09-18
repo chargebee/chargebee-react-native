@@ -18,7 +18,7 @@ To start the packager:
 yarn example start
 ```
 
-To run the example app on Android:
+To run the example app on Android (JDK 17; Play Billing Library 8 requires `minSdk` 23):
 
 ```sh
 yarn example android
@@ -28,6 +28,22 @@ To run the example app on iOS:
 
 ```sh
 yarn example ios
+```
+
+The example app uses React Native 0.71, which needs **Ruby 3.1** and **CocoaPods 1.12.1** (Ruby 4 / CocoaPods 1.17 will fail in `FBReactNativeSpec`). From `example/ios`:
+
+```sh
+brew install ruby@3.1
+export PATH="/opt/homebrew/opt/ruby@3.1/bin:$PATH"
+cd example/ios
+bundle install
+bundle exec pod install
+```
+
+Point `xcode-select` at Xcode (not Command Line Tools) so the iOS SDK is available:
+
+```sh
+sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
 ```
 
 Make sure your code passes TypeScript and ESLint. Run the following to verify:

@@ -142,8 +142,12 @@ export default class Chargebee {
 
   /**
    * Restores the subscriptions for the user logged in the device.
+   * Restores subscriptions only; one-time products are never restored.
    *
-   * @param {Boolean} includeInactivePurchases When set to true, the inactive purchases are also synced to Chargebee.
+   * @param {Boolean} includeInactivePurchases When set to true, inactive purchases are also synced to Chargebee.
+   * On Android, Google Play Billing Library 8 removed the purchase history API, so fully expired
+   * subscriptions are not returned even when this is true. Cancelled-but-not-expired, paused,
+   * trial, and suspended subscriptions still restore. iOS is unaffected.
    * @param {Object} customer Optional. Customer object.
    * Please use the same customer id which was used during the initial purchase
    * @returns {Promise<Array<RestoredSubscription>>} Array of subscriptions

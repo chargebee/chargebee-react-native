@@ -6,7 +6,7 @@ If you are a new customer, or considering to migrate new solution, please reach 
 
 > [!NOTE]  
 > #### Updates for Billing Library 6
-> - SDK Version 3.0: This version includes Google Billing Library 7.1.1 but uses Google Billing Library 5.2.1 APIs to fetch product information from the Google Play Console and make purchases. If you’re integrating Chargebee’s SDK for the first time, then use this version, and if you’re migrating from the older version of SDK to this version, follow the migration steps in this [document](https://www.chargebee.com/docs/2.0/mobile-playstore-billing-library-5.html).
+> - SDK Version 3.0: This version includes Google Billing Library 8.3.0 but uses Google Billing Library 5.2.1 APIs to fetch product information from the Google Play Console and make purchases. If you’re integrating Chargebee’s SDK for the first time, then use this version, and if you’re migrating from the older version of SDK to this version, follow the migration steps in this [document](https://www.chargebee.com/docs/2.0/mobile-playstore-billing-library-5.html).
 > - SDK Version 2.4.4: This [version](https://github.com/chargebee/chargebee-react-native/tree/master) includes Billing Library 6.2.1 but still uses Billing Library 4.0 APIs to fetch product information from the Google Play Console and make purchases. This will enable you to list or update your Android app on the store without any warnings from Google and give you enough time to migrate to version 2.0.
 
 
@@ -28,7 +28,10 @@ Requirements
 The following requirements must be set up before installing Chargebee’s React Native SDK.
 
 -    Recommended React Native version 0.71.0 or higher. The minimum supported React Native version is 0.67.
--    Requirements for Android https://github.com/chargebee/chargebee-android#requirements
+-    Android: `minSdkVersion` 23, `compileSdkVersion` / `targetSdkVersion` 34, JDK 17. Play Billing Library 8 requires minSdk 23. See also [chargebee-android requirements](https://github.com/chargebee/chargebee-android#requirements).
+-    If your app still uses Android Gradle Plugin 7.4.x (typical for React Native 0.71–0.72), add `classpath("com.android.tools:r8:8.10.21")` **before** the Android Gradle Plugin in the root `android/build.gradle` so D8 can dex Play Billing Library 8. React Native 0.73+ (AGP 8.x) does not need this.
+-    Host apps on `compileSdk` 34 should use `react-native-screens` 3.22.0 or later (older 3.20.x fails to compile against API 34). The Kotlin compiler must be 2.1+ to read Chargebee Android 2.0.0-beta-6 / Billing Library 8 artifacts.
+-    Apps targeting SDK 34 need React Native 0.71.13, 0.72.4, or later. Earlier versions crash on launch in debug builds on Android 14 with `One of RECEIVER_EXPORTED or RECEIVER_NOT_EXPORTED should be specified`.
 -    Requirements for iOS https://github.com/chargebee/chargebee-ios#requirements
 
 
@@ -250,7 +253,11 @@ try {
 
 The `restorePurchases()` function helps to recover your app user's previous purchases without making them pay again. Sometimes, your app user may want to restore their previous purchases after switching to a new device or reinstalling your app. You can use the `restorePurchases()` function to allow your app user to easily restore their previous purchases.
 
-To retrieve **inactive** purchases along with the **active** purchases for your app user, you can call the `restorePurchases()` function with the `includeInactivePurchases` parameter set to true. If you only want to restore active subscriptions, set the parameter to false. To associate the restored purchases to an existing **customer**, it is recommended to pass the necessary customer details, such as **customerId**, **firstName**, **lastName**, and **email**. This ensures that the customer details in your database match the customer details in Chargebee. If the customerId is not passed in the customer’s details, then the value of customerId will be the same as the SubscriptionId created in Chargebee. 
+To retrieve **inactive** purchases along with the **active** purchases for your app user, you can call the `restorePurchases()` function with the `includeInactivePurchases` parameter set to true. If you only want to restore active subscriptions, set the parameter to false. To associate the restored purchases to an existing **customer**, it is recommended to pass the necessary customer details, such as **customerId**, **firstName**, **lastName**, and **email**. This ensures that the customer details in your database match the customer details in Chargebee. If the customerId is not passed in the customer’s details, then the value of customerId will be the same as the SubscriptionId created in Chargebee.
+
+> [!IMPORTANT]
+> `restorePurchases()` restores subscriptions only; one-time products are never restored. On Android, Google Play Billing Library 8 removed the purchase history API and provides no client-side replacement, so only subscriptions that Google Play still associates with the user's account can be restored: active ones, including those that are cancelled but not yet expired, paused, in trial, or suspended. Subscriptions that have fully expired are no longer returned, even when `includeInactivePurchases` is set to `true`. iOS is unaffected.
+
 Here is an example of how to use the restorePurchases() function in your code with the `includeInactivePurchases` parameter set to true.
 
 ```ts

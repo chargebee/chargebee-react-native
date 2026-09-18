@@ -2,10 +2,10 @@
 
 buildscript {
     ext {
-        buildToolsVersion = "33.0.0"
-        minSdkVersion = 21
-        compileSdkVersion = 33
-        targetSdkVersion = 33
+        buildToolsVersion = "34.0.0"
+        minSdkVersion = 23
+        compileSdkVersion = 34
+        targetSdkVersion = 34
 
         // We use NDK 23 which has both M1 support and is the side-by-side NDK version from AGP.
         ndkVersion = "23.1.7779620"
@@ -15,7 +15,9 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath('com.android.tools.build:gradle:7.4.0')
+        // RN 0.71 ships AGP 7.4; its D8 cannot dex Play Billing 8.3 / Kotlin 2.2.
+        classpath("com.android.tools:r8:8.10.21")
+        classpath('com.android.tools.build:gradle:7.4.2')
         classpath("com.facebook.react:react-native-gradle-plugin")
     }
 }
