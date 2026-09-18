@@ -8,7 +8,10 @@ buildscript {
   }
 
   dependencies {
-    classpath "com.android.tools.build:gradle:7.4.0"
+    // AGP 7.4's bundled D8 cannot dex Play Billing 8.3 / Kotlin 2.2 metadata.
+    // Host apps on AGP 8.x (React Native 0.73+) can omit this.
+    classpath "com.android.tools:r8:8.10.21"
+    classpath "com.android.tools.build:gradle:7.4.2"
     // noinspection DifferentKotlinGradleVersion
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
   }
@@ -56,6 +59,10 @@ android {
     targetCompatibility JavaVersion.VERSION_1_8
   }
 
+  kotlinOptions {
+    jvmTarget = "1.8"
+  }
+
   sourceSets {
     main {
       if (isNewArchitectureEnabled()) {
@@ -84,9 +91,9 @@ dependencies {
   //noinspection GradleDynamicVersion
   implementation "com.facebook.react:react-native"
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-  implementation 'com.chargebee:chargebee-android:2.0.0-beta-5'
-  implementation 'com.android.billingclient:billing-ktx:7.1.1'
-  implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
+  implementation 'com.chargebee:chargebee-android:2.0.0-beta-6'
+  implementation 'com.android.billingclient:billing-ktx:8.3.0'
+  implementation(platform("org.jetbrains.kotlin:kotlin-bom:$kotlin_version"))
 }
 
 if (isNewArchitectureEnabled()) {
