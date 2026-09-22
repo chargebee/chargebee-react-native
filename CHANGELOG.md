@@ -1,5 +1,7 @@
 
 
+# [3.0.0-beta.3](https://github.com/chargebee/chargebee-react-native/compare/v3.0.0-beta.2...v3.0.0-beta.3) (2025-07-30)
+
 # [3.0.0-beta.2](https://github.com/chargebee/chargebee-react-native/compare/v3.0.0-beta.0...v3.0.0-beta.2) (2025-07-22)
 
 
